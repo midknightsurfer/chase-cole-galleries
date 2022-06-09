@@ -25,6 +25,7 @@ def seed_users():
         password="password",
     )
 
+
     db.session.add(demo)
     db.session.add(cynthia)    
     db.session.add(marnie)
