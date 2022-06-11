@@ -4,7 +4,7 @@ class Image(db.Model):
     __tablename__ = "images"
 
     id = db.Column(db.Integer, primary_key=True)
-    url = db.Column(db.String, nullable=False)
+    url = db.Column(db.Text, nullable=False)
     product_id = db.Column(db.Integer, db.ForeignKey("products.id"), nullable=False)
 
     product = db.relationship("Product", back_populates="images")
@@ -15,3 +15,6 @@ class Image(db.Model):
             "url": self.url,
             "product_id": self.product_id,
         }
+        
+    def image_info(self):
+        return self.url

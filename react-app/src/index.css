@@ -1,1 +1,17 @@
 /* TODO Add site wide styles */
+* {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", Helvetica, Arial;
+}
+
+input, textarea, select {
+  padding: 5px;
+  min-width: 100%;
+  border: 1px solid lightgrey;
+  margin: 5px;
+  border-radius: 5px;
+}
+
+input:focus, textarea:focus, select:focus {
+  border: 1px solid rgb(112, 18, 92);
+}

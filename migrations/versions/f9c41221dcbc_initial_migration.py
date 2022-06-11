@@ -7,6 +7,7 @@ Create Date: 2022-06-08 13:53:41.511348
 """
 from alembic import op
 import sqlalchemy as sa
+from datetime import datetime
 
 
 # revision identifiers, used by Alembic.
@@ -42,6 +43,7 @@ def upgrade():
     sa.Column('category_id', sa.Integer(), nullable=False),
     sa.Column('price', sa.Float(), nullable=False),
     sa.Column('shipping_price', sa.Float(), nullable=False),
+    sa.Column("created_at", sa.DateTime(), nullable=False, default=datetime.utcnow),
     sa.ForeignKeyConstraint(['category_id'], ['categories.id'], ),
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')

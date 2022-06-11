@@ -1,4 +1,5 @@
 from .db import db
+from datetime import datetime
 
 class Product(db.Model):
     __tablename__ = "products"
@@ -10,6 +11,7 @@ class Product(db.Model):
     category_id = db.Column(db.Integer, db.ForeignKey("categories.id"), nullable=False)
     price = db.Column(db.Float, nullable=False)
     shipping_price = db.Column(db.Float, nullable=False)
+    created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
 
     images = db.relationship("Image", back_populates="product", cascade="all, delete")
 
@@ -22,6 +24,6 @@ class Product(db.Model):
             "description": self.description,
             "price": self.price,
             "shipping_price": self.shipping_price,
-            "user": self.user.owner_info(),
-            "category": self.category_info()
+            "images": [image.image_info() for image in self.images],
+            "created_at": self.created_at,
         }
