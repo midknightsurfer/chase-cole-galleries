@@ -2,10 +2,13 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Redirect, useHistory } from "react-router-dom";
 import { login } from "../../store/session";
+import * as sessionActions from "../../store/session";
+
+import "./auth.css";
 
 const LoginForm = () => {
   const dispatch = useDispatch();
-  const history = useHistory();  
+  const history = useHistory();
   const user = useSelector((state) => state.session.user);
 
   const [errors, setErrors] = useState([]);
@@ -15,7 +18,7 @@ const LoginForm = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showCheck, setShowCheck] = useState(true);
   const [showLogin, setShowLogin] = useState(false);
-  
+
   let showHistory = 0;
 
   useEffect(() => {
@@ -26,6 +29,17 @@ const LoginForm = () => {
     }
     fetchData();
   }, []);
+
+  const demoLogin = async (e) => {
+    e.preventDefault();
+
+    const demoEmail = "demo@aa.io";
+    const demoPassword = "password";
+
+    setEmail(demoEmail);
+    setPassword(demoPassword);
+    dispatch(sessionActions.login("demo@aa.io", "password"));
+  };
 
   const onCheck = async (e) => {
     e.preventDefault();
@@ -66,15 +80,17 @@ const LoginForm = () => {
   }
 
   return (
-    <form>
+    <form className="login__form">
       <div>
         {errors.map((error, ind) => (
           <div key={ind}>{error}</div>
         ))}
+        <h3>Enter your email address to sign in or to create an account</h3>
       </div>
       <div>
         <label htmlFor="email">Email</label>
         <input
+          className="login__form-email"
           name="email"
           type="text"
           placeholder="Email"
@@ -96,15 +112,18 @@ const LoginForm = () => {
           </div>
         )}
         {showCheck && (
-          <button type="submit" onClick={onCheck}>
+          <button type="submit" className="login__form-btn" onClick={onCheck}>
             Check
           </button>
         )}
         {showLogin && (
-          <button type="submit" onClick={onLogin}>
+          <button type="submit" className="login__form-btn" onClick={onLogin}>
             Login
           </button>
         )}
+          <button type="submit" className="login__form-btn" onClick={demoLogin}>
+            Demo Login
+          </button>        
       </div>
     </form>
   );

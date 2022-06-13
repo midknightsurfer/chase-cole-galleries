@@ -129,9 +129,9 @@
 .logo {
   display: block;
   position: absolute;
-  width: 200px;
-  margin-top: -5.2vh;
-  margin-left: 20px;;
+  width: 100px;
+
+  margin-left: 70px;;
 }
 
 .menu__name {

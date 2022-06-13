@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 import ProductCard from "./ProductCard";
 import { getProducts } from "../../store/products";
 
@@ -21,7 +22,9 @@ const Products = () => {
   return (
     <div className="furniture__card-container">
       {products.slice(0, 8).map((product) => (
-        <ProductCard product={product} />
+        <Link to={`/products/${product.id}`}>
+          <ProductCard product={product} />
+        </Link>
       ))}
     </div>
   );

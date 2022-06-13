@@ -1,5 +1,6 @@
 const LOAD = "products/LOAD";
 const ADD_ONE = "products/ADD";
+const EDIT = "products/EDIT";
 const DELETE = "products/DELETE";
 
 const load = (products) => ({
@@ -9,6 +10,11 @@ const load = (products) => ({
 
 const add = (product) => ({
   type: ADD_ONE,
+  product,
+});
+
+const edit = (product) => ({
+  type: EDIT,
   product,
 });
 
@@ -51,6 +57,19 @@ export const addProduct =
     }
   };
 
+export const editProduct = (data, productId) => async (dispatch) => {
+  const response = await fetch(`/api/products/${productId}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
+  });
+  if (response.ok) {
+    const editedProduct = await response.json();
+    dispatch(edit(editedProduct));
+    return ["Created", editedProduct];
+  }
+};
+
 export const deleteProductId = (productId) => async (dispatch) => {
   const response = await fetch(`/api/products/${productId}`, {
     method: "DELETE",
@@ -64,7 +83,6 @@ export const deleteProductId = (productId) => async (dispatch) => {
 
 export const uploadFile = (fileForm) => async (dispatch) => {
   const { product_id, file, newFile } = fileForm;
-  console.log(product_id, "first");
   const form = new FormData();
   form.append("file", file);
   form.append("product_id", product_id);
@@ -94,6 +112,12 @@ const productReducer = (state = initialState, action) => {
         [action.product.id]: action.product,
       };
       return newState;
+    case EDIT:
+      const editState = {
+        ...state,
+        [action.product.id]: action.product,
+      };
+      return editState;
     case DELETE: {
       const newState = {
         ...state,

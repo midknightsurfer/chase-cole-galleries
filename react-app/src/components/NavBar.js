@@ -76,7 +76,7 @@ console.log(user)
                   <i class="fa-solid fa-blog"></i>Refinisher's Blog
                 </div>
                 <NavLink
-                  to="/newfurniture"
+                  to="/ProductForm"
                   exact={true}
                   onClick={() => setShowMenu(!showMenu)}
                   activeClassName="active"

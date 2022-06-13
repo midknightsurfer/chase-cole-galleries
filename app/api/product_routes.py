@@ -37,38 +37,34 @@ def add_product():
         
         db.session.add(product)
         db.session.commit()
-        # return json object
+
         return product.to_dict()
 
     return {"errors": validation_errors_to_error_messages(form.errors)}, 401
 
-# @product_routes.route("/<int:productId>", methods=["PUT"])
-# @login_required
-# def update(productId):
-#     form = NewproductForm()
-#     form['csrf_token'].data = request.cookies['csrf_token']
-#     if form.validate_on_submit():
-#         data = form.data
-#         product = product.query.filter(product.id == productId).first()
+@product_routes.route("/<int:productId>", methods=["PUT"])
+@login_required
+def update(productId):
+    form = NewProductForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
+    if form.validate_on_submit():
+        data = form.data
+        product = Product.query.filter(Product.id == productId).first()
 
-#         product.user_id = data['user_id']
-#         product.name = data['name']
-#         product.description = data['description']
-#         product.address = data['address']
-#         product.city = data['city']
-#         product.state = data['state']
-#         product.country = data['country']
-#         product.lat = data['lat']
-#         product.lng = data['lng']
-#         product.price = data['price']
+        product.user_id = data['user_id']
+        product.title = data['title']
+        product.description = data['description']
+        product.category_id = data['category_id']
+        product.shipping_price = data['shipping_price']        
+        product.price = data['price']
 
-#         images = Image.query.filter(Image.product_id == productId).all()
-#         for image in images:
-#             db.session.delete(image)
-#         db.session.commit()
+        # images = Image.query.filter(Image.product_id == productId).all()
+        # for image in images:
+        #     db.session.delete(image)
+        db.session.commit()
 
-#         return product.to_dict()
-#     return {"errors": validation_errors_to_error_messages(form.errors)}, 401
+        return product.to_dict()
+    return {"errors": validation_errors_to_error_messages(form.errors)}, 401
 
 @product_routes.route("/<int:productId>", methods=["DELETE"])
 @login_required
