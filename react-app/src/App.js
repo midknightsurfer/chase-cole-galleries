@@ -43,10 +43,10 @@ function App() {
         <Route path="/sign-up" exact={true}>
           <SignUpForm />
         </Route>
-        <Route path="/products/:productId">
+        <Route path="/products/:productId" exact={true}>
           <ProductView />
         </Route>
-        <ProtectedRoute path="/products/edit/:productId">
+        <ProtectedRoute path="/products/edit/:productId" exact={true}>
           <EditProductForm />
         </ProtectedRoute>
         <ProtectedRoute path="/users" exact={true}>

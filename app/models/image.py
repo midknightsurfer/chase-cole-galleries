@@ -17,4 +17,4 @@ class Image(db.Model):
         }
         
     def image_info(self):
-        return self.url
+        return self.url,

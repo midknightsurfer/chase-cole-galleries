@@ -57,7 +57,7 @@ const ProductForm = () => {
         product_id: product_id,
         newFile: true,
       };
-      console.log(obj);
+
       await dispatch(uploadFile(obj));
     }
   };

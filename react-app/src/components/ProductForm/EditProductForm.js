@@ -22,22 +22,20 @@ const EditProductForm = () => {
   );
   const [categoryId, setCategoryId] = useState(product?.category_id);
   const [validationErrors, setValidationErrors] = useState([]);
-  // const [images, setImages] = useState("");
+  const [images, setImages] = useState("");
 
-  // useEffect(() => {
-  //   let images = product?.images.map((image) => {
-  //     return { data_url: image };
-  //   });
-  //   setImages(images);
-  // }, []);
+  useEffect(() => {
+    let images = product?.images.map((image) => {
+      return { data_url: image };
+    });
+    setImages(images);
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (validationErrors.length > 0) {
       return;
     }
-
-    // let cleanImages = images?.map((image) => image.file);
 
     const data = {
       user_id: user.id,
@@ -50,39 +48,39 @@ const EditProductForm = () => {
 
     const productData = await dispatch(editProduct(data, product.id));
 
-    // await addImages(cleanImages, product.id);
+    await addImages(images, product.id);
     history.push("/");
   };
 
   useEffect(() => {
     const errors = [];
     setValidationErrors(errors);
-  }, [title, description]);
+  }, [title, description, images]);
 
-  // const addImages = async (images, product_id) => {
-  //   for (let x = 0; x < images.length; x++) {
-  //     let image = images[x];
-  //     console.log(image)
-  //     let newFile = false;
-  //     let file;
+  const addImages = async (images, product_id) => {
+    for (let x = 0; x < images.length; x++) {
+      let image = images[x];
 
+      let newFile = false;
+      let file;
 
-  //     if (image?.file) {
-  //       newFile = true;
-  //       file = image?.file;
-  //     } else {
-  //       file = image?.data_url;
-  //     }
+      //If there is a file, this is a new/updated upload
+      if (image.file) {
+        newFile = true;
+        file = image.file;
+      } else {
+        file = image.data_url;
+      }
 
-  //     const obj = {
-  //       file: file,
-  //       product_id: product_id,
-  //       newFile: newFile,
-  //     };
+      const obj = {
+        file: file,
+        product_id: product_id,
+        newFile: newFile,
+      };
 
-  //     await dispatch(uploadFile(obj));
-  //   }
-  // };
+      await dispatch(uploadFile(obj));
+    }
+  };
 
   return (
     <div className="product__form-container">
@@ -143,7 +141,7 @@ const EditProductForm = () => {
         </div>
         <div className="form_input_section" id="imageUploadSection">
           <div className="field_section_container">
-            {/* <h3 className="imagesHeader">Images:</h3> */}
+            <h3 className="imagesHeader">Images:</h3>
             <div className="erro_container_div">
               <ul className="erro_container">
                 {validationErrors.length > 0 &&
@@ -154,7 +152,7 @@ const EditProductForm = () => {
                   ))}
               </ul>
             </div>
-            {/* <div className="imageUploadContainer">
+            <div className="imageUploadContainer">
               <ImageUploading
                 multiple
                 value={images}
@@ -184,11 +182,12 @@ const EditProductForm = () => {
                       Add or Drag Images Here
                     </div>
                     {/* <div onClick={onImageRemoveAll}>Remove all images</div> */}
-                    {/* <div className="images_container">
+                    <div className="images_container">
                       {imageList.map((image, index) => (
                         <div key={index}>
                           <img src={image["data_url"]} alt="" height="230" />
                           <div className="editPhotoButtons">
+                           
                             <div
                               className="change_image"
                               onClick={() => onImageUpdate(index)}
@@ -199,6 +198,7 @@ const EditProductForm = () => {
                               className="remove_image"
                               onClick={() => onImageRemove(index)}
                             >
+
                               Remove
                             </div>
                           </div>
@@ -208,7 +208,7 @@ const EditProductForm = () => {
                   </div>
                 )}
               </ImageUploading>{" "}
-            </div> */}
+            </div>
           </div>
           <div className="product__form-btndiv">
             <button className="product__form-btn" type="submit">

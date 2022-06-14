@@ -74,7 +74,6 @@ export const deleteProductId = (productId) => async (dispatch) => {
   const response = await fetch(`/api/products/${productId}`, {
     method: "DELETE",
   });
-
   if (response.ok) {
     const data = await response.json();
     dispatch(deleteProduct(data));
@@ -87,6 +86,7 @@ export const uploadFile = (fileForm) => async (dispatch) => {
   form.append("file", file);
   form.append("product_id", product_id);
   form.append("newFile", newFile);
+  console.log(form)
   const res = await fetch("/api/products/images", {
     method: "POST",
     body: form,

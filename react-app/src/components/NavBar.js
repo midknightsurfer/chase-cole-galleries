@@ -27,8 +27,6 @@ console.log(user)
         <NavLink
           to="/"
           exact={true}
-          onClick={() => setShowMenu(!showMenu)}
-          activeClassName="active"
         >
           <img src={logo} alt="logo" className="logo" />
         </NavLink>

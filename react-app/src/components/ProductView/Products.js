@@ -22,9 +22,7 @@ const Products = () => {
   return (
     <div className="furniture__card-container">
       {products.slice(0, 8).map((product) => (
-        <Link to={`/products/${product.id}`}>
-          <ProductCard product={product} />
-        </Link>
+          <ProductCard product={product} />            
       ))}
     </div>
   );
