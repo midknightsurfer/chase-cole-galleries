@@ -2,4 +2,13 @@
 
 Chase Cole Galleries is an online marketplace to buy and sell used, high-end furniture.
 
--1 Login/Signup
+- Technologies Used
+- Database Schema
+- Login/Signup
+- Listing/Editing Furniture
+- Cart/Order System
+- Future Features
+
+## Technologies Used
+
+![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)
