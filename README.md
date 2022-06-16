@@ -1,129 +1,68 @@
-# Flask React Project
+![logo (2)](https://user-images.githubusercontent.com/68219912/174114383-989346e4-e858-486c-83ef-9422aeb7b806.png)
 
-This is the starter for the Flask React project.
+Chase Cole Galleries is an online marketplace to buy and sell used, high-end furniture.
 
-## Getting started
-1. Clone this repository (only this branch)
+- Technologies Used
+- Database Schema
+- Login/Signup
+- Listing/Editing Furniture
+- Cart/Order System
+- Future Features
 
-   ```bash
-   git clone https://github.com/appacademy-starters/python-project-starter.git
-   ```
+## Technologies Used
 
-2. Install dependencies
+![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)![Redux](https://img.shields.io/badge/redux-%23593d88.svg?style=for-the-badge&logo=redux&logoColor=white)![React Router](https://img.shields.io/badge/React_Router-CA4245?style=for-the-badge&logo=react-router&logoColor=white)![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)![Flask](https://img.shields.io/badge/flask-%23000.svg?style=for-the-badge&logo=flask&logoColor=white)![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white)![Postgres](https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white)![AWS](https://img.shields.io/badge/AWS-%23FF9900.svg?style=for-the-badge&logo=amazon-aws&logoColor=white)![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)![Heroku](https://img.shields.io/badge/heroku-%23430098.svg?style=for-the-badge&logo=heroku&logoColor=white)
 
-      ```bash
-      pipenv install --dev -r dev-requirements.txt && pipenv install -r requirements.txt
-      ```
+## Database Schema
 
-3. Create a **.env** file based on the example with proper settings for your
-   development environment
-4. Setup your PostgreSQL user, password and database and make sure it matches your **.env** file
+![image](https://user-images.githubusercontent.com/68219912/174128240-d25bee78-1e78-47ec-9c33-c37f5f225c77.png)
 
-5. Get into your pipenv, migrate your database, seed your database, and run your flask app
+## Login/Signup
 
-   ```bash
-   pipenv shell
-   ```
+A user clicks on Sign In at the bottom of the main menu and it takes them to a page where they can enter thier email address.
 
-   ```bash
-   flask db upgrade
-   ```
+![image](https://user-images.githubusercontent.com/68219912/174128598-4be4498a-093c-4691-9fbf-e32f4b72b9d4.png)
 
-   ```bash
-   flask seed all
-   ```
+If the user enters an email that exists in the database they will be met with a password prompt, otherwise the site will serve the user with a Sign Up form. Once filled out and submitted, assuming they will pass the validations, the user will be automatically logged in. The demo login button logs a user in under the demo account for the purpose of surveying the website.
 
-   ```bash
-   flask run
-   ```
+## Listing/Editing Furniture
 
-6. To run the React App in development, checkout the [README](./react-app/README.md) inside the `react-app` directory.
+A user is able to click on Sell my Furniture in the main menu to get to the form to list a new item. Picture upload is handled by Amazon Web Services S3.
 
-***
+![image](https://user-images.githubusercontent.com/68219912/174129605-2d6c6dc9-a6ce-429d-acda-05cf8a9a6f5d.png)
 
+A user can also edit or delete listings that they own from whatever page with the note pad and trash can icons, which also say edit and delete when you mouse over.
 
-*IMPORTANT!*
-   psycopg2-binary MUST remain a dev dependency because you can't install it on alpine-linux.
-   There is a layer in the Dockerfile that will install psycopg2 (not binary) for us.
-***
+![image](https://user-images.githubusercontent.com/68219912/174130118-20b2ca3f-8b35-44c6-96f7-fcdce9bbeaee.png)
 
-### Dev Containers (OPTIONAL for M1 Users)
-The following instructions detail an *optional* development setup for M1 Mac users having issues with the `psycopg` package.
+## Cart/Order System
 
-1. Make sure you have the [Microsoft Remote - Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers) extension installed. 
-2. Make sure you have [Docker](https://www.docker.com/products/docker-desktop/) installed on your computer. 
-3. Clone the repository (only this branch)
-   ```bash
-   git clone https://github.com/appacademy-starters/python-project-starter.git
-   ```
-4. Open the repo in VS Code. 
-5. Click "Open in Container" when VS Code prompts to open container in the bottom right hand corner. 
-6. **Be Patient!** The initial install will take a LONG time, it's building a container that has postgres preconfigured and even installing all your project dependencies. (For both flask and react!)
+A user is able to add items to a cart which totals the shipping and price of all cart items and creates an order when sent to checkout. The cart is opened with the flatbed icon on the navbar and users mays delete items from the cart with the trash can icon. Once an order is created, it may be viewed in the My Orders section of the main menu. Sellers can also find their pending orders in that location where they will be able to modify it's status.
 
-   **Note:** This will take much less time on future starts because everything will be cached.
+## Future Features and Updates
 
-7. Once everything is up, be sure to make a `.env` file based on `.env.example` in both the root directory and the *react-app* directory before running your app. You do not need a `DATABASE_URL` in the `.env` file if you are using this Docker setup for development - the URL is already set in the image (see `.devcontainer/Dockerfile` for the URL).
+- Done by pregrade day - 6/16
+- - First two features CRUD (Furniture Listing and Order System
+- - My Orders Page
+- - Cart Functionality
+- - Error Handling
+- Done by presentation day - 6/20
+- - Category Filtering
+- - Search
+- - Footer
+- - My Account Page
+- - Demo user seeding
+- Done by Graduation - 7/1
+- - Policy Pages
+- - Favorites
+- - Newly Added
+- - Payment Processor
+- - Additional Seeding
+- Done on Sprint weeks and beyond
+- - Refinisher's blog
+- - User Avatars
+- - Email Subscribers List
+- - Contact Page
+- - Domain Name Transfer
+- - Secure Credit Card storage
 
-8. Get into your pipenv, migrate your database, seed your database, and run your flask app
-
-   ```bash
-   pipenv shell
-   ```
-
-   ```bash
-   flask db upgrade
-   ```
-
-   ```bash
-   flask seed all
-   ```
-
-   ```bash
-   flask run
-   ```
-
-9. To run the React App in development, checkout the [README](./react-app/README.md) inside the `react-app` directory.
-
-<br>
-
-## Deploy to Heroku
-This repo comes configured with Github Actions. When you push to your main branch, Github will automatically pull your code, package and push it to Heroku, and then release the new image and run db migrations. 
-
-1. Write your Dockerfile. In order for the Github action to work effectively, it must have a configured Dockerfile. Follow the comments found in this [Dockerfile](./Dockerfile) to write your own!
-
-2. Create a new project on Heroku.
-
-3. Under Resources click "Find more add-ons" and add the add on called "Heroku Postgres".
-
-4. Configure production environment variables. In your Heroku app settings -> config variables you should have two environment variables set:
-
-   |    Key          |    Value    |
-   | -------------   | ----------- |
-   | `DATABASE_URL`  | Autogenerated when adding postgres to Heroku app |
-   | `SECRET_KEY`    | Random string full of entropy |
-
-5. Generate a Heroku OAuth token for your Github Action. To do so, log in to Heroku via your command line with `heroku login`. Once you are logged in, run `heroku authorizations:create`. Copy the GUID value for the Token key.
-
-6. In your Github Actions Secrets you should have two environment variables set. You can set these variables via your Github repository settings -> secrets -> actions. Click "New respository secret" to create
-each of the following variables:
-
-   |    Key            |    Value    |
-   | -------------     | ----------- |
-   | `HEROKU_API_KEY`  | Heroku Oauth Token (from step 6)|
-   | `HEROKU_APP_NAME` | Heroku app name    |
-
-7. Push to your `main` branch! This will trigger the Github Action to build your Docker image and deploy your application to the Heroku container registry. Please note that the Github Action will automatically upgrade your production database with `flask db upgrade`. However, it will *not* automatically seed your database. You must manually seed your production database if/when you so choose (see step 8).
-
-8. *Attention!* Please run this command *only if you wish to seed your production database*: `heroku run -a HEROKU_APP_NAME flask seed all`
-
-## Helpful commands
-|    Command            |    Purpose    |
-| -------------         | ------------- |
-| `pipenv shell`        | Open your terminal in the virtual environment and be able to run flask commands without a prefix |
-| `pipenv run`          | Run a command from the context of the virtual environment without actually entering into it. You can use this as a prefix for flask commands  |
-| `flask db upgrade`    | Check in with the database and run any needed migrations  |
-| `flask db downgrade`  | Check in with the database and revert any needed migrations  |
-| `flask seed all`      | Just a helpful syntax to run queries against the db to seed data. See the **app/seeds** folder for reference and more details |
-| `heroku login -i`      | Authenticate your heroku-cli using the command line. Drop the -i to authenticate via the browser |
-| `heroku authorizations:create` | Once authenticated, use this to generate an Oauth token |
-| `heroku run -a <app name>` | Run a command from within the deployed container on Heroku |
