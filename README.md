@@ -42,5 +42,27 @@ A user is able to add items to a cart which totals the shipping and price of all
 ## Future Features and Updates
 
 - Done by pregrade day - 6/16
-- - 
+- - First two features CRUD (Furniture Listing and Order System
+- - My Orders Page
+- - Cart Functionality
+- - Error Handling
+- Done by presentation day - 6/20
+- - Category Filtering
+- - Search
+- - Footer
+- - My Account Page
+- - Demo user seeding
+- Done by Graduation - 7/1
+- - Policy Pages
+- - Favorites
+- - Newly Added
+- - Payment Processor
+- - Additional Seeding
+- Done on Sprint weeks and beyond
+- - Refinisher's blog
+- - User Avatars
+- - Email Subscribers List
+- - Contact Page
+- - Domain Name Transfer
+- - Secure Credit Card storage
 
