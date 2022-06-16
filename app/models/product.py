@@ -14,7 +14,12 @@ class Product(db.Model):
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
 
     images = db.relationship("Image", back_populates="product", cascade="all, delete")
+    
     category = db.relationship("Category", back_populates="product")
+    
+    product_cart= db.relationship("Cart", back_populates="product" )
+    
+    item = db.relationship('OrderProduct', back_populates='product', cascade="all, delete-orphan")
 
     def to_dict(self):
         return {
@@ -28,3 +33,14 @@ class Product(db.Model):
             "images": [image.image_info() for image in self.images],
             "created_at": self.created_at,
         }
+        
+    
+    # def product_info(self):
+    #     return {
+    #     "id": self.id,
+    #     "user_id": self.user_id,
+    #     "title": self.title,
+    #     "description": self.description,
+    #     "shipping_price": self.shipping_price,
+    #     "images": [image.image_info() for image in self.images],
+    # }

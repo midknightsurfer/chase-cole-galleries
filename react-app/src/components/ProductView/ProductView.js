@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { getProducts } from "../../store/products";
 import ReactBnbGallery from "react-bnb-gallery";
+import { addCart } from "../../store/cart";
 
 import "react-bnb-gallery/dist/style.css";
 
@@ -11,6 +12,7 @@ const ProductView = () => {
   const dispatch = useDispatch();
 
   const product = useSelector((state) => state.products[productId]);
+  const cart = (useSelector((state)=>state.cart))
 
   const [photoIndex, setPhotoIndex] = useState(0);
   const [photoObject, setPhotoObject] = useState([]);
@@ -35,6 +37,24 @@ const ProductView = () => {
     setPhotoIndex(photoIndex);
     setShowPhotoModal(true);
   };
+
+  console.log(cart)
+
+  const addToCart = () => {
+    const currProduct = Object.values(cart.products)
+    let inCart = false
+    for (let i = 0; i < currProduct.length; i++ ){
+
+        if (currProduct[i].product_id === product.id){
+            inCart = true
+            console.log(i)
+        }
+    }
+
+
+        dispatch(addCart(product))
+
+}
 
   return (
     <div className="productview__container">
@@ -65,8 +85,18 @@ const ProductView = () => {
         <p>{product?.description}</p>
         <div className="add_to_cart_container">
           <h4>Add to Cart</h4>
-          <h5>Price: ${product?.price}.00</h5>
-          <h5>Shipping: ${product?.shipping_price}.00</h5>
+          <div className="add_to_cart_grid">
+            <span>
+              <h5>Price:</h5>
+            </span>
+            <span className="prices">${product?.price}.00</span>
+            <span>
+              <h5>Shipping:</h5>
+            </span>
+            <span className="prices">${product?.shipping_price}.00</span>
+          </div>
+          <hr />
+          <button onClick={() => addToCart()} className="total_button">${product?.price + product?.shipping_price}.00</button>
         </div>
       </div>
     </div>

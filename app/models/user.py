@@ -9,10 +9,19 @@ class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     first_name = db.Column(db.String(40), nullable=False)
     last_name = db.Column(db.String(40), nullable=False)
+    address = db.Column(db.String(255))
+    city = db.Column(db.String(255))
+    state = db.Column(db.String(20))
+    zipcode = db.Column(db.Integer)
+    credit_card = db.Column(db.Integer)
+    expiration = db.Column(db.Date)
+    security_code = db.Column(db.Integer)       
     email = db.Column(db.String(255), nullable=False, unique=True)
     hashed_password = db.Column(db.String(255), nullable=False)
     avatar = db.Column(db.String(255))
     admin = db.Column(db.Boolean)
+    
+    cart = db.relationship("Cart", back_populates="user")
 
     @property
     def password(self):

@@ -9,6 +9,9 @@ import ProductForm from "./components/ProductForm/ProductForm";
 import NavBar from "./components/NavBar";
 import EditProductForm from "./components/ProductForm/EditProductForm";
 import ProductView from "./components/ProductView/ProductView";
+import CartView from "./components/Cart/CartView";
+import { getCart } from "./store/cart";
+// import Orders from "./components/Orders/Orders"
 
 import ProtectedRoute from "./components/auth/ProtectedRoute";
 import UsersList from "./components/UsersList";
@@ -22,9 +25,11 @@ function App() {
   useEffect(() => {
     (async () => {
       await dispatch(authenticate());
+      await dispatch(getCart());
       setLoaded(true);
     })();
   }, [dispatch]);
+
 
   if (!loaded) {
     return null;
@@ -33,9 +38,13 @@ function App() {
   return (
     <BrowserRouter>
       <NavBar />
+
       <Switch>
         <Route path="/" exact={true}>
           <Products />
+        </Route>
+        <Route path="/cart" exact={true}>
+          <CartView />          
         </Route>
         <Route path="/login" exact={true}>
           <LoginForm />
@@ -49,6 +58,9 @@ function App() {
         <ProtectedRoute path="/products/edit/:productId" exact={true}>
           <EditProductForm />
         </ProtectedRoute>
+        {/* <ProtectedRoute path="/orders" exact={true}>
+          <Orders />
+        </ProtectedRoute>         */}
         <ProtectedRoute path="/users" exact={true}>
           <UsersList />
         </ProtectedRoute>

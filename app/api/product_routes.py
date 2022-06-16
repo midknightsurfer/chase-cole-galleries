@@ -92,7 +92,6 @@ def delete_product(productId):
 @login_required
 def add_product_images():
     newFile = request.form.get("newFile")
-    print(newFile)
     if newFile == "true":
         if "file" not in request.files:
             return "No user_file key in request.files"
@@ -101,8 +100,6 @@ def add_product_images():
         if file:
             product_id = request.form.get("product_id")
             file_url = upload_file_to_s3(file)
-            # file_url = file_url.replace(" ", "+")
-            print(file_url)
             image = Image(product_id=product_id, url=file_url["url"])
             db.session.add(image)
             db.session.commit()

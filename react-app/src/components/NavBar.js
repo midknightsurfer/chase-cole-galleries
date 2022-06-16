@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
 import * as sessionActions from "../store/session";
 import logo from "../Assets/logo.png";
+import CartView from "./Cart/CartView"
 
 import "./NavBar.css";
 
@@ -10,6 +11,7 @@ const NavBar = () => {
   const dispatch = useDispatch();
 
   const [showMenu, setShowMenu] = useState(false);
+  const [showCart, setShowCart] = useState(false);
   const user = useSelector((state) => state?.session?.user);
 
   const logout = (e) => {
@@ -30,6 +32,7 @@ console.log(user)
         >
           <img src={logo} alt="logo" className="logo" />
         </NavLink>
+        <div className="cart_icon" onClick={() => setShowCart(!showMenu)}><i class="fa-solid fa-cart-flatbed"></i></div>
         {showMenu && (
           <div className="main__menu-bg">
             <nav className="main__menu">
@@ -37,13 +40,12 @@ console.log(user)
                 <NavLink
                   to="/"
                   exact={true}
-                  onClick={() => setShowMenu(!showMenu)}
                   activeClassName="active"
                 >
                   <img src={logo} alt="logo" className="logo" />
                 </NavLink>
                 <i
-                  class="fas fa-times"
+                  class="menuclose fas fa-times"
                   onClick={() => setShowMenu(!showMenu)}
                 ></i>
               </div>
@@ -110,6 +112,14 @@ console.log(user)
               </div>
             </nav>
           </div>
+        )}
+        {showCart && (
+          <div className="main__menu-bg">
+            <i class="cartclose fas fa-times" onClick={() => setShowCart(!showCart)}></i>
+            <div className="cart_container">
+              <CartView />
+            </div>
+            </div>
         )}
       </nav>
       <div className="top__menu-categories">
