@@ -30,11 +30,18 @@ const CartView = () => {
         {Object.values(cartProducts)?.map((product) => {
           return (
             <div key={product.id}>
-              <CartItem product={product} total={getTotal()} />
+              <CartItem product={product} />
             </div>
           )
         })}
-
+        <div className="cart__checkout">
+          <div className="cart__checkout-total">
+            <span>Total: </span>{new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'USD' }).format(getTotal())}
+          </div>
+          <div className="cart__checkout-btn">
+            <button>Checkout</button>
+          </div>
+        </div>
       </div>
     )
   )

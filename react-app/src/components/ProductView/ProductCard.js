@@ -41,16 +41,16 @@ const ProductCard = ({ product }) => {
         {user ? (
           user.id === product.user_id ? (
             <div className="modifyBtns">
-              <button className="deleteBtn" onClick={handleButtonClick} title="delete">
+              <div className="deleteBtn" onClick={handleButtonClick} title="delete">
                 <i class="fa-solid fa-trash-can"></i>
-              </button>
-              <button
+              </div>
+              <div
                 className="editBtn"
                 onClick={handleEditBtn}
                 title="edit"
               >
                 <i class="fa-solid fa-pen-to-square"></i>
-              </button>
+              </div>
             </div>
           ) : (
             ""

@@ -97,7 +97,7 @@ console.log(user)
                     onClick={logout}
                     activeClassName="active"
                   >
-                    <div className="button__signup">Log Out</div>
+                    <button className="button__signup">Log Out</button>
                   </NavLink>
                 ) : (
                   <NavLink
@@ -106,7 +106,7 @@ console.log(user)
                     onClick={() => setShowMenu(!showMenu)}
                     activeClassName="active"
                   >
-                    <div className="button__signup">Sign In</div>
+                    <button className="button__signup">Sign In</button>
                   </NavLink>
                 )}
               </div>

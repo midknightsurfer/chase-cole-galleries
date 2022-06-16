@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import "./cart.css";
 
-const CartItem = ({ product, total }) => {
+const CartItem = ({ product }) => {
   console.log(product)
   return (
     <div className="cart__item">
@@ -12,6 +12,7 @@ const CartItem = ({ product, total }) => {
       <div className="cart__item-title">{product.product.title}</div>
       <div className="cart__item-price"><span>Price</span>{new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'USD' }).format(product.product.price)}</div>
       <div className="cart__item-shippingprice"><span>Shipping Price</span>{new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'USD' }).format(product.product.shipping_price)}</div>
+      <div className="deleteBtn" title="remove from cart"><i class="fa-solid fa-trash-can"></i></div>
     </div>
   );
 };

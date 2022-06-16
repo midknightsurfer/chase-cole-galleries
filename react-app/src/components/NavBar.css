@@ -27,20 +27,10 @@
 }
 
 .button__signup {
-  border-radius: 80px;
-  cursor: pointer;
-  color: white;
-  padding: 10px 0;
-  text-align: center;
   position: absolute;
   bottom: 3vh;
   width: 80%;
-  background-color: rgb(112, 18, 92);
   margin-left: 25px;
-}
-
-.button__signup:hover {
-  background-color: #fd576b;
 }
 
 .fa-bars {

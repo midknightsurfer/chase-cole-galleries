@@ -5,6 +5,7 @@
   height: 50px;
   margin: 10px;
   border: 1px solid;
+  border-radius: 10px;
 }
 
 .cart__item {
@@ -44,4 +45,30 @@
   margin-top: -120px;
   text-align: center;
   margin-right: 5px;
+}
+
+.cart__checkout {
+  width: 100%;
+  position: absolute;
+  bottom: 100px;
+
+}
+
+.cart__checkout-total {
+    text-align: center;
+    border-bottom: 2px solid #ff9845;
+}
+
+.cart__checkout-total span {
+  font-weight: bold;
+  text-align: left;
+}
+
+.cart__checkout-btn {
+  padding-top: 15px;
+  text-align: center;
+}
+
+.cart__item .deleteBtn {
+  width: 100%;
 }
