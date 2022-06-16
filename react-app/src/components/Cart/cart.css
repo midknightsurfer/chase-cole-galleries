@@ -10,12 +10,17 @@
 
 .cart__item {
   margin: 20px 0;
-  border-bottom: 2px solid #ff9845; 
+  border-bottom: 2px solid #ff9845;   
 }
 
-.cart__item-container h3 {
+.cart__item-container {
+  width: 100%;
+}
+
+ h3 {
   text-align: center;
   border-bottom: 2px solid #ff9845;
+
 }
 
 .cart__item-title {

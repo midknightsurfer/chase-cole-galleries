@@ -22,6 +22,25 @@ def add_to_cart():
     )
     db.session.add(new_cart_item)
     db.session.commit()
-
+    
     return new_cart_item.to_dict()
+  
+@cart_routes.route('/<int:cartUserId>', methods=["DELETE"])
+def clear_cart(cartUserId):
+    cart_product = Cart.query.filter(Cart.user_id == cartUserId).all()
+
+    for product in cart_product:
+        db.session.delete(product)
+
+    db.session.commit()
+    return {"message":"deleted cart"}
+
+@cart_routes.route('/<int:cartUserId>/<int:productId>', methods=["DELETE"])
+def delete_product(productId, cartUserId):
+
+    cart_product = Cart.query.filter(Cart.product_id == productId and Cart.user_id == cartUserId).first()
+    deleted_cart_product = cart_product.to_dict()
+    db.session.delete(cart_product)
+    db.session.commit()
+    return deleted_cart_product
 

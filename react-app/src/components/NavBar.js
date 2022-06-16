@@ -50,31 +50,31 @@ console.log(user)
                 ></i>
               </div>
               <div className="main__menu-account">
-                <div>
+                {/* <div>
                   <i class="fa-solid fa-user"></i>My Acccount
-                </div>
+                </div> */}
                 <span className="menu__name">
                   {user ? user?.first_name : ""}
                 </span>
-                <div>
+                {/* <div>
                   <i class="fa-solid fa-box"></i>My Orders
-                </div>
+                </div> */}
               </div>
               <div className="main__menu-lists">
-                <div>
+                {/* <div>
                   <i class="fa-solid fa-eye"></i>Recently Viewed
-                </div>
-                <div>
+                </div> */}
+                {/* <div>
                   <i class="fa-solid fa-calendar-plus"></i>New Arrivals
-                </div>
-                <div>
+                </div> */}
+                {/* <div>
                   <i class="fa-solid fa-heart"></i>Favorites
-                </div>
+                </div> */}
               </div>
               <div className="main__menu-contact">
-                <div>
+                {/* <div>
                   <i class="fa-solid fa-blog"></i>Refinisher's Blog
-                </div>
+                </div> */}
                 <NavLink
                   to="/ProductForm"
                   exact={true}
@@ -85,9 +85,9 @@ console.log(user)
                     <i class="fa-solid fa-dollar-sign"></i>Sell My Furniture
                   </div>
                 </NavLink>
-                <div>
+                {/* <div>
                   <i class="fa-solid fa-address-book"></i>Contact Us
-                </div>
+                </div> */}
               </div>
               <div class="main__menu-footer">
                 {user ? (
@@ -122,7 +122,7 @@ console.log(user)
             </div>
         )}
       </nav>
-      <div className="top__menu-categories">
+      {/* <div className="top__menu-categories">
         <ul>
           <li>Bedroom</li>
           <li>Dining Room</li>
@@ -131,7 +131,7 @@ console.log(user)
           <li>Outdoor</li>
           <li>Other</li>
         </ul>
-      </div>
+      </div> */}
     </>
   );
 };
