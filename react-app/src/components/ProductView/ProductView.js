@@ -38,8 +38,6 @@ const ProductView = () => {
     setShowPhotoModal(true);
   };
 
-  console.log(cart)
-
   const addToCart = () => {
     const currProduct = Object.values(cart.products)
     let inCart = false
@@ -50,9 +48,8 @@ const ProductView = () => {
             console.log(i)
         }
     }
-
-
         dispatch(addCart(product))
+        alert("Added to Cart")
 
 }
 

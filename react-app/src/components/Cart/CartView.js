@@ -23,6 +23,7 @@ const CartView = () => {
 
   const clearCart = () => {
     Object.values(cartProducts)?.map((product) => dispatch(clear(product.id)));
+    alert("Cart Cleared")
   };
 
   useEffect(() => {
