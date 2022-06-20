@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
 import ProductCard from "./ProductCard";
 import { getProducts } from "../../store/products";
 
@@ -12,7 +11,7 @@ const Products = () => {
   const products = useSelector((state) => Object.values(state?.products));
 
   products.sort(function (a, b) {
-    return new Date(b.created_at) - new Date(a.created_at);
+    return new Date(a.created_at) - new Date(b.created_at);
   });
 
   useEffect(() => {
@@ -22,7 +21,7 @@ const Products = () => {
   return (
     <>
     <div className="furniture__card-container">
-      {products.slice(0, 8).map((product) => (
+      {products.slice(13, 21).map((product) => (
           <ProductCard product={product} />            
       ))}
     </div>
