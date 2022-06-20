@@ -14,8 +14,8 @@ const ProductForm = () => {
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [price, setPrice] = useState(null);
-  const [shippingPrice, setShippingPrice] = useState(null);
+  const [price, setPrice] = useState(1);
+  const [shippingPrice, setShippingPrice] = useState(1);
   const [categoryId, setCategoryId] = useState(0);
   const [priceValidationErrors, setPriceValidationErrors] = useState([]); 
   const [categoryValidationErrors, setCategoryValidationErrors] = useState([]);  
@@ -37,7 +37,7 @@ const ProductForm = () => {
       setCategoryValidationErrors(["Please choose a valid Category"])
     }
 
-    if (priceValidationErrors.length || imgValidationErrors || categoryValidationErrors.length) {
+    if (priceValidationErrors.length || imgValidationErrors.length || categoryValidationErrors.length) {
       return;
     }
 

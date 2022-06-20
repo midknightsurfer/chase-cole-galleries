@@ -49,7 +49,7 @@ const EditProductForm = () => {
       setCategoryValidationErrors(["Please choose a valid Category"])
     }
 
-    if (priceValidationErrors.length || imgValidationErrors || categoryValidationErrors.length) {
+    if (priceValidationErrors.length || imgValidationErrors.length || categoryValidationErrors.length) {
       return;
     }
 
