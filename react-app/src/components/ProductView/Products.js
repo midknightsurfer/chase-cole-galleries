@@ -27,7 +27,7 @@ const Products = () => {
     </div>
     <div className="products__description">
     <h2>Exclusive High End Furniture</h2>    
-        <p>Welcome to Chase Cole Galleries; your one stop shop for hard to find and classic Furniture! Many of our products are designed by the artist Bob Timberlake and were once offered by Lexington Furniture. The pieces on this site are not your usual cheap particle board furniture that your normally find at other venues; they are expertly crafted, made to last, precision pieces that will light up your home. Feel free to create an account and browse our inventory. Also note that shipping on all these items will take awhile and be a bit more expensive than shipping with a large retail company because we use high end, private shippers and wrap your items with care to protect them on their journey.</p>
+        <p>Welcome to Chase Cole Galleries! Your one stop shop for hard to find and classic Furniture! Many of our products are designed by the artist Bob Timberlake and were once offered by Lexington Furniture. The pieces on this site are not your usual cheap particle board furniture that your normally find at other venues; they are expertly crafted, made to last, precision pieces that will light up your home. Feel free to create an account and browse our inventory. Also note that shipping on all these items will take awhile and be a bit more expensive than shipping with a large retail company because we use high end, private shippers and wrap your items with care to protect them on their journey.</p>
     </div>
     </>
 
