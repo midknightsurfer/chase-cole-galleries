@@ -22,6 +22,7 @@ class User(db.Model, UserMixin):
     admin = db.Column(db.Boolean)
     
     cart = db.relationship("Cart", back_populates="user")
+    
 
     @property
     def password(self):
@@ -42,4 +43,8 @@ class User(db.Model, UserMixin):
             "email": self.email,
             "avatar": self.avatar,
             "admin": self.admin,
+            "address": self.address,
+            "city": self.city,
+            "state": self.state,
+            "zipcode": self.zipcode,
         }

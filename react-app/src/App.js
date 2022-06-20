@@ -10,8 +10,10 @@ import NavBar from "./components/NavBar";
 import EditProductForm from "./components/ProductForm/EditProductForm";
 import ProductView from "./components/ProductView/ProductView";
 import CartView from "./components/Cart/CartView";
-import { getCart } from "./store/cart";
-// import Orders from "./components/Orders/Orders"
+import Checkout from './components/Cart/Checkout';
+import MyOrders from "./components/Orders/MyOrders";
+import Footer from "./components/Footer/footer"
+import MyAccount from "./components/MyAccount/MyAccount"
 
 import ProtectedRoute from "./components/auth/ProtectedRoute";
 import UsersList from "./components/UsersList";
@@ -25,7 +27,6 @@ function App() {
   useEffect(() => {
     (async () => {
       await dispatch(authenticate());
-      await dispatch(getCart());
       setLoaded(true);
     })();
   }, [dispatch]);
@@ -38,10 +39,11 @@ function App() {
   return (
     <BrowserRouter>
       <NavBar />
-
+      <Footer />
       <Switch>
         <Route path="/" exact={true}>
           <Products />
+          
         </Route>
         <Route path="/cart" exact={true}>
           <CartView />          
@@ -58,11 +60,17 @@ function App() {
         <ProtectedRoute path="/products/edit/:productId" exact={true}>
           <EditProductForm />
         </ProtectedRoute>
-        {/* <ProtectedRoute path="/orders" exact={true}>
-          <Orders />
-        </ProtectedRoute>         */}
+        <ProtectedRoute path="/myorders" exact={true}>
+          <MyOrders />
+        </ProtectedRoute>
+        <ProtectedRoute path="/myaccount" exact={true}>
+          <MyAccount />
+        </ProtectedRoute>                
         <ProtectedRoute path="/users" exact={true}>
           <UsersList />
+        </ProtectedRoute>
+        <ProtectedRoute path="/checkout" exact={true}>
+          <Checkout />
         </ProtectedRoute>
         <ProtectedRoute path="/users/:userId" exact={true}>
           <User />

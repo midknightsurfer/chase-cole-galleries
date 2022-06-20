@@ -1,7 +1,11 @@
+import rfdc from "rfdc";
+
+const clone = rfdc()
+
 const LOAD_ORDERS = "orders/GET_ORDERS";
 const NEW_ORDER = "orders/NEW_ORDER";
+const DELETE_ORDER = "orders/DELETE_ORDER"
 const UPDATE_STATUS = "orders/UPDATE_STATUS";
-
 
 const newCart = (order) => ({
   type: NEW_ORDER,
@@ -15,6 +19,22 @@ const getAllOrders = (orders) => {
   };
 };
 
+const updateOrder = (order) => {
+  return {
+      type: UPDATE_STATUS,
+      order
+  }
+}
+
+const deleteOrder = (order) => {
+  return {
+      type: DELETE_ORDER,
+      order
+  }
+}
+
+
+
 export const getOrders = (data) => async (dispatch) => {
   const response = await fetch(`/api/orders/${data}`);
 
@@ -24,43 +44,80 @@ export const getOrders = (data) => async (dispatch) => {
   }
 };
 
-export const newOrder = (user_id, product_id, status) => async (dispatch) => {
+export const newOrder = (data) => async (dispatch) => {
+
   const response = await fetch("/api/orders", {
     method: "post",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({
-      user_id,
-      product_id,
-      status,
-    }),
+    body: JSON.stringify({ data }),
   });
 
   if (response.ok) {
+    
     const order = await response.json();
+
     dispatch(newCart(order));
     return ["Created", order];
   }
 };
 
+export const editStatus = (data) => async (dispatch) => {
+  const {order_id, status} = data;
+
+  const response = await fetch(`/api/orders/${order_id}`,{
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ status })
+  })
+
+  console.log(data)
+
+  if(response.ok) {
+      const order = await response.json()
+      dispatch(updateOrder(order))
+  }
+}
+
+export const removeOrder = (data) => async (dispatch) => {
+  const response = await fetch(`api/orders/${data}`,{
+      method: "DELETE"
+  })
+console.log(data)
+  if(response.ok) {
+    console.log(response)
+      const order = await response.json()
+      dispatch(deleteOrder(order))
+  }
+}
+
 const initialState = {};
 
 const orderReducer = (state = initialState, action) => {
+  let newState = clone(state);
   switch (action.type) {
     case NEW_ORDER:
-      const newState = {
-        ...state,
-        arr: [...state.arr, action.product.id],
-      };
-      return newState;
+      newState[action.order.id] = action.order
+      return newState
     case LOAD_ORDERS:
-      const newObj = {};
-      action.orders.orders.forEach((order) => {
-        newObj[order.id] = order;
-
-      });
-      return newObj;
+      const newObj ={}
+      action.orders.orders.forEach((order)=>{
+          newObj[order.id] = order
+          const productObj = {}
+          newObj[order.id].products.forEach((product)=>{
+              productObj[product.id] = product
+          })
+          newObj[order.id].products = productObj
+      })
+      newState = newObj
+      return newState
+    case UPDATE_STATUS:
+      newState[action.order.id] = action.order
+      return newState
+    case DELETE_ORDER:
+      delete newState[action.order.id]
+      return newState
     default:
       return state;
   }

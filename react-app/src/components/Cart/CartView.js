@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useHistory, useParams } from "react-router-dom";
 import CartItem from "./CartItem";
 import { clear } from "../../store/cart";
 
 const CartView = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
 
-  const user = useSelector((state) => state.session.user);
   const cartTotal = useSelector((state) => state.cart.cartTotal);
   const [isLoaded, setIsLoaded] = useState(false);
   const cartProducts = useSelector((state) => state.cart.products);
@@ -20,13 +21,8 @@ const CartView = () => {
     return myCartTotal;
   };
 
-
   const clearCart = () => {
-
-    Object.values(cartProducts)?.map((product) => (
-      dispatch(clear(product.id))
-    ))
-    
+    Object.values(cartProducts)?.map((product) => dispatch(clear(product.id)));
   };
 
   useEffect(() => {
@@ -37,14 +33,18 @@ const CartView = () => {
     isLoaded && (
       <div className="cart__item-container">
         <h3>Cart</h3>
-        
-        {cartProducts && Object.values(cartProducts).length ? Object.values(cartProducts)?.map((product) => {
-          return (
-            <div key={product.id}>
-              <CartItem product={product} />
-            </div>
-          );
-        }) : <h4>Your Cart is Currently Empty</h4>}
+
+        {cartProducts && Object.values(cartProducts).length ? (
+          Object.values(cartProducts)?.map((product) => {
+            return (
+              <div key={product.id}>
+                <CartItem product={product} />
+              </div>
+            );
+          })
+        ) : (
+          <h4>Your Cart is Currently Empty</h4>
+        )} {window.location.pathname !== '/checkout' ? 
         <div className="cart__checkout">
           <div className="cart__checkout-total">
             <span>Total: </span>
@@ -53,11 +53,17 @@ const CartView = () => {
               currency: "USD",
             }).format(getTotal())}
           </div>
+
           <div className="cart__checkout-btn">
-            <button>Checkout</button>
-            <button onClick={clearCart}>Clear Cart</button>
+            <button onClick={() => history.push('/checkout')} type="submit">
+              Checkout
+            </button>
+
+            <button className="center" onClick={clearCart}>Clear Cart</button>
           </div>
+
         </div>
+          : "" }
       </div>
     )
   );

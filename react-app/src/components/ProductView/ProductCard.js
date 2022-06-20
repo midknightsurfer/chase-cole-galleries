@@ -42,14 +42,14 @@ const ProductCard = ({ product }) => {
           user.id === product.user_id ? (
             <div className="modifyBtns">
               <div className="deleteBtn" onClick={handleButtonClick} title="delete">
-                <i class="fa-solid fa-trash-can"></i>
+                <i className="fa-solid fa-trash-can"></i>
               </div>
               <div
                 className="editBtn"
                 onClick={handleEditBtn}
                 title="edit"
               >
-                <i class="fa-solid fa-pen-to-square"></i>
+                <i className="fa-solid fa-pen-to-square"></i>
               </div>
             </div>
           ) : (

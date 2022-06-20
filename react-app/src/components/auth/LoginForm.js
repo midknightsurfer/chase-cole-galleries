@@ -111,6 +111,7 @@ const LoginForm = () => {
             />
           </div>
         )}
+        <p>When you enter your email address and click check we will determine if you already have an account or not and get you to the right place.</p>
         {showCheck && (
           <button type="submit" className="login__form-btn" onClick={onCheck}>
             Check

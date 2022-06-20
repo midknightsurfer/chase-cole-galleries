@@ -17,7 +17,7 @@ class Product(db.Model):
     
     category = db.relationship("Category", back_populates="product")
     
-    product_cart= db.relationship("Cart", back_populates="product" )
+    product_cart = db.relationship("Cart", back_populates="product" )
     
     item = db.relationship('OrderProduct', back_populates='product', cascade="all, delete-orphan")
 

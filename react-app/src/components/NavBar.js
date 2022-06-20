@@ -25,14 +25,14 @@ console.log(user)
   return (
     <>
       <nav className="top__menu">
-        <i class="fa-solid fa-bars" onClick={() => setShowMenu(!showMenu)}></i>
+        <i className="fa-solid fa-bars" onClick={() => setShowMenu(!showMenu)}></i>
         <NavLink
           to="/"
           exact={true}
         >
           <img src={logo} alt="logo" className="logo" />
         </NavLink>
-        <div className="cart_icon" onClick={() => setShowCart(!showMenu)}><i class="fa-solid fa-cart-flatbed"></i></div>
+        <div className="cart_icon" onClick={() => setShowCart(!showMenu)}><i className="fa-solid fa-cart-flatbed"></i></div>
         {showMenu && (
           <div className="main__menu-bg">
             <nav className="main__menu">
@@ -45,35 +45,48 @@ console.log(user)
                   <img src={logo} alt="logo" className="logo" />
                 </NavLink>
                 <i
-                  class="menuclose fas fa-times"
+                  className="menuclose fas fa-times"
                   onClick={() => setShowMenu(!showMenu)}
                 ></i>
               </div>
               <div className="main__menu-account">
-                {/* <div>
-                  <i class="fa-solid fa-user"></i>My Acccount
-                </div> */}
+              <NavLink
+                  to={`/myaccount`}
+                  exact={true}
+                  activeClassName="active"
+                >
+                <div>
+                  <i className="fa-solid fa-user"></i>My Acccount
+                </div>
+               </NavLink> 
                 <span className="menu__name">
                   {user ? user?.first_name : ""}
                 </span>
-                {/* <div>
-                  <i class="fa-solid fa-box"></i>My Orders
-                </div> */}
+                <NavLink
+                  to={`/myorders`}
+                  exact={true}
+                  onClick={() => setShowMenu(!showMenu)}
+                  activeClassName="active"
+                >
+                <div>
+                  <i className="fa-solid fa-box"></i>My Orders
+                </div>
+                </NavLink>
               </div>
               <div className="main__menu-lists">
                 {/* <div>
-                  <i class="fa-solid fa-eye"></i>Recently Viewed
+                  <i className="fa-solid fa-eye"></i>Recently Viewed
                 </div> */}
                 {/* <div>
-                  <i class="fa-solid fa-calendar-plus"></i>New Arrivals
+                  <i className="fa-solid fa-calendar-plus"></i>New Arrivals
                 </div> */}
                 {/* <div>
-                  <i class="fa-solid fa-heart"></i>Favorites
+                  <i className="fa-solid fa-heart"></i>Favorites
                 </div> */}
               </div>
               <div className="main__menu-contact">
                 {/* <div>
-                  <i class="fa-solid fa-blog"></i>Refinisher's Blog
+                  <i className="fa-solid fa-blog"></i>Refinisher's Blog
                 </div> */}
                 <NavLink
                   to="/ProductForm"
@@ -82,14 +95,14 @@ console.log(user)
                   activeClassName="active"
                 >
                   <div>
-                    <i class="fa-solid fa-dollar-sign"></i>Sell My Furniture
+                    <i className="fa-solid fa-dollar-sign"></i>Sell My Furniture
                   </div>
                 </NavLink>
                 {/* <div>
-                  <i class="fa-solid fa-address-book"></i>Contact Us
+                  <i className="fa-solid fa-address-book"></i>Contact Us
                 </div> */}
               </div>
-              <div class="main__menu-footer">
+              <div className="main__menu-footer">
                 {user ? (
                   <NavLink
                     to="/"
@@ -115,7 +128,7 @@ console.log(user)
         )}
         {showCart && (
           <div className="main__menu-bg">
-            <i class="cartclose fas fa-times" onClick={() => setShowCart(!showCart)}></i>
+            <i className="cartclose fas fa-times" onClick={() => setShowCart(!showCart)}></i>
             <div className="cart_container">
               <CartView />
             </div>

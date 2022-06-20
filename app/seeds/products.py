@@ -121,8 +121,55 @@ def seed_products():
     category_id=1,
     price=1200,
     shipping_price=299,
+  )    
+  product16 = Product(
+    user_id=1,
+    title="Marge Carson King Size 4 Poster Bed Briar Finish",
+    description="Gorgeous Marge Carson King Size 4 Poster Bed,  Has a Briar Crackle Finish, Leather headboard. Light wear normal for age. posts are 7.5 tall",
+    category_id=1,
+    price=1500,
+    shipping_price=550,
   )  
-  
+  product17 = Product(
+    user_id=1,
+    title="Bob Timberlake Lexington Furniture Oak Mission Dresser w Mirror",
+    description="Very hard piece to find in oak. This auction is for a oak Timberlake mission dresser and mirror",
+    category_id=1,
+    price=1895,
+    shipping_price=425,
+  )
+  product18 = Product(
+    user_id=1,
+    title="Bob Timberlake Carolina Chest Cherry Nightstand 833621",
+    description="Bob Timberlake Carolina Chest Nightstand 833621. Beautiful Cherrywood. Has a natural knot on top. Measures 26 w x 18 d x 27 tall",
+    category_id=1,
+    price=750,
+    shipping_price=175,
+  )  
+  product19 = Product(
+    user_id=1,
+    title="Bob Timberlake Lexington Quail Hunters Sideboard",
+    description="Rare piece of Bob Timberlake furniture stain w Fred Carver color. It's the quail hunters sideboard number 844869",
+    category_id=2,
+    price=850,
+    shipping_price=325,
+  )  
+  product20 = Product(
+    user_id=1,
+    title="Heywood Wakefield Victorian Wicker Woven Platform Rocker Glider",
+    description="Heywood Wakefield Victorian Wicker Platform Rocker Glider. Estimated to be from 19th century, Ltd measures 46 h x 27.5 wide x 36 d x 16 to top of seat.",
+    category_id=3,
+    price=995,
+    shipping_price=200,
+  )  
+  product21 = Product(
+    user_id=1,
+    title="Bob Timberlake Lexington Furniture Plantation Chest Cherry",
+    description="Popular Bob Timberlake Plantation Chest Dresser. Cherry, picture is showing it alot darker than it is, more of a cherry color",
+    category_id=1,
+    price=1200,
+    shipping_price=299,
+  )  
   db.session.add(product1)
   db.session.add(product2)  
   db.session.add(product3)
@@ -138,7 +185,12 @@ def seed_products():
   db.session.add(product13)
   db.session.add(product14)  
   db.session.add(product15)
-  
+  db.session.add(product16)
+  db.session.add(product17)
+  db.session.add(product18)  
+  db.session.add(product19)
+  db.session.add(product20)  
+  db.session.add(product21)  
   db.session.commit()
   
 

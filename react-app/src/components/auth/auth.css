@@ -40,3 +40,8 @@
   background-color: rgba(255, 0, 0, 0.349);
   text-align: center;
 }
+
+.login__form p {
+  text-align: center;
+  font-size: 10pt;
+}

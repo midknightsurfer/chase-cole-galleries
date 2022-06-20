@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import { editProduct, uploadFile } from "../../store/products";
@@ -21,8 +21,11 @@ const EditProductForm = () => {
     product?.shipping_price + ".00"
   );
   const [categoryId, setCategoryId] = useState(product?.category_id);
-  const [validationErrors, setValidationErrors] = useState([]);
   const [images, setImages] = useState("");
+  const [priceValidationErrors, setPriceValidationErrors] = useState([]); 
+  const [categoryValidationErrors, setCategoryValidationErrors] = useState([]);  
+  const [imgValidationErrors, setImgValidationErrors] = useState([]);
+
 
   useEffect(() => {
     let images = product?.images.map((image) => {
@@ -33,7 +36,20 @@ const EditProductForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (validationErrors.length > 0) {
+
+    if (price < 1 || shippingPrice < 1) {
+      setPriceValidationErrors(["Please enter a value greater than zero!"]);
+    }
+
+    if (images.length < 1) {
+      setImgValidationErrors(["Please upload at least one picture!"]);
+    }
+
+    if (categoryId === 0) {
+      setCategoryValidationErrors(["Please choose a valid Category"])
+    }
+
+    if (priceValidationErrors.length || imgValidationErrors || categoryValidationErrors.length) {
       return;
     }
 
@@ -52,11 +68,6 @@ const EditProductForm = () => {
     history.push("/");
   };
 
-  useEffect(() => {
-    const errors = [];
-    setValidationErrors(errors);
-  }, [title, description, images]);
-
   const addImages = async (images, product_id) => {
     for (let x = 0; x < images.length; x++) {
       let image = images[x];
@@ -64,7 +75,6 @@ const EditProductForm = () => {
       let newFile = false;
       let file;
 
-      //If there is a file, this is a new/updated upload
       if (image.file) {
         newFile = true;
         file = image.file;
@@ -84,7 +94,7 @@ const EditProductForm = () => {
 
   return (
     <div className="product__form-container">
-      <h3>Edit Your Furniture:</h3>
+      <h3>Edit Your Furniture</h3>
       <form className="product__form" onSubmit={handleSubmit}>
         <div>
           <label className="label">Title:</label>
@@ -106,6 +116,7 @@ const EditProductForm = () => {
           ></textarea>
 
           <label className="label">Category:</label>
+          {categoryValidationErrors ? <div className={categoryValidationErrors.length ? "errors" : ""}>{categoryValidationErrors}</div> : ""}
           <select
             value={categoryId}
             onChange={(e) => setCategoryId(e.target.value)}
@@ -122,8 +133,9 @@ const EditProductForm = () => {
 
           <div className="product__form-prices">
             <label className="label">Price:</label>
+            {priceValidationErrors ? <div className={priceValidationErrors.length ? "errors" : ""}>{priceValidationErrors}</div> : ""}
             <input
-              class="product_price"
+              className="product_price"
               type="number"
               value={price}
               onChange={(e) => setPrice(e.target.value)}
@@ -131,7 +143,7 @@ const EditProductForm = () => {
             ></input>
             <label className="label">Shipping Price:</label>
             <input
-              class="shipping_price"
+              className="shipping_price"
               type="number"
               value={shippingPrice}
               onChange={(e) => setShippingPrice(e.target.value)}
@@ -142,16 +154,7 @@ const EditProductForm = () => {
         <div className="form_input_section" id="imageUploadSection">
           <div className="field_section_container">
             <h3 className="imagesHeader">Images:</h3>
-            <div className="erro_container_div">
-              <ul className="erro_container">
-                {validationErrors.length > 0 &&
-                  validationErrors.map((error) => (
-                    <li className="erro" key={error} style={{ color: "red" }}>
-                      {error}
-                    </li>
-                  ))}
-              </ul>
-            </div>
+            {imgValidationErrors ? <div className={imgValidationErrors.length ? "errors" : ""}>{imgValidationErrors}</div> : ""}
             <div className="imageUploadContainer">
               <ImageUploading
                 multiple

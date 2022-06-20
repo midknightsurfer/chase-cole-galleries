@@ -211,7 +211,90 @@ def seed_images():
         product_id=15,
         url="https://i.ebayimg.com/images/g/-UUAAOSwSohibHK8/s-l1600.jpg",
     )
-
+    image53 = Image(
+        product_id=16,
+        url="https://i.ebayimg.com/images/g/5sgAAOSwxcRh-HrF/s-l1600.jpg",
+    )
+    image54 = Image(
+        product_id=16,
+        url="https://i.ebayimg.com/images/g/CVQAAOSwv5Zg5Qd2/s-l1600.jpg",
+    )
+    image55 = Image(
+        product_id=16,
+        url="https://i.ebayimg.com/images/g/sHUAAOSwZkhg5QjS/s-l1600.jpg",
+    )
+    image56 = Image(
+        product_id=16,
+        url="https://i.ebayimg.com/images/g/GlUAAOSwYhJg5QjU/s-l1600.jpg",
+    )
+    image57 = Image(
+        product_id=17,
+        url="https://i.ebayimg.com/images/g/GCoAAOSwsOBf84T7/s-l1600.jpg",
+    )
+    image58 = Image(
+        product_id=17,
+        url="https://i.ebayimg.com/images/g/U2QAAOSwLaVf84UQ/s-l1600.jpg",
+    )
+    image59 = Image(
+        product_id=17,
+        url="https://i.ebayimg.com/images/g/ULwAAOSwVhFf84Uf/s-l1600.jpg",
+    )
+    image60 = Image(
+        product_id=17,
+        url="https://i.ebayimg.com/images/g/eA0AAOSw-tFf84Uy/s-l1600.jpg",
+    )
+    image61 = Image(
+        product_id=18,
+        url="https://i.ebayimg.com/images/g/ryAAAOSwGI1iYuyR/s-l1600.jpg",
+    )
+    image62 = Image(
+        product_id=18,
+        url="https://i.ebayimg.com/images/g/cy8AAOSweFdiYuyo/s-l1600.jpg",
+    )
+    image63 = Image(
+        product_id=19,
+        url="https://i.ebayimg.com/images/g/iMwAAOSwidFh6NCJ/s-l1600.jpg",
+    )
+    image64 = Image(
+        product_id=19,
+        url="https://i.ebayimg.com/images/g/iMwAAOSwidFh6NCJ/s-l1600.jpg",
+    )
+    image65 = Image(
+        product_id=19,
+        url="https://i.ebayimg.com/images/g/v2gAAOSwC-RiV26n/s-l1600.jpg",
+    )
+    image66 = Image(
+        product_id=20,
+        url="https://i.ebayimg.com/images/g/3o8AAOSwVvNhWMy1/s-l1600.jpg",
+    )
+    image67 = Image(
+        product_id=20,
+        url="https://i.ebayimg.com/images/g/6TMAAOSwCaBhWMzA/s-l1600.jpg",
+    )
+    image68 = Image(
+        product_id=20,
+        url="https://i.ebayimg.com/images/g/dm0AAOSwjYthWMzc/s-l1600.jpg",
+    )
+    image69 = Image(
+        product_id=20,
+        url="https://i.ebayimg.com/images/g/lV0AAOSwuiJhWMz9/s-l1600.jpg",
+    )
+    image70 = Image(
+        product_id=20,
+        url="https://i.ebayimg.com/images/g/pbUAAOSwRA9hWM95/s-l1600.jpg",
+    )
+    image71 = Image(
+        product_id=21,
+        url="https://i.ebayimg.com/images/g/Ba0AAOSwgOBibHK6/s-l1600.jpg",
+    )
+    image72 = Image(
+        product_id=21,
+        url="https://i.ebayimg.com/images/g/zBMAAOSwMsJibHK7/s-l1600.jpg",
+    )
+    image73 = Image(
+        product_id=21,
+        url="https://i.ebayimg.com/images/g/-UUAAOSwSohibHK8/s-l1600.jpg",
+    )
     db.session.add(image1)
     db.session.add(image2)
     db.session.add(image3)
@@ -264,7 +347,27 @@ def seed_images():
     db.session.add(image50)
     db.session.add(image51)
     db.session.add(image52)
-
+    db.session.add(image53)
+    db.session.add(image54)
+    db.session.add(image55)
+    db.session.add(image56)
+    db.session.add(image57)
+    db.session.add(image58)
+    db.session.add(image59)
+    db.session.add(image60)
+    db.session.add(image61)
+    db.session.add(image62)
+    db.session.add(image63)
+    db.session.add(image64)
+    db.session.add(image65)
+    db.session.add(image66)
+    db.session.add(image67)
+    db.session.add(image68)
+    db.session.add(image69)
+    db.session.add(image70)
+    db.session.add(image71)
+    db.session.add(image72)
+    db.session.add(image73)
     db.session.commit()
 
 

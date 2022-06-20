@@ -77,3 +77,50 @@
 .cart__item .deleteBtn {
   width: 100%;
 }
+
+.checkout__cart-container {
+  position: absolute;
+  width: 30%;
+  border: 2px solid;
+  margin: 40px;
+}
+
+.checkout__container {
+  display: flex;
+  flex-direction: column;
+}
+
+.checkout__shipping-details {
+  margin: 40px;
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  right: 20px;
+  width: 40%;
+  border: 2px solid;
+}
+
+.checkout__shipping-details div {
+  margin: 10px 20px;
+}
+
+.checkout__shipping-details button {
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.checkout__shippingform {
+  margin: 5px;
+}
+
+.checkout__confirm {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  padding-bottom: 150px;
+}
+
+.checkout__confirm button {
+  width: 30%;
+}

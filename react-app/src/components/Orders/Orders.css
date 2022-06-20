@@ -1,0 +1,46 @@
+.myorders__orderscontainer {
+  display: grid;
+  grid-template-columns: 2fr 2fr;
+}
+
+.myorders__sellerorder-container, .myorders__buyerorder-container {
+  border: 1px solid;
+  margin : 20px;
+  margin-bottom: 150px;
+}
+
+.orders_singlecontainer {
+  display: flex;
+  justify-content: space-between;
+  border: 1px solid;
+  padding: 5px;
+  font-size: 10pt;
+  cursor: pointer;
+}
+
+.orders_singlecontainer span {
+  color: #fd576b;
+  margin-left: 5px;
+}
+
+.orders_singlecontainer:hover {
+  box-shadow: 2px 2px 10px rgb(131, 130, 130);
+  background-color: #ff994560;
+}
+
+
+.orders__modifyModal {
+  text-align: center;
+  font-size:  1.3em;
+  background-color: #fff;
+  transition: 0.5s;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 400px;
+  padding: 40px;
+  transform: translate(-50%, -50%);
+  box-sizing: border-box;
+  box-shadow: 0 15px 25px rgba(0, 0, 0, 0.6);
+  border-radius: 10px;
+}

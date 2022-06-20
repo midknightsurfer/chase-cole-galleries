@@ -15,14 +15,29 @@ const ProductForm = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState(null);
-  const [shippingPrice, setShippingPrice] = useState("");
-  const [categoryId, setCategoryId] = useState("");
-  const [validationErrors, setValidationErrors] = useState([]);
+  const [shippingPrice, setShippingPrice] = useState(null);
+  const [categoryId, setCategoryId] = useState(0);
+  const [priceValidationErrors, setPriceValidationErrors] = useState([]); 
+  const [categoryValidationErrors, setCategoryValidationErrors] = useState([]);  
+  const [imgValidationErrors, setImgValidationErrors] = useState([]);
   const [images, setImages] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (validationErrors.length > 0) {
+
+    if (price < 1 || shippingPrice < 1) {
+      setPriceValidationErrors(["Please enter a value greater than zero!"]);
+    }
+
+    if (images.length < 1) {
+      setImgValidationErrors(["Please upload at least one picture!"]);
+    }
+
+    if (categoryId === 0) {
+      setCategoryValidationErrors(["Please choose a valid Category"])
+    }
+
+    if (priceValidationErrors.length || imgValidationErrors || categoryValidationErrors.length) {
       return;
     }
 
@@ -41,14 +56,8 @@ const ProductForm = () => {
     );
 
     await addImages(cleanImages, productData[1].id);
-    window.alert("Successful post.");
     history.push("/");
   };
-
-  useEffect(() => {
-    const errors = [];
-    setValidationErrors(errors);
-  }, [title, description, images]);
 
   const addImages = async (images, product_id) => {
     for (let x = 0; x < images.length; x++) {
@@ -64,74 +73,66 @@ const ProductForm = () => {
 
   return (
     <div className="product__form-container">
-      <h3>List Your Furniture:</h3>
+      <h2>List Your Furniture</h2>
       <form className="product__form" onSubmit={handleSubmit}>
-        <div>
-          <label className="label">Title:</label>
-          <input
-            name="title"
-            type="input"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            required
-          ></input>
+        <label className="label">Title:</label>
+        <input
+          name="title"
+          type="input"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          required
+        ></input>
 
-          <label className="label">Description:</label>
-          <textarea
-            className="product__form-description"
-            name="description"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            required
-          ></textarea>
+        <label className="label">Description:</label>
+        <textarea
+          className="product__form-description"
+          name="description"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+          required
+        ></textarea>
 
-          <label className="label">Category:</label>
-          <select
-            value={categoryId}
-            onChange={(e) => setCategoryId(e.target.value)}
-            className="product__form-category"
-          >
-            <option value="0">Choose a Category</option>
-            <option value="1">Bedroom</option>
-            <option value="2">Dining Room</option>
-            <option value="3">Living Room</option>
-            <option value="4">Office</option>
-            <option value="5">Outdoor</option>
-            <option value="6">Other</option>
-          </select>
+        <label className="label">Category:</label>
+        {categoryValidationErrors ? <div className={categoryValidationErrors.length ? "errors" : ""}>{categoryValidationErrors}</div> : ""}
+        <select
+          value={categoryId}
+          onChange={(e) => setCategoryId(e.target.value)}
+          className="product__form-category"
+          required
+        >
+          <option value="0">Choose a Category</option>
+          <option value="1">Bedroom</option>
+          <option value="2">Dining Room</option>
+          <option value="3">Living Room</option>
+          <option value="4">Office</option>
+          <option value="5">Outdoor</option>
+          <option value="6">Other</option>
+        </select>
 
-          <div className="product__form-prices">
-            <label className="label">Price:</label>
-            <input
-              class="product_price"
-              type="number"
-              value={price}
-              onChange={(e) => setPrice(e.target.value)}
-              required
-            ></input>
-            <label className="label">Shipping Price:</label>
-            <input
-              class="shipping_price"
-              type="number"
-              value={shippingPrice}
-              onChange={(e) => setShippingPrice(e.target.value)}
-              required
-            ></input>
-          </div>
-        </div>
+        <label className="label">Price:</label>
+
+        {priceValidationErrors ? <div className={priceValidationErrors.length ? "errors" : ""}>{priceValidationErrors}</div> : ""}
+        <input
+          className="product_price"
+          type="number"
+          value={price}
+          onChange={(e) => setPrice(e.target.value)}
+          required
+        ></input>
+        <label className="label">Shipping Price:</label>
+        <input
+          className="shipping_price"
+          type="number"
+          value={shippingPrice}
+          onChange={(e) => setShippingPrice(e.target.value)}
+          required
+        ></input>
+
         <div className="form_input_section" id="imageUploadSection">
           <div className="field_section_container">
             <h3 className="imagesHeader">Images:</h3>
-            <div className="erro_container_div">
-              <ul className="erro_container">
-                {validationErrors.length > 0 &&
-                  validationErrors.map((error) => (
-                    <li className="erro" key={error} style={{ color: "red" }}>
-                      {error}
-                    </li>
-                  ))}
-              </ul>
-            </div>
+            {imgValidationErrors ? <div className={imgValidationErrors.length ? "errors" : ""}>{imgValidationErrors}</div> : ""}
             <div className="imageUploadContainer">
               <ImageUploading
                 multiple
@@ -166,15 +167,15 @@ const ProductForm = () => {
                       {imageList.map((image, index) => (
                         <div key={index}>
                           <img src={image["data_url"]} alt="" height="230" />
-                          <div className="editPhotoButtons">
+                          <div className="modifyBtns">
                             <div
-                              className="change_image"
+                              className="editBtn"
                               onClick={() => onImageUpdate(index)}
                             >
                               Change
                             </div>
                             <div
-                              className="remove_image"
+                              className="deleteBtn"
                               onClick={() => onImageRemove(index)}
                             >
                               Remove
@@ -188,6 +189,7 @@ const ProductForm = () => {
               </ImageUploading>
             </div>
           </div>
+
           <div className="product__form-btndiv">
             <button className="product__form-btn" type="submit">
               Submit
