@@ -1,17 +1,16 @@
 import React, { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { Redirect } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import { signUp } from "../../store/session";
 
-const SignUpForm = () => {
+const SignUpForm = ({ email }) => {
+  const dispatch = useDispatch();
+  
   const [errors, setErrors] = useState([]);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
-  const user = useSelector((state) => state.session.user);
-  const dispatch = useDispatch();
+
 
   const onSignUp = async (e) => {
     e.preventDefault();
@@ -33,10 +32,6 @@ const SignUpForm = () => {
     setLastName(e.target.value);
   };
 
-  const updateEmail = (e) => {
-    setEmail(e.target.value);
-  };
-
   const updatePassword = (e) => {
     setPassword(e.target.value);
   };
@@ -45,17 +40,9 @@ const SignUpForm = () => {
     setRepeatPassword(e.target.value);
   };
 
-  if (user) {
-    return <Redirect to="/" />;
-  }
-
   return (
-    <form onSubmit={onSignUp} className="signup__form">
-      <div>
-        {errors.map((error, ind) => (
-          <div className="error" key={ind}>{error}</div>
-        ))}
-      </div>
+    <form onSubmit={onSignUp}>
+      <h3>Sign Up</h3>
       <div>
         <label>First Name</label>
         <input
@@ -79,7 +66,7 @@ const SignUpForm = () => {
         <input
           type="email"
           name="email"
-          onChange={updateEmail}
+          disabled={true}
           value={email}
         ></input>
       </div>
@@ -102,7 +89,12 @@ const SignUpForm = () => {
           required={true}
         ></input>
       </div>
-      <button type="submit" className="signup__form-btn">Sign Up</button>
+      <div>
+        {errors.map((error, ind) => (
+          <div className="auth-form__error" key={ind}>{error}</div>
+        ))}
+      </div>
+      <button type="submit" className="auth-form__button">Sign Up</button>
     </form>
   );
 };

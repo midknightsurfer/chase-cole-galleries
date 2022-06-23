@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import LoginForm from "./components/auth/LoginForm";
 import SignUpForm from "./components/auth/SignUpForm";
@@ -10,10 +10,10 @@ import NavBar from "./components/NavBar";
 import EditProductForm from "./components/ProductForm/EditProductForm";
 import ProductView from "./components/ProductView/ProductView";
 import CartView from "./components/Cart/CartView";
-import Checkout from './components/Cart/Checkout';
+import Checkout from "./components/Cart/Checkout";
 import MyOrders from "./components/Orders/MyOrders";
-import Footer from "./components/Footer/footer"
-import MyAccount from "./components/MyAccount/MyAccount"
+import Footer from "./components/Footer/footer";
+import MyAccount from "./components/MyAccount/MyAccount";
 
 import ProtectedRoute from "./components/auth/ProtectedRoute";
 import UsersList from "./components/UsersList";
@@ -21,6 +21,7 @@ import User from "./components/User";
 import { authenticate } from "./store/session";
 
 function App() {
+  const user = useSelector((state) => state.session.user);
   const [loaded, setLoaded] = useState(false);
   const dispatch = useDispatch();
 
@@ -31,26 +32,31 @@ function App() {
     })();
   }, [dispatch]);
 
+  // useEffect(() => {
+  //   dispatch(sessionActions.restoreUser()).then(() => setIsLoaded(true));
+  // }, [dispatch]);
 
-  if (!loaded) {
-    return null;
-  }
+  let splash;
 
-  return (
-    <BrowserRouter>
-      <NavBar />
-      <Footer />
+  if (!user) {
+    splash = (
+      <LoginForm />
+    );
+  } else {
+
+    splash = loaded && (
+          <BrowserRouter>
+          <NavBar />
+          <Footer />
+
       <Switch>
         <Route path="/" exact={true}>
           <Products />
-          
         </Route>
         <Route path="/cart" exact={true}>
-          <CartView />          
+          <CartView />
         </Route>
-        <Route path="/login" exact={true}>
-          <LoginForm />
-        </Route>
+        <Route path="/login" exact={true}></Route>
         <Route path="/sign-up" exact={true}>
           <SignUpForm />
         </Route>
@@ -65,7 +71,7 @@ function App() {
         </ProtectedRoute>
         <ProtectedRoute path="/myaccount" exact={true}>
           <MyAccount />
-        </ProtectedRoute>                
+        </ProtectedRoute>
         <ProtectedRoute path="/users" exact={true}>
           <UsersList />
         </ProtectedRoute>
@@ -81,6 +87,13 @@ function App() {
         <ProductForm />
       </ProtectedRoute>
     </BrowserRouter>
+      );
+    }
+
+  return (
+    <>
+      {splash}
+    </>
   );
 }
 

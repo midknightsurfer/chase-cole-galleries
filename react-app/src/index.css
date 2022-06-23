@@ -6,9 +6,9 @@
 
 input, textarea, select {
   padding: 5px;
-  min-width: 100%;
+  width: 95%;
   border: 1px solid lightgrey;
-  margin: 5px;
+  margin: 5px 0;
   border-radius: 5px;
 }
 
@@ -18,11 +18,11 @@ input:focus, textarea:focus, select:focus {
 
 button {
   border-radius: 80px;
+  width: 40%;
   cursor: pointer;
   color: #ff9845;
   padding: 10px 0;
   text-align: center;
-  width: 80%;
   margin: 10px;
   box-shadow: 2px 2px 15px black;
   background-color: rgb(112, 18, 92);

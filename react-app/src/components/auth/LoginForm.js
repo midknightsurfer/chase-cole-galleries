@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { Redirect, useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import { login } from "../../store/session";
 import * as sessionActions from "../../store/session";
+import logo from "../../assets/logo.png";
+import SignUpForm from "./SignUpForm";
 
 import "./auth.css";
 
 const LoginForm = () => {
   const dispatch = useDispatch();
-  const history = useHistory();
-  const user = useSelector((state) => state.session.user);
 
   const [errors, setErrors] = useState([]);
   const [email, setEmail] = useState("");
@@ -18,8 +17,8 @@ const LoginForm = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showCheck, setShowCheck] = useState(true);
   const [showLogin, setShowLogin] = useState(false);
-
-  let showHistory = 0;
+  const [showSignUp, setShowSignUp] = useState(false);
+  const [showLoginForm, setShowLoginForm] = useState(true);
 
   useEffect(() => {
     async function fetchData() {
@@ -29,6 +28,7 @@ const LoginForm = () => {
     }
     fetchData();
   }, []);
+
 
   const demoLogin = async (e) => {
     e.preventDefault();
@@ -44,19 +44,24 @@ const LoginForm = () => {
   const onCheck = async (e) => {
     e.preventDefault();
 
-    users.map((aUser) => {
-      if (aUser.email === email) {
+    const user = users.find((user) => user.email === email);
+  
+    if (user) {
         setShowPassword(!showPassword);
         setShowCheck(!showCheck);
-        setShowLogin(!showLogin);
-      } else {
-        showHistory += 1;
-      }
-    });
-    if (showHistory === users.length) {
-      history.push("/sign-up");
+        setShowLogin(!showLogin);      
+    } else {
+        setShowCheck(!showCheck);
+        setShowSignUp(!showSignUp);
+        setShowLoginForm(!showLoginForm);      
     }
   };
+
+  const onCancel = () => {
+    setShowCheck(!showCheck);
+    setShowSignUp(!showSignUp);
+    setShowLoginForm(!showLoginForm);
+  }
 
   const onLogin = async (e) => {
     e.preventDefault();
@@ -75,58 +80,104 @@ const LoginForm = () => {
     setPassword(e.target.value);
   };
 
-  if (user) {
-    return <Redirect to="/" />;
-  }
-
   return (
-    <form className="login__form">
-      <div>
-        {errors.map((error, ind) => (
-          <div key={ind}>{error}</div>
-        ))}
-        <h3>Enter your email address to sign in or to create an account</h3>
-      </div>
-      <div>
-        <label htmlFor="email">Email</label>
-        <input
-          className="login__form-email"
-          name="email"
-          type="text"
-          placeholder="Email"
-          value={email}
-          onChange={updateEmail}
-        />
-      </div>
-      <div>
-        {showPassword && (
+    <>
+      <ul className="auth-slideshow">
+        <li>
+          <span>Image 01</span>
+        </li>
+        <li>
+          <span>Image 02</span>
+        </li>
+        <li>
+          <span>Image 03</span>
+        </li>
+        <li>
+          <span>Image 04</span>
+        </li>
+        <li>
+          <span>Image 05</span>
+        </li>
+        <li>
+          <span>Image 06</span>
+        </li>
+      </ul>
+      <form className="auth-form">
+        {showLoginForm && (
+          <>
+            <img src={logo} alt="logo"/>
+
+            <h3>Enter your email address to sign in or to create an account</h3>
+
+            <div>
+              <label htmlFor="email">Email</label>
+              <input
+                name="email"
+                type="text"
+                placeholder="Email"
+                value={email}
+                onChange={updateEmail}
+              />
+            </div>
+          </>
+        )}
+        <div>
+          {showPassword && (
+            <div>
+              <label htmlFor="password">Password</label>
+              <input
+                name="password"
+                type="password"
+                placeholder="Password"
+                value={password}
+                onChange={updatePassword}
+              />
+            </div>
+          )}
+
           <div>
-            <label htmlFor="password">Password</label>
-            <input
-              name="password"
-              type="password"
-              placeholder="Password"
-              value={password}
-              onChange={updatePassword}
-            />
+            {errors.map((error, ind) => (
+              <div className="auth-form__error" key={ind}>{error}</div>
+            ))}
           </div>
-        )}
-        <p>When you enter your email address and click check we will determine if you already have an account or not and get you to the right place.</p>
-        {showCheck && (
-          <button type="submit" className="login__form-btn" onClick={onCheck}>
-            Check
-          </button>
-        )}
-        {showLogin && (
-          <button type="submit" className="login__form-btn" onClick={onLogin}>
-            Login
-          </button>
-        )}
-          <button type="submit" className="login__form-btn" onClick={demoLogin}>
-            Demo Login
-          </button>        
-      </div>
-    </form>
+          {showCheck && (
+            <>
+              <p>
+                When you enter your email address and click continue we will
+                determine if you already have an account or not and get you to
+                the right place.
+              </p>
+              <button
+                type="submit"
+                className="auth-form__button"
+                onClick={onCheck}
+              >
+                Continue
+              </button>
+              <button
+                type="submit"
+                className="auth-form__button"
+                onClick={demoLogin}
+              >
+                Demo Login
+              </button>
+            </>
+          )}
+          {showLogin && (
+            <button type="submit" className="auth-form__button" onClick={onLogin}>
+              Login
+            </button>
+          )}
+
+          {showSignUp && (
+            <>
+              <SignUpForm email={email} />
+              <button onClick={onCancel} className="auth-form__button">Cancel</button>
+            </>
+          )}
+        </div>
+      </form>
+    </>
   );
 };
 

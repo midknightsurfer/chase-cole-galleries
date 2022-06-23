@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
 import * as sessionActions from "../store/session";
-import logo from "../Assets/logo.png";
+import logo from "../assets/logo.png";
 import CartView from "./Cart/CartView"
 
 import "./NavBar.css";
