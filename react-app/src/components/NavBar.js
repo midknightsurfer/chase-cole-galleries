@@ -4,6 +4,7 @@ import { NavLink } from "react-router-dom";
 import * as sessionActions from "../store/session";
 import logo from "../assets/logo.png";
 import CartView from "./Cart/CartView"
+import { useCategory } from '../context/CategoryContext';
 
 import "./NavBar.css";
 
@@ -12,6 +13,7 @@ const NavBar = () => {
 
   const [showMenu, setShowMenu] = useState(false);
   const [showCart, setShowCart] = useState(false);
+  const {category, setCategory} = useCategory()
   const user = useSelector((state) => state?.session?.user);
 
   const logout = (e) => {
@@ -19,9 +21,9 @@ const NavBar = () => {
     dispatch(sessionActions.logout());
 
     setShowMenu(!showMenu)
-    // history.push("/");
+
   };
-console.log(user)
+
   return (
     <>
       <nav className="top__menu">
@@ -74,20 +76,20 @@ console.log(user)
                 </NavLink>
               </div>
               <div className="main__menu-lists">
-                {/* <div>
+                <div>
                   <i className="fa-solid fa-eye"></i>Recently Viewed
-                </div> */}
-                {/* <div>
+                </div>
+                <div>
                   <i className="fa-solid fa-calendar-plus"></i>New Arrivals
-                </div> */}
-                {/* <div>
+                </div>
+                <div>
                   <i className="fa-solid fa-heart"></i>Favorites
-                </div> */}
+                </div>
               </div>
               <div className="main__menu-contact">
-                {/* <div>
+                <div>
                   <i className="fa-solid fa-blog"></i>Refinisher's Blog
-                </div> */}
+                </div>
                 <NavLink
                   to="/ProductForm"
                   exact={true}
@@ -98,9 +100,9 @@ console.log(user)
                     <i className="fa-solid fa-dollar-sign"></i>Sell My Furniture
                   </div>
                 </NavLink>
-                {/* <div>
+                <div>
                   <i className="fa-solid fa-address-book"></i>Contact Us
-                </div> */}
+                </div>
               </div>
               <div className="main__menu-footer">
                 {user ? (
@@ -135,16 +137,16 @@ console.log(user)
             </div>
         )}
       </nav>
-      {/* <div className="top__menu-categories">
+      <div className="top__menu-categories">
         <ul>
-          <li>Bedroom</li>
-          <li>Dining Room</li>
-          <li>Living Room</li>
-          <li>Office</li>
-          <li>Outdoor</li>
-          <li>Other</li>
+          <li onClick={() => setCategory(1)}>Bedroom</li>
+          <li onClick={() => setCategory(2)}>Dining Room</li>
+          <li onClick={() => setCategory(3)}>Living Room</li>
+          <li onClick={() => setCategory(4)}>Office</li>
+          <li onClick={() => setCategory(5)}>Outdoor</li>
+          <li onClick={() => setCategory(6)}>Other</li>
         </ul>
-      </div> */}
+      </div>
     </>
   );
 };

@@ -2,6 +2,10 @@ import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import ProductCard from "./ProductCard";
 import { getProducts } from "../../store/products";
+import Slider from "react-slick";
+import { useCategory } from "../../context/CategoryContext";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 import "./ProductView.css";
 
@@ -9,28 +13,67 @@ const Products = () => {
   const dispatch = useDispatch();
 
   const products = useSelector((state) => Object.values(state?.products));
+  const { category, setCategory } = useCategory();
 
-  products.sort(function (a, b) {
-    return new Date(a.created_at) - new Date(b.created_at);
+  let filteredProducts = products.filter((product) => {
+    if (category === 0) {
+      return product;
+    } else {
+      return product.category_id === category;
+    }
   });
 
-  useEffect(() => {
-    dispatch(getProducts());
-  }, [dispatch]);
+  const settings = {
+    infinite: true,
+    speed: 1000,
+    slidesToScroll: 2,
+    autoplay: true,
+    arrows: false,
+    autoplaySpeed: 3000,
+    responsive: [
+      {
+        breakpoint: 2000,
+        settings: {
+          slidesToShow: filteredProducts.length < 6 ? filteredProducts.length : 6,
+        },
+      },
+      {
+        breakpoint: 1300,
+        settings: {
+          slidesToShow: filteredProducts.length < 5 ? filteredProducts.length : 5,
+        },
+      },
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: filteredProducts.length < 4 ? filteredProducts.length : 4,
+        },
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: filteredProducts.length < 2 ? filteredProducts.length : 2,
+        },
+      },
+      {
+        breakpoint: 350,
+        settings: {
+          slidesToShow: filteredProducts.length < 1 ? filteredProducts.length : 1,
+        },
+      },
+    ],
+  };
 
   return (
     <>
-    <div className="furniture__card-container">
-      {products.slice(13, 21).map((product) => (
-          <ProductCard product={product} />            
-      ))}
-    </div>
-    <div className="products__description">
-    <h2>Exclusive High End Furniture</h2>    
-        <p>Welcome to Chase Cole Galleries! Your one stop shop for hard to find and classic Furniture! Many of our products are designed by the artist Bob Timberlake and were once offered by Lexington Furniture. The pieces on this site are not your usual cheap particle board furniture that your normally find at other venues; they are expertly crafted, made to last, precision pieces that will light up your home. Feel free to create an account and browse our inventory. Also note that shipping on all these items will take awhile and be a bit more expensive than shipping with a large retail company because we use high end, private shippers and wrap your items with care to protect them on their journey.</p>
-    </div>
+      <div className="furniture__card-container">
+        <Slider {...settings}>
+          {filteredProducts.length ? filteredProducts.map((product) => (
+            <ProductCard key={product.id} product={product} />
+          )): <div>No products found</div>}
+        </Slider>
+      </div>
     </>
-
   );
 };
 

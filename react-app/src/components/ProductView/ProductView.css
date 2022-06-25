@@ -1,18 +1,19 @@
 .furniture__card-container {
-  width: 100vw;
-  display: flex;
-  flex-wrap: wrap;
+  width: 90%;
+  margin: 0 auto;
   justify-content: center;
   line-height: 20px;
+  border: 1px solid black;
+  margin-top: 50px;
 }
 
 .furniture__card {
-  max-width: 200px;
+  min-width: 150px;
   box-shadow: 4px 4px 10px gray;
   margin: 6px;
   font-size: 10pt;
   padding: 2px;
-  border: 1px solid #ff9845;
+  border: 2px solid transparent;
 }
 
 .furniture__card:hover {
@@ -204,11 +205,4 @@
 
 .prices {
   text-align: right;
-}
-
-.products__description {
-  margin-left: auto;
-  margin-right: auto;
-  width: 80%;
-  margin-top: 40px;
 }
