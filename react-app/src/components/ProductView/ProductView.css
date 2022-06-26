@@ -1,13 +1,17 @@
-.furniture__card-container {
+.products-card__container {
   width: 90%;
   margin: 0 auto;
-  justify-content: center;
   line-height: 20px;
   border: 1px solid black;
   margin-top: 50px;
 }
 
-.furniture__card {
+.products-card__container a {
+  text-decoration: none;
+  color: black;
+}
+
+.products-card {
   min-width: 150px;
   box-shadow: 4px 4px 10px gray;
   margin: 6px;
@@ -16,12 +20,11 @@
   border: 2px solid transparent;
 }
 
-.furniture__card:hover {
+.products-card:hover {
   border: 2px solid #fd576b;
 }
 
-
-.furniture__card-photo {
+.products-card__photo {
   display: flex;
   width: 100%;
   justify-content: center;
@@ -30,54 +33,33 @@
   background-position: center;
 }
 
-
-.furniture__card-container a {
-  text-decoration: none;
-  color: black;
-}
-
-.furniture__card-title,
-.furniture__card-price {
+.products-card__title,
+.products-card__price {
   padding: 5px;
 }
 
-.furniture__card-title {
+.products-card__title {
   height: 60px;
 }
 
-.furniture__card-price {
+.products-card__price {
   font-weight: bold;
 }
 
-.modifyBtns {
+.products-card__modifybtns {
   display: flex;
   justify-content: center;
   align-items: flex-end;
   width: 100%;
   border: 1px solid black;
-  ;
 }
 
-.deleteBtn,
-.editBtn {
-  text-align: center;
-  width: 50%;
-  background-color: rgb(112, 18, 92);
-  color: #ff9845;
-  border: 0px;
-  cursor: pointer;
-}
-
-.deleteBtn:hover,
-.editBtn:hover {
-  background-color: #fd576b;
-}
-
-.modal-bg {
+.products-card__modalbg {
+  display: flex;
   width: 100vw;
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.5);
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   align-items: center;
@@ -85,11 +67,7 @@
   z-index: 9999;
 }
 
-.modal {
-  background-color: white;
-}
-
-.confirmation__modal {
+.products-card__modal {
   text-align: center;
   font-size: 1.3em;
   background-color: #fff;
@@ -105,21 +83,9 @@
   border-radius: 10px;
 }
 
-.confirmationBtns {
+.products-card__modalbtns {
   display: flex;
   justify-content: center;
-}
-
-.confirmationBtns div {
-  margin: 10px;
-  padding: 10px 20px;
-  background-color: rgb(112, 18, 92);
-  border-radius: 80px;
-  color: white;
-}
-
-.confirmationBtns div:hover {
-  background-color: #fd576b;
 }
 
 .productview__container {

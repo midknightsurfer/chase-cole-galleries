@@ -8,7 +8,7 @@ import ProductView from "./ProductView/ProductView";
 import CartView from "./Cart/CartView";
 import Checkout from "./Cart/Checkout";
 import MyOrders from "./Orders/MyOrders";
-import Footer from "./Footer/footer";
+import Footer from "./Footer/Footer";
 import MyAccount from "./MyAccount/MyAccount";
 
 export {

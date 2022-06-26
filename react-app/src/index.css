@@ -36,6 +36,21 @@ button:active {
   border: 0px;
 }
 
+.delete-btn,
+.edit-btn {
+  text-align: center;
+  width: 50%;
+  background-color: rgb(112, 18, 92);
+  color: #ff9845;
+  border: 0px;
+  cursor: pointer;
+}
+
+.delete-btn:hover,
+.edit-btn:hover {
+  background-color: #fd576b;
+}
+
 .homepage-description {
   margin-left: auto;
   margin-right: auto;
@@ -48,7 +63,11 @@ button:active {
   grid-template-columns: 2fr 2fr 2fr;
   grid-template-rows: 2fr 2fr 2fr;
   bottom: 0;
+  left: 0;
+  right: 0;
+
   position: fixed;
+  background-color: white;
   height: 20vh;
   width: 100%;
   border-top: 1px solid rgb(180, 176, 176);

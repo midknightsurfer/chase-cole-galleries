@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import { persistStore } from "redux-persist";
+import { ModalProvider } from "./context/ModalContext";
 import CategoryContext from "./context/CategoryContext";
 import configureStore from "./store";
 import App from "./App";
@@ -17,7 +18,9 @@ ReactDOM.render(
     <Provider store={store}>
       <PersistGate loading={<App />} persistor={persistor}>
         <CategoryContext>
-          <App />
+          <ModalProvider>
+            <App />
+          </ModalProvider>
         </CategoryContext>
       </PersistGate>
     </Provider>

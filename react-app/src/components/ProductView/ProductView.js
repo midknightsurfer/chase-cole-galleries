@@ -21,7 +21,7 @@ const ProductView = () => {
   useEffect(() => {
     dispatch(getProducts(productId));
   }, [dispatch]);
-
+console.log(product.images)
   const handlePhotos = (photosIndex) => {
     if (!photoObject.length) {
       const productImages = [];
