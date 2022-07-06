@@ -10,6 +10,7 @@ import Checkout from "./Cart/Checkout";
 import MyOrders from "./Orders/MyOrders";
 import Footer from "./Footer/Footer";
 import MyAccount from "./MyAccount/MyAccount";
+import PageNotFound from "./PageNotFound";    
 
 export {
   LoginForm,
@@ -23,5 +24,6 @@ export {
   Checkout,
   MyOrders,
   Footer,
-  MyAccount
+  MyAccount,
+  PageNotFound
 };

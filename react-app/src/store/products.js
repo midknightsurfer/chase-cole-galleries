@@ -33,7 +33,7 @@ export const getProducts = () => async (dispatch) => {
 };
 
 export const addProduct =
-  (user_id, title, description, category_id, price, shipping_price) =>
+  (user_id, title, description, category_id, price, shipping_price, sold) =>
   async (dispatch) => {
     const response = await fetch("/api/products", {
       method: "post",
@@ -47,6 +47,7 @@ export const addProduct =
         category_id,
         price,
         shipping_price,
+        sold
       }),
     });
 
@@ -63,6 +64,21 @@ export const editProduct = (data, productId) => async (dispatch) => {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
   });
+
+  if (response.ok) {
+    const editedProduct = await response.json();
+    dispatch(edit(editedProduct));
+    return ["Created", editedProduct];
+  }
+};
+
+export const editSold = (data, productId) => async (dispatch) => {
+  const response = await fetch(`/api/products/sold/${productId}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify( data ), 
+  });
+
   if (response.ok) {
     const editedProduct = await response.json();
     dispatch(edit(editedProduct));
@@ -86,11 +102,6 @@ export const uploadFile = (fileForm) => async (dispatch) => {
   form.append("file", file);
   form.append("product_id", product_id);
   form.append("newFile", newFile);
-  console.log(form)
-  const res = await fetch("/api/products/images", {
-    method: "POST",
-    body: form,
-  });
 };
 
 const initialState = {};

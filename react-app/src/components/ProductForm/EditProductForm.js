@@ -1,57 +1,78 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import { editProduct, uploadFile } from "../../store/products";
 import ImageUploading from "react-images-uploading";
+import { ModalContext } from "../../context/ModalContext";
 
 import "./ProductForm.css";
 
 const EditProductForm = () => {
   const dispatch = useDispatch();
   const history = useHistory();
+  const { productId } = useParams();
 
   const user = useSelector((state) => state.session.user);
-  const { productId } = useParams();
   const product = useSelector((state) => state.products[productId]);
+  let { handleModal, setModal } = useContext(ModalContext);
 
   const [title, setTitle] = useState(product?.title);
   const [description, setDescription] = useState(product?.description);
-  const [price, setPrice] = useState(product?.price + ".00");
-  const [shippingPrice, setShippingPrice] = useState(
-    product?.shipping_price + ".00"
-  );
+  const [price, setPrice] = useState(product?.price);
+  const [shippingPrice, setShippingPrice] = useState(product?.shipping_price);
   const [categoryId, setCategoryId] = useState(product?.category_id);
   const [images, setImages] = useState("");
-  const [priceValidationErrors, setPriceValidationErrors] = useState([]); 
-  const [categoryValidationErrors, setCategoryValidationErrors] = useState([]);  
-  const [imgValidationErrors, setImgValidationErrors] = useState([]);
 
+  const [validationErrors, setValidationErrors] = useState([]);
+  const [hasSubmitted, setHasSubmitted] = useState(false);
 
   useEffect(() => {
     let images = product?.images.map((image) => {
       return { data_url: image };
     });
     setImages(images);
-  }, []);
+  }, [ product ]);
+
+  useEffect(() => {
+    const errors = [];
+    if (!title) {
+      errors.push("Title is required");
+    }
+    if (title && (title.length > 20 || title.length < 55)) {
+      errors.push("Title must be between 20 and 55 characters");
+    }
+    if (!description) {
+      errors.push("Description is required");
+    }
+    if (description && description.length < 40) {
+      errors.push("Type a longer description");
+    }
+    if (!price) {
+      errors.push("Price is required");
+    }
+    if (price && price < 0) {
+      errors.push("Price must be greater than 0");
+    }
+    if (!shippingPrice) {
+      errors.push("Shipping Price is required");
+    }
+    if (shippingPrice && shippingPrice < 0) {
+      errors.push("Shipping Price must be greater than 0");
+    }
+    if (categoryId === 0) {
+      errors.push("Category is required");
+    }
+    if (!images.length) {
+      errors.push("At least one image is required");
+    }
+    setValidationErrors(errors);
+  }, [title, description, price, shippingPrice, categoryId, images]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (price < 1 || shippingPrice < 1) {
-      setPriceValidationErrors(["Please enter a value greater than zero!"]);
-    }
-
-    if (images.length < 1) {
-      setImgValidationErrors(["Please upload at least one picture!"]);
-    }
-
-    if (categoryId === 0) {
-      setCategoryValidationErrors(["Please choose a valid Category"])
-    }
-
-    if (priceValidationErrors.length || imgValidationErrors.length || categoryValidationErrors.length) {
-      return;
-    }
+    setHasSubmitted(true);
+    if (validationErrors.length) return;
 
     const data = {
       user_id: user.id,
@@ -60,12 +81,28 @@ const EditProductForm = () => {
       category_id: categoryId,
       price,
       shipping_price: shippingPrice,
+      sold: false,
     };
 
-    const productData = await dispatch(editProduct(data, product.id));
+    await dispatch(editProduct(data, product.id));
 
     await addImages(images, product.id);
-    history.push("/");
+
+    handleModal(
+      <div className="products-card__modalbg">
+        <div className="products-card__modal">
+          <p>Item Modified Successfully</p>
+        </div>
+      </div>
+    );
+
+    setValidationErrors([]);
+    setHasSubmitted(false);
+
+    setTimeout(() => {
+      history.push("/myaccount");
+      setModal(false);
+    }, 3000);
   };
 
   const addImages = async (images, product_id) => {
@@ -93,128 +130,128 @@ const EditProductForm = () => {
   };
 
   return (
-    <div className="product__form-container">
-      <h3>Edit Your Furniture</h3>
-      <form className="product__form" onSubmit={handleSubmit}>
-        <div>
-          <label className="label">Title:</label>
-          <input
-            name="title"
-            type="input"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            required
-          ></input>
+    <div className="product-form__container">
+      <h2>List Your Furniture</h2>
+      <p>All Fields are Required</p>
+      <form className="product-form" onSubmit={handleSubmit}>
+        <label className="label">Title:</label>
+        <input
+          name="title"
+          type="input"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+        ></input>
 
-          <label className="label">Description:</label>
-          <textarea
-            className="product__form-description"
-            name="description"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            required
-          ></textarea>
+        <label className="label">Description:</label>
+        <textarea
+          className="product-form__description"
+          name="description"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+        ></textarea>
 
-          <label className="label">Category:</label>
-          {categoryValidationErrors ? <div className={categoryValidationErrors.length ? "errors" : ""}>{categoryValidationErrors}</div> : ""}
-          <select
-            value={categoryId}
-            onChange={(e) => setCategoryId(e.target.value)}
-            className="product__form-category"
-          >
-            <option value="0">Choose a Category</option>
-            <option value="1">Bedroom</option>
-            <option value="2">Dining Room</option>
-            <option value="3">Living Room</option>
-            <option value="4">Office</option>
-            <option value="5">Outdoor</option>
-            <option value="6">Other</option>
-          </select>
+        <label className="label">Category:</label>
+        <select
+          value={categoryId}
+          onChange={(e) => setCategoryId(e.target.value)}
+          className="product-form__category"
+        >
+          <option value="0">Choose a Category</option>
+          <option value="1">Bedroom</option>
+          <option value="2">Dining Room</option>
+          <option value="3">Living Room</option>
+          <option value="4">Office</option>
+          <option value="5">Outdoor</option>
+          <option value="6">Other</option>
+        </select>
 
-          <div className="product__form-prices">
-            <label className="label">Price:</label>
-            {priceValidationErrors ? <div className={priceValidationErrors.length ? "errors" : ""}>{priceValidationErrors}</div> : ""}
-            <input
-              className="product_price"
-              type="number"
-              value={price}
-              onChange={(e) => setPrice(e.target.value)}
-              required
-            ></input>
-            <label className="label">Shipping Price:</label>
-            <input
-              className="shipping_price"
-              type="number"
-              value={shippingPrice}
-              onChange={(e) => setShippingPrice(e.target.value)}
-              required
-            ></input>
-          </div>
-        </div>
-        <div className="form_input_section" id="imageUploadSection">
-          <div className="field_section_container">
-            <h3 className="imagesHeader">Images:</h3>
-            {imgValidationErrors ? <div className={imgValidationErrors.length ? "errors" : ""}>{imgValidationErrors}</div> : ""}
-            <div className="imageUploadContainer">
-              <ImageUploading
-                multiple
-                value={images}
-                onChange={(imageList) => setImages(imageList)}
-                maxNumber={80}
-                dataURLKey="data_url"
-                acceptType={["jpg", "png", "jpeg"]}
-              >
-                {({
-                  imageList,
-                  onImageUpload,
-                  onImageRemoveAll,
-                  onImageUpdate,
-                  onImageRemove,
-                  isDragging,
-                  dragProps,
-                }) => (
-                  <div className="upload__image-wrapper">
-                    <div
-                      style={
-                        isDragging ? { color: "rgb(192, 53, 22)" } : undefined
-                      }
-                      onClick={onImageUpload}
-                      {...dragProps}
-                      className="add_images_container"
-                    >
-                      Add or Drag Images Here
-                    </div>
-                    {/* <div onClick={onImageRemoveAll}>Remove all images</div> */}
-                    <div className="images_container">
-                      {imageList.map((image, index) => (
-                        <div key={index}>
-                          <img src={image["data_url"]} alt="" height="230" />
-                          <div className="editPhotoButtons">
-                           
-                            <div
-                              className="change_image"
-                              onClick={() => onImageUpdate(index)}
-                            >
-                              Change
-                            </div>
-                            <div
-                              className="remove_image"
-                              onClick={() => onImageRemove(index)}
-                            >
+        <label className="label">Price:</label>
 
-                              Remove
-                            </div>
+        <input
+          className="product-form__price"
+          type="number"
+          value={price}
+          onChange={(e) => setPrice(e.target.value)}
+        ></input>
+        <label className="label">Shipping Price:</label>
+        <input
+          className="product-form__shippingprice"
+          type="number"
+          value={shippingPrice}
+          onChange={(e) => setShippingPrice(e.target.value)}
+        ></input>
+
+        <div className="product-form__input" id="imageUploadSection">
+          <h3 className="product-form__imagesheader">Images:</h3>
+          <div className="product-form__imagecontainer">
+            <ImageUploading
+              multiple
+              value={images}
+              onChange={(imageList) => setImages(imageList)}
+              maxNumber={20}
+              dataURLKey="data_url"
+              acceptType={["jpg", "png", "jpeg"]}
+            >
+              {({
+                imageList,
+                onImageUpload,
+                onImageRemoveAll,
+                onImageUpdate,
+                onImageRemove,
+                isDragging,
+                dragProps,
+              }) => (
+                <div className="product-form__uploadimage">
+                  <div
+                    style={
+                      isDragging ? { color: "rgb(192, 53, 22)" } : undefined
+                    }
+                    onClick={onImageUpload}
+                    {...dragProps}
+                    className="product-form__addimages"
+                  >
+                    Click or Drag Images Here
+                  </div>
+                  <div className="product-form__images">
+                    {imageList.map((image, index) => (
+                      <div key={index}>
+                        <img src={image["data_url"]} alt="" height="230" />
+                        <div className="products-card__modifybtns">
+                          <div
+                            className="edit-btn"
+                            onClick={() => onImageUpdate(index)}
+                          >
+                            Change
+                          </div>
+                          <div
+                            className="delete-btn"
+                            onClick={() => onImageRemove(index)}
+                          >
+                            Remove
                           </div>
                         </div>
-                      ))}
-                    </div>
+                      </div>
+                    ))}
                   </div>
-                )}
-              </ImageUploading>{" "}
-            </div>
+                </div>
+              )}
+            </ImageUploading>
           </div>
-          <div className="product__form-btndiv">
-            <button className="product__form-btn" type="submit">
+
+          {hasSubmitted && validationErrors.length > 0 && (
+            <div className="errors__container">
+              <div className="errors">
+                The following errors were found:
+                <ul>
+                  {validationErrors.map((error) => (
+                    <li key={error}>{error}</li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          )}
+          <div className="product-form__btndiv">
+            <button className="product-form__btn" type="submit">
               Submit
             </button>
           </div>

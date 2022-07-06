@@ -1,45 +1,39 @@
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import OrdersCard from "./OrdersCard";
+import PurchaseHistory from "./PurchaseHistory";
 
-import './Orders.css'
+import "./Orders.css";
 
 const MyOrders = () => {
-  const dispatch = useDispatch();
-
   const orders = useSelector((state) => Object.values(state.orders));
   const user = useSelector((state) => state.session.user);
 
-
   return (
-    <div>
+    <div className="orders-container">
       <h2>My Orders</h2>
-      <div className="myorders__orderscontainer">
-        <div className="myorders__sellerorder-container">
-          <h3>Stuff I've Purchased</h3>
-          {orders.map(
-            (order) =>
-              order.user_id === user.id && (            
-              order.products.map(product => (
-                <OrdersCard products={product.product} status={order.status} id={order.id} />
-                
-              ))
-
-              )
-          )}
+      <div className="orders-orders__container">
+        <h3>Stuff I've Sold</h3>
+        <div className="orders-sold__container">
+          {orders.map((order) => (
+            order.user_id === user.id (
+            <OrdersCard
+              key={order.id} order={order}
+            />
+          )))}
         </div>
-        <div className="myorders__buyerorder-container">
-          <h3>Stuff I've Sold</h3>
+          <h3>Stuff I've Purchased</h3>        
+        <div className="orders-purchases__container">
           {orders.map(
             (order) =>
-              order.products.map(product => (
-                product.product.user_id === user.id && (
-                  <OrdersCard products={product.product} status={order.status} id={order.id} />
-
-                )
-              )
-              )
-          )}          
+              order.products.map((product) => (
+                product.product.user_id === user.id ? ( 
+                <PurchaseHistory
+                  key={product.id}
+                  product={product.product}
+                  status={order.status}
+                />
+              ) : null))
+          )}
         </div>
       </div>
     </div>

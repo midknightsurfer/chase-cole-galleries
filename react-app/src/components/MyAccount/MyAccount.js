@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import updateUser from '../../store/user'
+import updateUser from "../../store/user";
 
 const MyAccount = () => {
   const user = useSelector((state) => state.session.user);
@@ -12,14 +12,41 @@ const MyAccount = () => {
   const [state, setState] = useState(user.state);
   const [city, setCity] = useState(user.city);
   const [zipcode, setZipcode] = useState(user.zipcode);
+  const [phone, setPhone] = useState(user.phone);
+
+  const [validationErrors, setValidationErrors] = useState([]);
+  const [hasSubmitted, setHasSubmitted] = useState(false);
 
   const editShipping = () => {
     setShowShipping(!showShipping);
     setShowShippingForm(!showShippingForm);
   };
 
+  useEffect(() => {
+    const errors = [];
+    if (!address) {
+      errors.push("Address is required");
+    }
+    if (!state) {
+      errors.push("State is required");
+    }
+    if (!city) {
+      errors.push("City is required");
+    }
+    if (!zipcode) {
+      errors.push("Zipcode is required");
+    }
+    if (!phone) {
+      errors.push("Phone is required");
+    }
+    setValidationErrors(errors);
+  }, [address, city, state, zipcode, phone, showShippingForm]);
+
   const handleSave = async (e) => {
     e.preventDefault();
+
+    setHasSubmitted(true);
+    if (validationErrors.length) return;
 
     const data = {
       user_id: user.id,
@@ -27,9 +54,10 @@ const MyAccount = () => {
       city,
       state,
       zipcode,
+      phone,
     };
 
-    const productData = await dispatch(updateUser(data, user.id));
+    await dispatch(updateUser(data, user.id));
 
     setShowShipping(!showShipping);
     setShowShippingForm(!showShippingForm);
@@ -52,7 +80,7 @@ const MyAccount = () => {
         </>
       )}
       {showShippingForm && (
-        <div className="checkout__shippingform">
+        <div className="checkout-shipping__form">
           <form onSubmit={handleSave}>
             <label className="label">Address:</label>
             <input
@@ -60,7 +88,6 @@ const MyAccount = () => {
               type="input"
               value={address}
               onChange={(e) => setAddress(e.target.value)}
-              required
             ></input>
             <label className="label">City:</label>
             <input
@@ -68,7 +95,6 @@ const MyAccount = () => {
               type="input"
               value={city}
               onChange={(e) => setCity(e.target.value)}
-              required
             ></input>
             <label className="label">State:</label>
             <select
@@ -135,8 +161,23 @@ const MyAccount = () => {
               type="number"
               value={zipcode}
               onChange={(e) => setZipcode(e.target.value)}
-              required
             ></input>
+            <input
+              name="phone"
+              type="number"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+            ></input>
+            {hasSubmitted && validationErrors.length > 0 && (
+              <div style={{ width: "50%" }} className="errors">
+                The following errors were found:
+                <ul>
+                  {validationErrors.map((error) => (
+                    <li key={error}>{error}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
             <button type="submit">Save</button>
           </form>
         </div>

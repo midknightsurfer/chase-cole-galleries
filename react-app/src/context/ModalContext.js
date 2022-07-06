@@ -6,9 +6,9 @@ let ModalContext;
 let { Provider } = (ModalContext = createContext());
 
 let ModalProvider = ({ children }) => {
-  let { modal, handleModal, modalContent } = useModal();
+  let { modal, handleModal, modalContent, setModal } = useModal();
   return (
-    <Provider value={{ modal, handleModal, modalContent }}>
+    <Provider value={{ modal, handleModal, modalContent, setModal }}>
       <Modal />
       {children}
     </Provider>

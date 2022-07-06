@@ -50,9 +50,7 @@ def edit_status(order_id):
 
 @order_routes.route("/<int:order_id>", methods=["DELETE"])
 def delete_order(order_id):
-    print("print--------------", order_id)
     order = Order.query.get(order_id)
-    print("print--------------", order)
     order_deleted = order.to_dict()
     db.session.delete(order)
     db.session.commit()

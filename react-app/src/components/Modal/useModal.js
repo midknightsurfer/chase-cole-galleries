@@ -12,5 +12,5 @@ export default () => {
     }
   };
 
-  return { modal, handleModal, modalContent };
+  return { modal, handleModal, modalContent, setModal };
 };

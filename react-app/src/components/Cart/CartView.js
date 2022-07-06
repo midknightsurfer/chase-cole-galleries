@@ -1,72 +1,93 @@
-import { useState, useEffect } from "react";
+import { useContext } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useHistory, useParams } from "react-router-dom";
+import { useHistory, NavLink } from "react-router-dom";
+import { ModalContext } from "../../context/ModalContext";
 import CartItem from "./CartItem";
 import { clear } from "../../store/cart";
+import { editSold } from "../../store/products";
 
 const CartView = () => {
   const dispatch = useDispatch();
   const history = useHistory();
+  let { setModal } = useContext(ModalContext);
 
-  const cartTotal = useSelector((state) => state.cart.cartTotal);
-  const [isLoaded, setIsLoaded] = useState(false);
-  const cartProducts = useSelector((state) => state.cart.products);
+  const cartTotal = useSelector((state) => Object.values(state.cart.cartTotal));
+  const cartProducts = useSelector((state) =>
+    Object.values(state.cart.products)
+  );
 
   const getTotal = () => {
     const inital = 0;
-    const myCartTotal = Object.values(cartTotal).reduce(
-      (accum, curr) => accum + curr,
-      inital
-    );
+    const myCartTotal = cartTotal.reduce((accum, curr) => accum + curr, inital);
     return myCartTotal;
   };
 
   const clearCart = () => {
-    Object.values(cartProducts)?.map((product) => dispatch(clear(product.id)));
-    alert("Cart Cleared")
+    const data = {
+      sold: false,
+    };
+
+    cartProducts?.map((product) =>
+      dispatch(editSold(data, product.product_id)).then(
+        dispatch(clear(product.id))
+      )
+    );
   };
 
-  useEffect(() => {
-    setIsLoaded(true);
-  }, [dispatch, cartTotal]);
+  const handleCheckout = () => {
+    history.push("/checkout");
+    setModal(false);
+  };
 
   return (
-    isLoaded && (
-      <div className="cart__item-container">
-        <h3>Cart</h3>
+    <div className="main-menu__bg">
+      <i
+        className="cart-close fas fa-times"
+        onClick={() => setModal(false)}
+      ></i>
+      <div className="cart-container">
+        <div className="cart-item__container">
+          <h3>Cart</h3>
+          {cartProducts && cartProducts.length ? (
+            cartProducts?.map((product) => {
+              return (
+                <div key={product.id}>
+                  <CartItem product={product} />
+                </div>
+              );
+            })
+          ) : (
+            <h4>Your Cart is Currently Empty</h4>
+          )}{" "}
+          {window.location.pathname !== "/checkout" ? (
+            cartProducts.length ? (
+              <div className="cart-checkout">
+                <div className="cart-checkout__total">
+                  <span>Total: </span>
+                  {new Intl.NumberFormat("en-IN", {
+                    style: "currency",
+                    currency: "USD",
+                  }).format(getTotal())}
+                </div>
 
-        {cartProducts && Object.values(cartProducts).length ? (
-          Object.values(cartProducts)?.map((product) => {
-            return (
-              <div key={product.id}>
-                <CartItem product={product} />
+                <div className="cart-checkout__btn">
+                  <NavLink to="/checkout" exact={true}>
+                    <button onClick={handleCheckout} type="submit">
+                      Checkout
+                    </button>
+                  </NavLink>
+                  <button onClick={clearCart}>Clear Cart</button>
+                </div>
               </div>
-            );
-          })
-        ) : (
-          <h4>Your Cart is Currently Empty</h4>
-        )} {window.location.pathname !== '/checkout' ? 
-        <div className="cart__checkout">
-          <div className="cart__checkout-total">
-            <span>Total: </span>
-            {new Intl.NumberFormat("en-IN", {
-              style: "currency",
-              currency: "USD",
-            }).format(getTotal())}
-          </div>
-
-          <div className="cart__checkout-btn">
-            <button onClick={() => history.push('/checkout')} type="submit">
-              Checkout
-            </button>
-
-            <button className="center" onClick={clearCart}>Clear Cart</button>
-          </div>
-
+            ) : (
+              ""
+            )
+          ) : (
+            ""
+          )}
         </div>
-          : "" }
       </div>
-    )
+    </div>
   );
 };
 

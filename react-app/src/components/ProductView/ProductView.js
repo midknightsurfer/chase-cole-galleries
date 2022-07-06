@@ -1,27 +1,45 @@
-import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useState, useEffect, useContext } from "react";
+import { useParams, useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { getProducts } from "../../store/products";
-import ReactBnbGallery from "react-bnb-gallery";
+import { getProducts, editSold } from "../../store/products";
 import { addCart } from "../../store/cart";
+import { ModalContext } from "../../context/ModalContext";
 
+import ReactBnbGallery from "react-bnb-gallery";
 import "react-bnb-gallery/dist/style.css";
+
+import sold from "../../assets/sold.png";
 
 const ProductView = () => {
   const { productId } = useParams();
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const product = useSelector((state) => state.products[productId]);
-  const cart = (useSelector((state)=>state.cart))
+  let { handleModal, setModal } = useContext(ModalContext);
+  const user = useSelector((state) => state.session.user);
 
   const [photoIndex, setPhotoIndex] = useState(0);
   const [photoObject, setPhotoObject] = useState([]);
   const [showPhotoModal, setShowPhotoModal] = useState(false);
 
+  const [users, setUsers] = useState([]);
+
   useEffect(() => {
     dispatch(getProducts(productId));
-  }, [dispatch]);
-console.log(product.images)
+  }, [dispatch, productId]);
+
+  useEffect(() => {
+    async function fetchData() {
+      const response = await fetch("/api/users/");
+      const responseData = await response.json();
+      setUsers(responseData.users);
+    }
+    fetchData();
+  }, []);
+
+  const soldBy = users.find((user) => user.id === product?.user_id);
+
   const handlePhotos = (photosIndex) => {
     if (!photoObject.length) {
       const productImages = [];
@@ -34,36 +52,43 @@ console.log(product.images)
       }
       setPhotoObject(productImages);
     }
-    setPhotoIndex(photoIndex);
+    setPhotoIndex(photosIndex);
     setShowPhotoModal(true);
   };
 
   const addToCart = () => {
-    const currProduct = Object.values(cart.products)
-    let inCart = false
-    for (let i = 0; i < currProduct.length; i++ ){
+    const data = {
+      sold: true,
+    };
 
-        if (currProduct[i].product_id === product.id){
-            inCart = true
-            console.log(i)
-        }
-    }
-        dispatch(addCart(product))
-        alert("Added to Cart")
+    dispatch(editSold(data, product.id));
+    dispatch(addCart(product));
 
-}
+    handleModal(
+      <div className="products-card__modalbg">
+        <div className="products-card__modal">
+          <p>Added to Cart</p>
+        </div>
+      </div>
+    );
+    
+    setTimeout(() => {
+      history.push("/");
+      setModal(false);
+    }, 3000);
+  };
 
   return (
     <div className="productview__container">
-      <div className="productview__images-container">
+      <div className="productview-image__container">
         <div
-          className="productview__img-maincontainer"
+          className="productview-image__maincontainer"
           style={{ backgroundImage: `url(${product?.images[0]})` }}
         ></div>
-        <div className="productview__img-gallery">
+        <div className="productview-image__gallery">
           {product?.images.map((image) => (
             <div
-              className="productview__image-container"
+              className="productview-image__container"
               onClick={() => handlePhotos()}
               style={{ backgroundImage: `url(${image})` }}
             ></div>
@@ -77,23 +102,54 @@ console.log(product.images)
         />
       </div>
 
-      <div className="productview__information-container">
+      <div className="productview-information__container">
         <h2>{product?.title}</h2>
+        <h4>
+          Sold by: {soldBy?.first_name} {soldBy?.last_name}
+        </h4>
         <p>{product?.description}</p>
-        <div className="add_to_cart_container">
+        <div className="productview-cart__container">
           <h4>Add to Cart</h4>
-          <div className="add_to_cart_grid">
+          <div className="productview-cart">
+            {product?.sold === true ? (
+              <img src={sold} alt="sold" className="productview-cart__sold" />
+            ) : (
+              ""
+            )}
             <span>
               <h5>Price:</h5>
             </span>
-            <span className="prices">${product?.price}.00</span>
+            <span className="productview-cart__prices">
+              {new Intl.NumberFormat("en-IN", {
+                style: "currency",
+                currency: "USD",
+              }).format(product?.price)}
+            </span>
             <span>
               <h5>Shipping:</h5>
             </span>
-            <span className="prices">${product?.shipping_price}.00</span>
+            <span className="productview-cart__prices">
+              {new Intl.NumberFormat("en-IN", {
+                style: "currency",
+                currency: "USD",
+              }).format(product?.shipping_price)}
+            </span>
           </div>
           <hr />
-          <button onClick={() => addToCart()} className="total_button">${product?.price + product?.shipping_price}.00</button>
+          {user?.id !== product?.user_id ? (
+            <button
+              onClick={() => addToCart()}
+              className="productview-cart__button"
+              disabled={product?.sold}
+            >
+              {new Intl.NumberFormat("en-IN", {
+                style: "currency",
+                currency: "USD",
+              }).format(product?.price + product?.shipping_price)}
+            </button>
+          ) : (
+            ""
+          )}
         </div>
       </div>
     </div>

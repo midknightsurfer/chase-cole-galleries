@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
-import CartView from "./CartView";
-import { useHistory } from "react-router-dom"
+import { useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { updateUser } from "../../store/user";
 import { newOrder } from "../../store/orders";
-import { clear } from "../../store/cart"
+import { clear } from "../../store/cart";
+import CartItem from "./CartItem";
 
 import "./cart.css";
 
@@ -13,22 +13,44 @@ const Checkout = () => {
   const history = useHistory();
   const user = useSelector((state) => state.session.user);
   const cartTotal = useSelector((state) => Object.values(state.cart.cartTotal));
-  const cart = useSelector((state)=> state.cart)
-
-
+  const cart = useSelector((state) => Object.values(state.cart.products));
 
   const [showShipping, setShowShipping] = useState(true);
   const [showShippingForm, setShowShippingForm] = useState(false);
+
   const [address, setAddress] = useState(user.address);
   const [state, setState] = useState(user.state);
   const [city, setCity] = useState(user.city);
   const [zipcode, setZipcode] = useState(user.zipcode);
+  const [phone, setPhone] = useState(user.phone);
+
+  const [validationErrors, setValidationErrors] = useState([]);
+  const [hasSubmitted, setHasSubmitted] = useState(false);
+
+  useEffect(() => {
+    const errors = [];
+    if (!address) {
+      errors.push("Address is required");
+    }
+    if (!state) {
+      errors.push("State is required");
+    }
+    if (!city) {
+      errors.push("City is required");
+    }
+    if (!zipcode) {
+      errors.push("Zipcode is required");
+    }
+    if (!phone) {
+      errors.push("Phone is required");
+    }
+    setValidationErrors(errors);
+  }, [address, city, state, zipcode, phone, showShippingForm]);
 
   const editShipping = () => {
     setShowShipping(!showShipping);
     setShowShippingForm(!showShippingForm);
   };
-
 
   const getTotal = () => {
     const inital = 0;
@@ -39,24 +61,31 @@ const Checkout = () => {
     return myCartTotal;
   };
 
-
   const submitHandler = (e) => {
-    e.preventDefault()
-    const cartItems = Object.values(cart.products)
+    e.preventDefault();
+
+    setHasSubmitted(true);
+    if (validationErrors.length) return;
+
+    const cartItems = cart;
 
     const data = {
       user_id: user.id,
       status: "Processing",
       products: cartItems,
-      total: getTotal()
-    }
+      total: getTotal(),
+    };
 
-    dispatch(newOrder(data))
-    dispatch(clear(user.id))
-    history.push("/myorders")
-}
+    dispatch(newOrder(data));
+    dispatch(clear(user.id));
 
-  const handleSave = async (e) => {
+    setValidationErrors([]);
+    setHasSubmitted(false);
+
+    history.push("/myorders");
+  };
+
+  const handleSave = (e) => {
     e.preventDefault();
 
     const data = {
@@ -64,23 +93,36 @@ const Checkout = () => {
       address,
       city,
       state,
-      zipcode
+      zipcode,
     };
 
-    const productData = await dispatch(updateUser(data, user.id));
+    dispatch(updateUser(data, user.id));
 
     setShowShipping(!showShipping);
-    setShowShippingForm(!showShippingForm);  
+    setShowShippingForm(!showShippingForm);
   };
 
   return (
-    <div className="checkout__container">
+    <div className="checkout-container">
       <h2>Checkout</h2>
-      <div className="checkout__cart-container">
-        <CartView />
-      </div>
-      <div className="checkout__shipping-details">
+      {cart?.length === 0 ? (
+        history.push("/")
+      ) : (
+        <div className="checkout-cart__container">
+          {cart?.map((product) => {
+            return (
+              <div key={product.id}>
+                <CartItem product={product} />
+              </div>
+            );
+          })}{" "}
+        </div>
+      )}
+      <div className="checkout-shipping__details">
         <h3>Shipping Details</h3>
+        <p>
+          A valid shipping address and phone number are required for purchase
+        </p>
         <div>
           Name: {user.first_name} {user.last_name}
         </div>
@@ -95,7 +137,7 @@ const Checkout = () => {
           </>
         )}
         {showShippingForm && (
-          <div className="checkout__shippingform">
+          <div className="checkout-shipping__form">
             <form onSubmit={handleSave}>
               <label className="label">Address:</label>
               <input
@@ -103,7 +145,6 @@ const Checkout = () => {
                 type="input"
                 value={address}
                 onChange={(e) => setAddress(e.target.value)}
-                required
               ></input>
               <label className="label">City:</label>
               <input
@@ -111,7 +152,6 @@ const Checkout = () => {
                 type="input"
                 value={city}
                 onChange={(e) => setCity(e.target.value)}
-                required
               ></input>
               <label className="label">State:</label>
               <select
@@ -178,20 +218,42 @@ const Checkout = () => {
                 type="number"
                 value={zipcode}
                 onChange={(e) => setZipcode(e.target.value)}
-                required
+              ></input>
+              <input
+                name="phone"
+                type="number"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
               ></input>
               <button type="submit">Save</button>
             </form>
           </div>
         )}
       </div>
-      <form onSubmit={submitHandler}>
-      <div className="checkout__confirm">
-        <div>Total: {new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'USD' }).format(getTotal())}</div>
-        <button type="submit">Confirm Order</button>
-      </div>        
-      </form>
-
+      <div className="checkout-confirmation">
+        {hasSubmitted && validationErrors.length > 0 && (
+          <div style={{width: "50%"}} className="errors">
+            The following errors were found:
+            <ul>
+              {validationErrors.map((error) => (
+                <li key={error}>{error}</li>
+              ))}
+            </ul>
+          </div>
+        )}
+        <div>
+          <div>
+            Total:{" "}
+            {new Intl.NumberFormat("en-IN", {
+              style: "currency",
+              currency: "USD",
+            }).format(getTotal())}
+          </div>
+          <form onSubmit={submitHandler}>
+            <button type="submit">Confirm Order</button>
+          </form>
+        </div>
+      </div>
     </div>
   );
 };

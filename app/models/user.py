@@ -13,9 +13,7 @@ class User(db.Model, UserMixin):
     city = db.Column(db.String(255))
     state = db.Column(db.String(20))
     zipcode = db.Column(db.Integer)
-    credit_card = db.Column(db.Integer)
-    expiration = db.Column(db.Date)
-    security_code = db.Column(db.Integer)       
+    phone = db.Column(db.Integer)   
     email = db.Column(db.String(255), nullable=False, unique=True)
     hashed_password = db.Column(db.String(255), nullable=False)
     avatar = db.Column(db.String(255))
@@ -41,6 +39,7 @@ class User(db.Model, UserMixin):
             "first_name": self.first_name,
             "last_name": self.last_name,
             "email": self.email,
+            "phone": self.phone,
             "avatar": self.avatar,
             "admin": self.admin,
             "address": self.address,

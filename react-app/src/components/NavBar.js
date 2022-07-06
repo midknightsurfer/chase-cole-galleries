@@ -1,150 +1,47 @@
-import React, { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { NavLink } from "react-router-dom";
-import * as sessionActions from "../store/session";
-import logo from "../assets/logo.png";
-import CartView from "./Cart/CartView"
+import React, { useContext } from "react";
 import { useCategory } from '../context/CategoryContext';
+import { ModalContext } from "../context/ModalContext";
+import { NavLink, useHistory } from "react-router-dom"
+import CartView from "./Cart/CartView"
+import MainMenu from "./MainMenu/MainMenu";
 
+import logo from "../assets/logo.png";
 import "./NavBar.css";
 
 const NavBar = () => {
-  const dispatch = useDispatch();
+  const history = useHistory();
+  const { setCategory } = useCategory()
+  let { handleModal } = useContext(ModalContext);
 
-  const [showMenu, setShowMenu] = useState(false);
-  const [showCart, setShowCart] = useState(false);
-  const {category, setCategory} = useCategory()
-  const user = useSelector((state) => state?.session?.user);
-
-  const logout = (e) => {
-    e.preventDefault();
-    dispatch(sessionActions.logout());
-
-    setShowMenu(!showMenu)
-
-  };
+  const handleCategory = (catId) => {
+    if (window.location.pathname !== "/") {
+      history.push('/');
+    }
+    setCategory(catId)
+  }
 
   return (
     <>
-      <nav className="top__menu">
-        <i className="fa-solid fa-bars" onClick={() => setShowMenu(!showMenu)}></i>
+      <nav className="top-menu">
+        <i className="fa-solid fa-bars" onClick={() => handleModal(<MainMenu />)}></i>
+        <div className="top-menu__menuhover">Menu</div>
         <NavLink
           to="/"
           exact={true}
         >
           <img src={logo} alt="logo" className="logo" />
         </NavLink>
-        <div className="cart_icon" onClick={() => setShowCart(!showMenu)}><i className="fa-solid fa-cart-flatbed"></i></div>
-        {showMenu && (
-          <div className="main__menu-bg">
-            <nav className="main__menu">
-              <div className="main__menu-header">
-                <NavLink
-                  to="/"
-                  exact={true}
-                  activeClassName="active"
-                >
-                  <img src={logo} alt="logo" className="logo" />
-                </NavLink>
-                <i
-                  className="menuclose fas fa-times"
-                  onClick={() => setShowMenu(!showMenu)}
-                ></i>
-              </div>
-              <div className="main__menu-account">
-              <NavLink
-                  to={`/myaccount`}
-                  exact={true}
-                  activeClassName="active"
-                >
-                <div>
-                  <i className="fa-solid fa-user"></i>My Acccount
-                </div>
-               </NavLink> 
-                <span className="menu__name">
-                  {user ? user?.first_name : ""}
-                </span>
-                <NavLink
-                  to={`/myorders`}
-                  exact={true}
-                  onClick={() => setShowMenu(!showMenu)}
-                  activeClassName="active"
-                >
-                <div>
-                  <i className="fa-solid fa-box"></i>My Orders
-                </div>
-                </NavLink>
-              </div>
-              <div className="main__menu-lists">
-                <div>
-                  <i className="fa-solid fa-eye"></i>Recently Viewed
-                </div>
-                <div>
-                  <i className="fa-solid fa-calendar-plus"></i>New Arrivals
-                </div>
-                <div>
-                  <i className="fa-solid fa-heart"></i>Favorites
-                </div>
-              </div>
-              <div className="main__menu-contact">
-                <div>
-                  <i className="fa-solid fa-blog"></i>Refinisher's Blog
-                </div>
-                <NavLink
-                  to="/ProductForm"
-                  exact={true}
-                  onClick={() => setShowMenu(!showMenu)}
-                  activeClassName="active"
-                >
-                  <div>
-                    <i className="fa-solid fa-dollar-sign"></i>Sell My Furniture
-                  </div>
-                </NavLink>
-                <div>
-                  <i className="fa-solid fa-address-book"></i>Contact Us
-                </div>
-              </div>
-              <div className="main__menu-footer">
-                {user ? (
-                  <NavLink
-                    to="/"
-                    exact={true}
-                    onClick={logout}
-                    activeClassName="active"
-                  >
-                    <button className="button__signup">Log Out</button>
-                  </NavLink>
-                ) : (
-                  <NavLink
-                    to="/login"
-                    exact={true}
-                    onClick={() => setShowMenu(!showMenu)}
-                    activeClassName="active"
-                  >
-                    <button className="button__signup">Sign In</button>
-                  </NavLink>
-                )}
-              </div>
-            </nav>
-          </div>
-        )}
-        {showCart && (
-          <div className="main__menu-bg">
-            <i className="cartclose fas fa-times" onClick={() => setShowCart(!showCart)}></i>
-            <div className="cart_container">
-              <CartView />
-            </div>
-            </div>
-        )}
+        <div className="top-menu__cart" onClick={() => handleModal(<CartView />)}><i className="fa-solid fa-cart-flatbed"></i></div>
+        <div className="top-menu__carthover">Cart</div>
       </nav>
-      <div className="top__menu-categories">
+      <div className="top-menu__categories">
         <ul>
-          <li onClick={() => setCategory(1)}>Bedroom</li>
-          <li onClick={() => setCategory(2)}>Dining Room</li>
-          <li onClick={() => setCategory(3)}>Living Room</li>
-          <li onClick={() => setCategory(4)}>Office</li>
-          <li onClick={() => setCategory(5)}>Outdoor</li>
-          <li onClick={() => setCategory(6)}>Other</li>
+          <li onClick={() => handleCategory(1)}>Bedroom</li>
+          <li onClick={() => handleCategory(2)}>Dining Room</li>
+          <li onClick={() => handleCategory(3)}>Living Room</li>
+          <li onClick={() => handleCategory(4)}>Office</li>
+          <li onClick={() => handleCategory(5)}>Outdoor</li>
+          <li onClick={() => handleCategory(6)}>Other</li>
         </ul>
       </div>
     </>

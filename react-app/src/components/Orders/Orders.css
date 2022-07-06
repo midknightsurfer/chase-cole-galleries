@@ -1,35 +1,91 @@
-.myorders__orderscontainer {
-  display: grid;
-  grid-template-columns: 2fr 2fr;
+.orders-container h2 {
+  text-align: center;
+  margin-bottom: 20px;
 }
 
-.myorders__sellerorder-container, .myorders__buyerorder-container {
+.orders-orders__container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 200px;
+  margin-bottom: 150px;    
+}
+
+.orders-purchases__container {
+  margin-top: 20px;
+  border: 1px solid;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  flex-direction: column;
+  width: 80%
+}
+
+.orders-purchases__img {
+  width: 100px;
+  height: 100px;
+  background-position: center;
+  background-size: cover;
+  float: right;
+  border: 1px solid;
+}
+
+.orders-purchases__singlecontainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+  margin: 10px;
+  border: 1px solid;
+  padding: 5px;
+  font-size: 10pt;
+  background-color: rgba(182, 179, 179, 0.836);
+  border-radius: 5px;
+}
+
+.orders-product__container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;  
+  padding: 5px;
+}
+
+.orders-sold__container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;;
   border: 1px solid;
   margin : 20px;
-  margin-bottom: 150px;
 }
 
-.orders_singlecontainer {
-  display: flex;
-  justify-content: space-between;
+.orders-sold__container div {
+  border-bottom: 1px solid;  
+}
+
+.orders-single__container {
+  display: grid;
+  text-align: center;
+  margin: 10px;
   border: 1px solid;
   padding: 5px;
   font-size: 10pt;
   cursor: pointer;
+  width: 200px;
+  background-color: rgba(182, 179, 179, 0.836);
+  border-radius: 5px;
 }
 
-.orders_singlecontainer span {
+.orders-single__container span {
   color: #fd576b;
   margin-left: 5px;
 }
 
-.orders_singlecontainer:hover {
+.orders-single__container:hover, .orders-purchases__singlecontainer:hover {
   box-shadow: 2px 2px 10px rgb(131, 130, 130);
   background-color: #ff994560;
 }
 
-
-.orders__modifyModal {
+.orders-details__modal {
   text-align: center;
   font-size:  1.3em;
   background-color: #fff;
@@ -43,4 +99,16 @@
   box-sizing: border-box;
   box-shadow: 0 15px 25px rgba(0, 0, 0, 0.6);
   border-radius: 10px;
+}
+
+.orders-details__close {
+  cursor: pointer;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  color: rgb(112, 18, 92)
+}
+
+.orders-details__close:hover {
+  color: #fd576b
 }

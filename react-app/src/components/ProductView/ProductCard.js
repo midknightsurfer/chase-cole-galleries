@@ -4,18 +4,20 @@ import { deleteProductId } from "../../store/products";
 import { ModalContext } from "../../context/ModalContext";
 import { useHistory, Link } from "react-router-dom";
 
+import sold from "../../assets/sold.png";
+
 import "./ProductView.css";
 
 const ProductCard = ({ product }) => {
   const dispatch = useDispatch();
   const history = useHistory();
-  let { handleModal } = useContext(ModalContext);
+  let { handleModal, setModal } = useContext(ModalContext);
 
   const user = useSelector((state) => state.session.user);
 
   const deleteProduct = (productId) => {
     dispatch(deleteProductId(productId));
-    handleModal(<ContentComponent />);
+    setModal(false);
   };
 
   const handleButtonClick = (e) => {
@@ -26,7 +28,7 @@ const ProductCard = ({ product }) => {
             <p>Are you sure you want to remove this product?</p>
             <div className="products-card__modalbtns">
               <button onClick={() => deleteProduct(product.id)}>Delete</button>
-              <button onClick={() => handleModal(<ContentComponent />)}>
+              <button onClick={() => setModal(false)}>
                 Cancel
               </button>
             </div>
@@ -47,7 +49,11 @@ const ProductCard = ({ product }) => {
           <div
             className="products-card__photo"
             style={{ backgroundImage: `url(${product.images[0]})` }}
-          ></div>
+          >            {product?.sold === true ? (
+            <img src={sold} alt="sold" className="products-cart__sold" />
+          ) : (
+            ""
+          )}</div>
 
           <div className="products-card__title">{product.title}</div>
           <div className="products-card__price">{new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'USD' }).format(product.price)}</div>
@@ -78,7 +84,3 @@ const ProductCard = ({ product }) => {
 };
 
 export default ProductCard;
-
-function ContentComponent() {
-  return <></>;
-}

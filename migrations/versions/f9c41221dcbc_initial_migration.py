@@ -34,9 +34,7 @@ def upgrade():
         sa.Column("city", sa.String(length=255)),
         sa.Column("state", sa.String(length=20)),
         sa.Column("zipcode", sa.Integer),
-        sa.Column("credit_card", sa.Integer),
-        sa.Column("expiration", sa.Date),
-        sa.Column("security_code", sa.Integer),
+        sa.Column("phone", sa.Integer),
         sa.Column("email", sa.String(length=255), nullable=False),
         sa.Column("hashed_password", sa.String(length=255), nullable=False),
         sa.Column("avatar", sa.String(length=255), nullable=True),
@@ -53,6 +51,7 @@ def upgrade():
         sa.Column("category_id", sa.Integer(), nullable=False),
         sa.Column("price", sa.Float(), nullable=False),
         sa.Column("shipping_price", sa.Float(), nullable=False),
+        sa.Column("sold", sa.Boolean(), default=False),
         sa.Column("created_at", sa.DateTime(), nullable=False, default=datetime.utcnow),
         sa.ForeignKeyConstraint(
             ["category_id"],

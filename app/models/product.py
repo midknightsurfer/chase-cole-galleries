@@ -10,6 +10,7 @@ class Product(db.Model):
     description = db.Column(db.Text, nullable=False)
     category_id = db.Column(db.Integer, db.ForeignKey("categories.id"), nullable=False)
     price = db.Column(db.Float, nullable=False)
+    sold = db.Column(db.Boolean, default=False)
     shipping_price = db.Column(db.Float, nullable=False)
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
 
@@ -29,6 +30,7 @@ class Product(db.Model):
             "description": self.description,
             "category_id": self.category.category_info(),
             "price": self.price,
+            "sold": self.sold,
             "shipping_price": self.shipping_price,
             "images": [image.image_info() for image in self.images],
             "created_at": self.created_at,

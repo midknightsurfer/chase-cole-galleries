@@ -1,0 +1,102 @@
+.main-menu {
+  height: 100vh;
+  width: 260px;;
+  display: flex;
+  border-right: 1px solid;
+  flex: 0 0 fit-content;
+  position: fixed;
+	left: 0;
+	top: 0;
+  animation-name: slide;
+  animation-duration: 250ms;
+  background-color: white;
+}
+
+.main-menu a {
+  text-decoration: none;
+  color: black;
+}
+
+@keyframes slide {
+  0% {transform: translateX(-100%)};  
+  25% {transform: translateX(-15%)};
+  50% {transform: translateX(-10%)};
+  75% {transform: translateX(-5%)};
+  100% {transform: translateX(1%)};
+}
+
+.main-menu__header {
+  position: absolute;
+  border-bottom: 2px solid #ff9845;
+  width: 100%;
+  height: 60px;
+}
+
+.main-menu__account {
+  top: 60px; 
+}
+
+.main-menu__lists, .main-menu__account, .main-menu__contact {
+  position: absolute;
+  width: 100%;
+  border-bottom: 2px solid #ff9845;    
+}
+
+.main-menu__account div, .main-menu__lists div, .main-menu__contact div {
+  cursor: pointer;   
+  padding: 10px;
+  margin: 5px;
+  border-radius: 5px;
+}
+
+.main-menu__account div:hover, .main-menu__lists div:hover, .main-menu__contact div:hover {
+  background-color: #ff994560;
+}
+
+.main-menu__name {
+  position: absolute;
+  left: 40px;
+  margin-top: -15px;
+  color: #fd576b;
+  font-weight: bold;
+}
+
+.main-menu__contact {
+  top: 310px;
+}
+
+.main-menu__lists {
+  top: 160px;  
+}
+
+.main-menu__signin {
+  position: absolute;
+  bottom: 3vh;
+  width: 80%;
+  margin-left: 25px;
+}
+
+.main-menu__bg {
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  top: 0;
+  left: 0;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.main-menu__close {
+  cursor: pointer;  
+  position: absolute;
+  color: rgb(112, 18, 92);
+  padding: 15px;
+  font-size: 16pt;
+}
+
+.fa-user, .fa-box, .fa-calendar-plus, .fa-eye, .fa-heart, .fa-blog, .fa-dollar-sign, .fa-address-book {
+  color: rgb(112, 18, 92);
+  margin-right: 10px;
+}
