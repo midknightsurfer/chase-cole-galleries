@@ -13,14 +13,13 @@ class User(db.Model, UserMixin):
     city = db.Column(db.String(255))
     state = db.Column(db.String(20))
     zipcode = db.Column(db.Integer)
-    phone = db.Column(db.Integer)   
+    phone = db.Column(db.String(20))   
     email = db.Column(db.String(255), nullable=False, unique=True)
     hashed_password = db.Column(db.String(255), nullable=False)
     avatar = db.Column(db.String(255))
     admin = db.Column(db.Boolean)
     
-    cart = db.relationship("Cart", back_populates="user")
-    
+    cart = db.relationship("Cart", back_populates="user")    
 
     @property
     def password(self):

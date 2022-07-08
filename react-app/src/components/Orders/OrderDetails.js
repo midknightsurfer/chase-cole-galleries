@@ -1,50 +1,47 @@
 import { useContext, useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { removeOrder, editStatus } from "../../store/orders";
+import { useDispatch } from "react-redux";
+import { removeOrder, editStatus } from "../../store/sold";
 import { ModalContext } from "../../context/ModalContext";
-import { getUsers } from "../../store/user";
 
-const OrderDetails = ({ order }) => {
-  const [newStatus, setNewStatus] = useState(order.status);
+
+const OrderDetails = ({ product }) => {
+  const [newStatus, setNewStatus] = useState(product.status);
   const dispatch = useDispatch();
-  const user = useSelector((state) =>
-    state.user.users.find((user) => user.id === order.user_id)
-  );
-  let { handleModal } = useContext(ModalContext);
 
-  useEffect(() => {
-    dispatch(getUsers());
-  }, [dispatch]);
+  let { handleModal, setModal } = useContext(ModalContext);
+
 
   const cancelOrder = () => {
-    dispatch(removeOrder(order.id));
-    handleModal(<ContentComponent />);
+    dispatch(removeOrder(product.id));
+    setModal(false);
   };
 
-  const updateStatus = () => {
+  const updateStatus = async (e) => {
+    e.preventDefault();
     const data = {
-      order_id: order.id,
+      order_id: product.id,
       status: newStatus,
     };
 
-    dispatch(editStatus(data));
-    handleModal(<ContentComponent />);
+    await dispatch(editStatus(data));
+
+    setModal(false);
   };
 
   return (
     <div className="main-menu__bg">
       <div className="orders-details__modal">
         <h3>Order Details</h3>
-        <div>Name: {user.first_name} {user.last_name}</div>
+        {/* <div>Name: {user.first_name} {user.last_name}</div>
         <div>Email: {user.email}</div>
         <div>Address: {user.address}</div>
         <div>City: {user.city}</div>
         <div>State: {user.state}</div> 
         <div>Zipcode: {user.zipcode}</div>
-        <div>Phone: {user.phone}</div>
+        <div>Phone: {user.phone}</div> */}
         <i
           className="orders-details__close fas fa-times"
-          onClick={() => handleModal(<ContentComponent />)}
+          onClick={() => setModal(false)}
         ></i>
         <select
           value={newStatus}
@@ -64,7 +61,3 @@ const OrderDetails = ({ order }) => {
 };
 
 export default OrderDetails;
-
-function ContentComponent() {
-  return <></>;
-}

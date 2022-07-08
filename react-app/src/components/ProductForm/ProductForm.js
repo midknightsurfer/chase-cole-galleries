@@ -176,7 +176,6 @@ const ProductForm = () => {
               {({
                 imageList,
                 onImageUpload,
-                onImageRemoveAll,
                 onImageUpdate,
                 onImageRemove,
                 isDragging,

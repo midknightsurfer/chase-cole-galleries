@@ -94,6 +94,7 @@ const Checkout = () => {
       city,
       state,
       zipcode,
+      phone,
     };
 
     dispatch(updateUser(data, user.id));
@@ -132,6 +133,7 @@ const Checkout = () => {
             <div>
               City: {city} State: {state} Zipcode: {zipcode}
             </div>
+            <div>Phone: {phone}</div>
 
             <button onClick={editShipping}>Update Shipping Info</button>
           </>
@@ -219,6 +221,7 @@ const Checkout = () => {
                 value={zipcode}
                 onChange={(e) => setZipcode(e.target.value)}
               ></input>
+              <label className="label">Phone:</label>              
               <input
                 name="phone"
                 type="number"

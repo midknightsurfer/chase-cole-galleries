@@ -34,7 +34,7 @@ def upgrade():
         sa.Column("city", sa.String(length=255)),
         sa.Column("state", sa.String(length=20)),
         sa.Column("zipcode", sa.Integer),
-        sa.Column("phone", sa.Integer),
+        sa.Column("phone", sa.String(length=20)),
         sa.Column("email", sa.String(length=255), nullable=False),
         sa.Column("hashed_password", sa.String(length=255), nullable=False),
         sa.Column("avatar", sa.String(length=255), nullable=True),
@@ -67,7 +67,6 @@ def upgrade():
         "orders",
         sa.Column("id", sa.Integer(), nullable=False),
         sa.Column("user_id", sa.Integer(), nullable=False),
-        sa.Column("status", sa.String(length=80), nullable=False),
         sa.Column("total", sa.Integer(), nullable=False),        
         sa.Column("created_at", sa.DateTime, nullable=False, default=datetime.utcnow),
         sa.ForeignKeyConstraint(
@@ -79,10 +78,12 @@ def upgrade():
     op.create_table(
         "order_products",
         sa.Column("id", sa.Integer(), nullable=False),
+        sa.Column("user_id", sa.Integer(), nullable=False),
         sa.Column("order_id", sa.Integer(), nullable=False),
         sa.Column("product_id", sa.Integer(), nullable=False),
         sa.Column("product_title", sa.String(), nullable=False),
         sa.Column("product_image", sa.String(), nullable=False),
+        sa.Column("status", sa.String(length=80), nullable=False),
         sa.ForeignKeyConstraint(
             ["order_id"],
             ["orders.id"],
@@ -90,6 +91,10 @@ def upgrade():
         sa.ForeignKeyConstraint(
             ["product_id"],
             ["products.id"],
+        ),
+        sa.ForeignKeyConstraint(
+            ["user_id"],
+            ["users.id"],
         ),
         sa.PrimaryKeyConstraint("id"),
     )

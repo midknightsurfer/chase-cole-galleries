@@ -13,7 +13,7 @@ const load = (user) => ({
 
 export const getUsers = () => async (dispatch) => {
   const response = await fetch(`/api/users`);
-console.log(response)
+
   if (response.ok) {
     const user = await response.json();
     dispatch(load(user));

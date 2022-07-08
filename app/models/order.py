@@ -5,10 +5,9 @@ class Order(db.Model):
     __tablename__ = "orders"
 
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False) # user foreign key
-    status = db.Column(db.String(80), nullable=False)
-    total = db.Column(db.Integer, nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False) # user foreign key    total = db.Column(db.Integer, nullable=False)
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    total = db.Column(db.Integer, nullable=False)
 
     products = db.relationship('OrderProduct', back_populates='order', cascade="all, delete-orphan")
 
@@ -17,20 +16,11 @@ class Order(db.Model):
         return {
             "id": self.id,
             "user_id": self.user_id,
-            "status": self.status,
             "created_at": self.created_at,
             "products": [product.to_dict() for product in self.products],
             "total": self.total
         }
         
         
-    # def product_info(self):
-    #     return {
-    #     "id": self.id,
-    #     "user_id": self.user_id,
-    #     "title": self.product.booking_info(),
-    #     "description": self.product.booking_info(),
-    #     "shipping_price": self.product.booking_info(),
-    #     "images": [image.image_info() for image in self.images],
-    # }
+
 

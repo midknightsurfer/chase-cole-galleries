@@ -1,5 +1,6 @@
 from flask import Blueprint, jsonify, request
 from flask_login import login_required
+from .auth_routes import validation_errors_to_error_messages
 from app.models import db, User
 from app.forms import UpdateShipping
 
@@ -16,7 +17,6 @@ def users():
 @login_required
 def user(id):
     user = User.query.get(id)
-    print("print user..............", user)
     return user.to_dict()
 
 
@@ -33,6 +33,7 @@ def update(userId):
         user.city = data["city"]
         user.state = data["state"]
         user.zipcode = data["zipcode"]
+        user.phone = data["phone"]
         
         db.session.add(user)
         db.session.commit()

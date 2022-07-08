@@ -35,14 +35,3 @@ class Product(db.Model):
             "images": [image.image_info() for image in self.images],
             "created_at": self.created_at,
         }
-        
-    
-    # def product_info(self):
-    #     return {
-    #     "id": self.id,
-    #     "user_id": self.user_id,
-    #     "title": self.title,
-    #     "description": self.description,
-    #     "shipping_price": self.shipping_price,
-    #     "images": [image.image_info() for image in self.images],
-    # }
