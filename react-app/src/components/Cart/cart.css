@@ -93,7 +93,7 @@
   flex-direction: column;
   font-size: 8pt;
   position: absolute;
-  right: 0;
+  right: 40px;
   margin-top: -120px;
   text-align: center;
   margin-right: 5px;
@@ -104,7 +104,7 @@
   flex-direction: column;
   font-size: 8pt;
   position: absolute;
-  right: 100px;
+  right: 140px;
   margin-top: -120px;
   text-align: center;
   margin-right: 5px;
@@ -136,15 +136,8 @@
 }
 
 .checkout-cart__container {
-  position: absolute;
-  width: 40%;
+  margin: 20px 40px;
   border: 2px solid;
-  margin: 40px;
-}
-
-.checkout-container {
-  display: flex;
-  flex-direction: column;
 }
 
 .checkout-container h2 {
@@ -152,12 +145,9 @@
 }
 
 .checkout-shipping__details {
-  margin: 40px;
+  margin: 20px 40px;
   display: flex;
   flex-direction: column;
-  position: absolute;
-  right: 20px;
-  width: 40%;
   border: 2px solid;
 }
 
@@ -166,32 +156,49 @@
 }
 
 .checkout-shipping__details button {
+  width: 300px;
   margin-right: auto;
   margin-left: auto;
 }
 
 .checkout-shipping__form {
   margin: 5px;
+  width: 90%;
+}
+
+.checkout-shipping__form input {
+  width: 80%;
+  margin: 5px;
+
+}
+
+.checkout-shipping__form button {
+  width: 300px;
+  margin: 20px;
 }
 
 .checkout-confirm {
-  position: absolute;
+  margin: 20px 40px;
   bottom: 0;
   width: 100%;
   text-align: center;
-  padding-bottom: 150px;
+
 }
 
 .checkout-confirmation {
-  position: absolute;
   text-align: center;
   width: 100%;
-  bottom: 250px;
+  padding-bottom: 350px;  
 }
 
 .checkout-confirmation button {
   width: 20%;
 }
+
+.checkout-shipping__details p {
+  text-align: center; 
+}
+
 
 
 

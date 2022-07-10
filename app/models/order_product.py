@@ -10,6 +10,7 @@ class OrderProduct(db.Model):
     product_id = db.Column(db.Integer, db.ForeignKey("products.id"), nullable=False)
     product_title = db.Column(db.String, nullable=False)
     product_image = db.Column(db.String, nullable=False)
+    buyer_id = db.Column(db.Integer , nullable=False)
     status = db.Column(db.String)
 
     order = db.relationship("Order", back_populates="products")

@@ -81,6 +81,7 @@ def upgrade():
         sa.Column("user_id", sa.Integer(), nullable=False),
         sa.Column("order_id", sa.Integer(), nullable=False),
         sa.Column("product_id", sa.Integer(), nullable=False),
+        sa.Column("buyer_id", sa.Integer(), nullable=False),
         sa.Column("product_title", sa.String(), nullable=False),
         sa.Column("product_image", sa.String(), nullable=False),
         sa.Column("status", sa.String(length=80), nullable=False),

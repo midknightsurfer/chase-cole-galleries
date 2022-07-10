@@ -1,43 +1,51 @@
-import React, { useState } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { signUp } from "../../store/session";
 
 const SignUpForm = ({ email }) => {
   const dispatch = useDispatch();
-  
-  const [errors, setErrors] = useState([]);
+
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [password, setPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
 
+  const [validationErrors, setValidationErrors] = useState([]);
+  const [hasSubmitted, setHasSubmitted] = useState(false);
+
+  useEffect(() => {
+    const errors = [];
+    if (!firstName) {
+      errors.push("First Name is required");
+    }
+    if (!lastName) {
+      errors.push("Last Name is required");
+    }
+    if (!password) {
+      errors.push("Password is required");
+    }
+    if (!repeatPassword) {
+      errors.push("Repeat Password is required");
+    }
+    if (password !== repeatPassword) {
+      errors.push("Passwords do not match");
+    }
+
+    setValidationErrors(errors);
+  }, [firstName, lastName, password, repeatPassword]);
+
 
   const onSignUp = async (e) => {
     e.preventDefault();
-    if (password === repeatPassword) {
-      const data = await dispatch(signUp(firstName, lastName, email, password));
-      if (data) {
-        setErrors(data);
-      }
-    } else {
-      setErrors(["Passwords do not match!"])
-    }
-  };
+    
+    setHasSubmitted(true);
+    if (validationErrors.length !== 0) return;
 
-  const updateFirstName = (e) => {
-    setFirstName(e.target.value);
-  };
+    await dispatch(signUp(firstName, lastName, email, password));
 
-  const updateLastName = (e) => {
-    setLastName(e.target.value);
-  };
+    setHasSubmitted(false);
+    setValidationErrors([]);
 
-  const updatePassword = (e) => {
-    setPassword(e.target.value);
-  };
-
-  const updateRepeatPassword = (e) => {
-    setRepeatPassword(e.target.value);
   };
 
   return (
@@ -48,7 +56,7 @@ const SignUpForm = ({ email }) => {
         <input
           type="text"
           name="first_name"
-          onChange={updateFirstName}
+          onChange={(e) => setFirstName(e.target.value)}
           value={firstName}
         ></input>
       </div>
@@ -57,7 +65,7 @@ const SignUpForm = ({ email }) => {
         <input
           type="text"
           name="last_name"
-          onChange={updateLastName}
+          onChange={(e) => setLastName(e.target.value)}  
           value={lastName}
         ></input>
       </div>
@@ -75,7 +83,7 @@ const SignUpForm = ({ email }) => {
         <input
           type="password"
           name="password"
-          onChange={updatePassword}
+          onChange={(e) => setPassword(e.target.value)}
           value={password}
         ></input>
       </div>
@@ -84,19 +92,19 @@ const SignUpForm = ({ email }) => {
         <input
           type="password"
           name="repeat_password"
-          onChange={updateRepeatPassword}
+          onChange={(e) => setRepeatPassword(e.target.value)} 
           value={repeatPassword}
           required={true}
         ></input>
       </div>
       <div>
-        {errors.map((error, ind) => (
+        {hasSubmitted && validationErrors.length > 0 && (
+        validationErrors.map((error, ind) => (
           <div className="auth-form__error" key={ind}>{error}</div>
-        ))}
+        )))}
       </div>
       <button type="submit" className="auth-form__button">Sign Up</button>
-    </form>
-  );
+    </form>  );
 };
 
 export default SignUpForm;

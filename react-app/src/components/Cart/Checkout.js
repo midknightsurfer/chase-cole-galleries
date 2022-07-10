@@ -29,6 +29,7 @@ const Checkout = () => {
 
   useEffect(() => {
     const errors = [];
+    setHasSubmitted(false);
     if (!address) {
       errors.push("Address is required");
     }
@@ -41,8 +42,14 @@ const Checkout = () => {
     if (!zipcode) {
       errors.push("Zipcode is required");
     }
+    if (zipcode && zipcode.length !== 5) {
+      errors.push("Zipcode must be 5 digits");
+    }
     if (!phone) {
       errors.push("Phone is required");
+    }
+    if (phone && phone.length !== 10) {
+      errors.push("Phone must be 10 digits");
     }
     setValidationErrors(errors);
   }, [address, city, state, zipcode, phone, showShippingForm]);
@@ -85,7 +92,7 @@ const Checkout = () => {
     history.push("/myorders");
   };
 
-  const handleSave = (e) => {
+  const handleSave = async (e) => {
     e.preventDefault();
 
     const data = {
@@ -97,11 +104,17 @@ const Checkout = () => {
       phone,
     };
 
-    dispatch(updateUser(data, user.id));
+    await dispatch(updateUser(data, user.id));
 
     setShowShipping(!showShipping);
     setShowShippingForm(!showShippingForm);
   };
+
+  const handleCancel = (e) => {
+    e.preventDefault();
+    setShowShipping(!showShipping);
+    setShowShippingForm(!showShippingForm);
+  }
 
   return (
     <div className="checkout-container">
@@ -110,6 +123,7 @@ const Checkout = () => {
         history.push("/")
       ) : (
         <div className="checkout-cart__container">
+          <h3>Cart</h3>
           {cart?.map((product) => {
             return (
               <div key={product.id}>
@@ -136,11 +150,22 @@ const Checkout = () => {
             <div>Phone: {phone}</div>
 
             <button onClick={editShipping}>Update Shipping Info</button>
+            {hasSubmitted && validationErrors.length > 0 && (
+          <div className="errors">
+            The following errors were found:
+            <ul>
+              {validationErrors.map((error) => (
+                <li key={error}>{error}</li>
+              ))}
+            </ul>
+          </div>
+        )}
           </>
         )}
         {showShippingForm && (
           <div className="checkout-shipping__form">
-            <form onSubmit={handleSave}>
+            <form onSubmit={handleSave}>            
+            <div>
               <label className="label">Address:</label>
               <input
                 name="address"
@@ -148,14 +173,18 @@ const Checkout = () => {
                 value={address}
                 onChange={(e) => setAddress(e.target.value)}
               ></input>
+            </div>
+            <div>
               <label className="label">City:</label>
               <input
                 name="city"
                 type="input"
                 value={city}
                 onChange={(e) => setCity(e.target.value)}
-              ></input>
-              <label className="label">State:</label>
+              ></input>              
+            </div>
+            <div>
+              <label className="label">State: </label>
               <select
                 name="state"
                 value={state}
@@ -213,7 +242,9 @@ const Checkout = () => {
                 <option value="WV">West Virginia</option>
                 <option value="WI">Wisconsin</option>
                 <option value="WY">Wyoming</option>
-              </select>
+              </select>              
+            </div>
+            <div>
               <label className="label">Zipcode:</label>
               <input
                 name="zipcode"
@@ -221,6 +252,8 @@ const Checkout = () => {
                 value={zipcode}
                 onChange={(e) => setZipcode(e.target.value)}
               ></input>
+            </div>
+            <div>
               <label className="label">Phone:</label>              
               <input
                 name="phone"
@@ -228,14 +261,16 @@ const Checkout = () => {
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
               ></input>
-              <button type="submit">Save</button>
+            </div>
+
+
+
+
+              <button type="submit" onClick={submitHandler}>Save</button>
+              <button onClick={handleCancel}>Cancel</button>
             </form>
-          </div>
-        )}
-      </div>
-      <div className="checkout-confirmation">
-        {hasSubmitted && validationErrors.length > 0 && (
-          <div style={{width: "50%"}} className="errors">
+            {hasSubmitted && validationErrors.length > 0 && (
+          <div className="errors">
             The following errors were found:
             <ul>
               {validationErrors.map((error) => (
@@ -244,6 +279,10 @@ const Checkout = () => {
             </ul>
           </div>
         )}
+          </div>
+        )}
+      </div>
+      <div className="checkout-confirmation">
         <div>
           <div>
             Total:{" "}

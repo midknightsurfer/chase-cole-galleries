@@ -32,6 +32,7 @@ def new_order():
         order_product = OrderProduct(
             order_id=order.id,
             user_id=product["product"]["user_id"],
+            buyer_id=req["user_id"],
             product_id=product["product"]["id"],
             product_title=product["product"]["title"],
             product_image=product["product"]["images"],

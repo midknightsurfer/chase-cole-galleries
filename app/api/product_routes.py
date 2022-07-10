@@ -62,7 +62,7 @@ def update(productId):
         product.shipping_price = data["shipping_price"]
         product.price = data["price"]
         product.sold = data["sold"]
-
+        
         images = Image.query.filter(Image.product_id == productId).all()
         for image in images:
             db.session.delete(image)
@@ -110,7 +110,6 @@ def delete_product(productId):
 @login_required
 def add_product_images():
     newFile = request.form.get("newFile")
-    print("start print___________", newFile)
     
     if newFile == "true":
         if "file" not in request.files:
@@ -124,7 +123,6 @@ def add_product_images():
             db.session.commit()
 
     if newFile == "false":
-        print("********************************")
         product_id = request.form.get("product_id")
         url = request.form.get("file")
         image = Image(product_id=product_id, url=url)

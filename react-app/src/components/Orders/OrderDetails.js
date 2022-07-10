@@ -10,7 +10,7 @@ const OrderDetails = ({ product }) => {
 
   let { handleModal, setModal } = useContext(ModalContext);
 
-
+console.log(product)
   const cancelOrder = () => {
     dispatch(removeOrder(product.id));
     setModal(false);

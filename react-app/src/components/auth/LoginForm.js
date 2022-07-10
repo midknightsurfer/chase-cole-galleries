@@ -10,15 +10,30 @@ import "./auth.css";
 const LoginForm = () => {
   const dispatch = useDispatch();
 
-  const [errors, setErrors] = useState([]);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [users, setUsers] = useState([]);
+
   const [showPassword, setShowPassword] = useState(false);
   const [showCheck, setShowCheck] = useState(true);
   const [showLogin, setShowLogin] = useState(false);
   const [showSignUp, setShowSignUp] = useState(false);
   const [showLoginForm, setShowLoginForm] = useState(true);
+
+  const [validationErrors, setValidationErrors] = useState([]);
+  const [hasSubmitted, setHasSubmitted] = useState(false);
+
+  useEffect(() => {
+    const errors = [];
+    if (!email) {
+      errors.push("Email is required");
+    }
+    if (email && !email.includes('@')) {
+      errors.push("Email must contain an @");
+    }
+
+    setValidationErrors(errors);
+  }, [email, password]);
 
   useEffect(() => {
     async function fetchData() {
@@ -43,6 +58,9 @@ const LoginForm = () => {
   const onCheck = async (e) => {
     e.preventDefault();
 
+    setHasSubmitted(true);
+    if (validationErrors.length !== 0) return;
+
     const user = users.find((user) => user.email === email);
   
     if (user) {
@@ -54,6 +72,9 @@ const LoginForm = () => {
         setShowSignUp(!showSignUp);
         setShowLoginForm(!showLoginForm);      
     }
+
+    setHasSubmitted(false);
+    setValidationErrors([]);
   };
 
   const onCancel = () => {
@@ -65,18 +86,15 @@ const LoginForm = () => {
   const onLogin = async (e) => {
     e.preventDefault();
 
-    const data = await dispatch(login(email, password));
-    if (data) {
-      setErrors(data);
-    }
-  };
+    setHasSubmitted(true);
+  
+    if (validationErrors.length !== 0) return;
 
-  const updateEmail = (e) => {
-    setEmail(e.target.value);
-  };
+    await dispatch(login(email, password));
 
-  const updatePassword = (e) => {
-    setPassword(e.target.value);
+    setHasSubmitted(false);
+    setValidationErrors([]);
+
   };
 
   return (
@@ -115,7 +133,7 @@ const LoginForm = () => {
                 type="text"
                 placeholder="Email"
                 value={email}
-                onChange={updateEmail}
+                onChange={(e) => setEmail(e.target.value) }
               />
             </div>
           </>
@@ -129,15 +147,16 @@ const LoginForm = () => {
                 type="password"
                 placeholder="Password"
                 value={password}
-                onChange={updatePassword}
+                onChange={(e) => setPassword(e.target.value) }
               />
             </div>
           )}
 
           <div>
-            {errors.map((error, ind) => (
+            {hasSubmitted && validationErrors.length > 0 && (
+            validationErrors.map((error, ind) => (
               <div className="auth-form__error" key={ind}>{error}</div>
-            ))}
+            )))}
           </div>
           {showCheck && (
             <>

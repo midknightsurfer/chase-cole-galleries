@@ -29,15 +29,9 @@ const ProductForm = () => {
     if (!title) {
       errors.push("Title is required");
     }
-    if (title && (title.length > 20 || title.length < 55)) {
-      errors.push("Title must be between 20 and 55 characters");
-    }
     if (!description) {
       errors.push("Description is required");
-    }
-    if (description && description.length < 40) {
-      errors.push("Type a longer description");
-    }    
+    } 
     if (!price) {
       errors.push("Price is required");
     }
@@ -93,7 +87,7 @@ const ProductForm = () => {
     setHasSubmitted(false);
 
     setTimeout(() => {
-      history.push("/myaccount");
+      history.push("/");
       setModal(false);
     }, 3000);
   };

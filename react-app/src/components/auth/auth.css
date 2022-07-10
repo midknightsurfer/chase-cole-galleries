@@ -106,3 +106,10 @@
   background-image: url(../../assets/furniture06.jpg);
   animation-delay: 30s; 
 }
+
+@media screen and (max-width: 600px) {
+  .auth-form {
+    width: 75vw;
+    opacity: 1;
+  }
+}
