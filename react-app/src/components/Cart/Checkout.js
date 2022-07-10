@@ -111,7 +111,7 @@ const Checkout = () => {
   };
 
   const handleCancel = (e) => {
-    e.preventDefault();
+    e.preventDefault()
     setShowShipping(!showShipping);
     setShowShippingForm(!showShippingForm);
   }
