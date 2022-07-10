@@ -42,8 +42,8 @@ const Checkout = () => {
     if (!zipcode) {
       errors.push("Zipcode is required");
     }
-    if (zipcode && zipcode.length !== 5) {
-      errors.push("Zipcode must be 5 digits");
+    if (zipcode && (zipcode.length > 5 || zipcode.length < 5)) {
+      errors.push("Zip Code must be 5 digits");
     }
     if (!phone) {
       errors.push("Phone is required");
@@ -245,7 +245,7 @@ const Checkout = () => {
               </select>              
             </div>
             <div>
-              <label className="label">Zipcode:</label>
+              <label className="label">Zip Code:</label>
               <input
                 name="zipcode"
                 type="number"
@@ -262,11 +262,7 @@ const Checkout = () => {
                 onChange={(e) => setPhone(e.target.value)}
               ></input>
             </div>
-
-
-
-
-              <button type="submit" onClick={submitHandler}>Save</button>
+              <button type="submit" onClick={handleSave}>Save</button>
               <button onClick={handleCancel}>Cancel</button>
             </form>
             {hasSubmitted && validationErrors.length > 0 && (
