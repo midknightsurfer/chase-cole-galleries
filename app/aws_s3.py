@@ -1,5 +1,7 @@
+import logging
 import boto3
 import botocore
+from botocore.exceptions import ClientError
 import os
 import uuid
 
@@ -36,8 +38,8 @@ def upload_file_to_s3(file, acl="public-read"):
                 "ContentType": file.content_type
             }
         )
-    except Exception as e:
-
-        return {"errors": str(e)}
+    except ClientError as e:
+        logging.error(e)
+        return False
 
     return {"url": f"{S3_LOCATION}{file.filename}"}
