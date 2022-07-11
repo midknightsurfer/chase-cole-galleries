@@ -1,6 +1,10 @@
-const LOAD_SOLD = "orders/LOAD_SOLD";
-const UPDATE_STATUS = "orders/UPDATE_STATUS";
-const DELETE_ORDER = "orders/DELETE_ORDER"
+import rfdc from "rfdc";
+
+const clone = rfdc()
+
+const LOAD_SOLD = "sold/LOAD_SOLD";
+const UPDATE_STATUS = "sold/UPDATE_STATUS";
+const DELETE = "sold/DELETE_ORDER"
 
 const sold = (product) => {
   return {
@@ -18,7 +22,7 @@ const updateOrder = (order) => {
 
 const deleteOrder = (order) => {
   return {
-      type: DELETE_ORDER,
+      type: DELETE,
       order
   }
 }
@@ -41,7 +45,6 @@ export const editStatus = (data) => async (dispatch) => {
       body: JSON.stringify({ status })
   })
 
-
   if(response.ok) {
       const order = await response.json()
       dispatch(updateOrder(order))
@@ -49,12 +52,11 @@ export const editStatus = (data) => async (dispatch) => {
 }
 
 export const removeOrder = (data) => async (dispatch) => {
-  const response = await fetch(`api/orders/${data}`,{
+  const response = await fetch(`api/orders/sold/${data}`,{
       method: "DELETE"
   })
 
   if(response.ok) {
-    console.log(response)
       const order = await response.json()
       dispatch(deleteOrder(order))
   }
@@ -63,7 +65,7 @@ export const removeOrder = (data) => async (dispatch) => {
 const initialState = {};
 
 const soldReducer = (state = initialState, action) => {
-  let newState = {};
+  let newState = clone(state);
   switch (action.type) {
     case LOAD_SOLD:
       let soldObj = {};
@@ -75,7 +77,7 @@ const soldReducer = (state = initialState, action) => {
     case UPDATE_STATUS:
       newState[action.order.id] = action.order
       return newState
-    case DELETE_ORDER:
+    case DELETE:
       delete newState[action.order.id]
       return newState
     default:

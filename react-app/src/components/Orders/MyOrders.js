@@ -13,11 +13,12 @@ const MyOrders = () => {
   const orders = useSelector((state) => Object.values(state.orders));
   const sold = useSelector((state) => Object.values(state.sold));
 
-console.log(sold)
+console.log(orders)
   useEffect(() => {
     dispatch(getOrders(user.id));
     dispatch(getSold(user.id));
   }, [dispatch, user.id]);
+
 
   return (
     <div className="orders-container">
@@ -25,13 +26,14 @@ console.log(sold)
       <div className="orders-orders__container">
         <h3>Stuff I've Purchased</h3>
         <div className="orders-sold__container">
-          {orders.map((order) => (
+          {!orders.length ? <h4>Items you purchase will show up here</h4> : orders.map((order) => (
             <OrdersCard order={order} />
           ))}
         </div>
         <h3>Stuff I've Sold</h3>
         <div className="orders-purchases__container">
-          {Object.values(sold).map((product) =>
+          {!sold.length ? <h4>Items you sell will show up here</h4> :
+          Object.values(sold).map((product) =>
                 <PurchaseHistory product={product} />
               )
             }

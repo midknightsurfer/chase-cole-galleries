@@ -56,9 +56,17 @@ def edit_status(product_id):
     return order.to_dict()
 
 
-@order_routes.route("/<int:product_id>", methods=["DELETE"])
-def delete_order(product_id):
+@order_routes.route("/sold/<int:product_id>", methods=["DELETE"])
+def delete_product(product_id):
     order = OrderProduct.query.get(product_id)
+    order_deleted = order.to_dict()
+    db.session.delete(order)
+    db.session.commit()
+    return order_deleted
+
+@order_routes.route("/<int:order_id>", methods=["DELETE"])
+def delete_order(order_id):
+    order = Order.query.get(order_id)
     order_deleted = order.to_dict()
     db.session.delete(order)
     db.session.commit()

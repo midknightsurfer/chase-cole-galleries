@@ -4,7 +4,7 @@ import OrderDetails from "./OrderDetails";
 
 const PurchaseHistory = ({ product }) => {
   let { handleModal } = useContext(ModalContext);
-
+console.log(product)
   return (
     <div
       onClick={() => handleModal(<OrderDetails product={product} />)}

@@ -26,4 +26,5 @@ class OrderProduct(db.Model):
             "product_image": self.product_image,
             "status": self.status,
             "product": self.product.to_dict(),
+            "buyer_id": self.buyer_id
         }

@@ -1,8 +1,19 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
+import { useDispatch } from 'react-redux';
+import { removeOrder } from "../../store/orders";
 
 import "./Orders.css";
 
 const OrdersCard = ({ order }) => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (!Object.keys(order.products).length) {
+      dispatch(removeOrder(order.id));
+    } else {
+      return;
+    }
+  });
 
   return (
     <>
