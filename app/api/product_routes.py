@@ -118,7 +118,6 @@ def add_product_images():
         if file:
             product_id = request.form.get("product_id")
             file_url = upload_file_to_s3(file)
-            file_url = file_url.replace(" ", "+")
             image = Image(product_id=product_id, url=file_url["url"])
             db.session.add(image)
             db.session.commit()
