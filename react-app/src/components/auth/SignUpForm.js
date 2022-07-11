@@ -37,6 +37,7 @@ const SignUpForm = ({ email }) => {
 
   const onSignUp = async (e) => {
     e.preventDefault();
+    e.stopPropagation();
     
     setHasSubmitted(true);
     if (validationErrors.length !== 0) return;
