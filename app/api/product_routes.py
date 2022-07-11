@@ -4,6 +4,9 @@ from .auth_routes import validation_errors_to_error_messages
 from app.forms import NewProductForm, UpdateSold
 from app.models import db, Product, Image
 
+import boto3
+import botocore
+from app.config import Config
 from app.aws_s3 import *
 
 
@@ -34,7 +37,7 @@ def add_product():
             category_id=data["category_id"],
             price=data["price"],
             shipping_price=data["shipping_price"],
-            sold=data["sold"]
+            sold=data["sold"],
         )
 
         db.session.add(product)
@@ -62,7 +65,7 @@ def update(productId):
         product.shipping_price = data["shipping_price"]
         product.price = data["price"]
         product.sold = data["sold"]
-        
+
         images = Image.query.filter(Image.product_id == productId).all()
         for image in images:
             db.session.delete(image)
@@ -71,12 +74,13 @@ def update(productId):
         return product.to_dict()
     return {"errors": validation_errors_to_error_messages(form.errors)}, 401
 
+
 @product_routes.route("/sold/<int:productId>", methods=["PUT"])
 @login_required
 def updateSold(productId):
     form = UpdateSold()
     form["csrf_token"].data = request.cookies["csrf_token"]
-    if form.validate_on_submit():     
+    if form.validate_on_submit():
         data = form.data
         product = Product.query.filter(Product.id == productId).first()
 
@@ -86,6 +90,7 @@ def updateSold(productId):
 
         return product.to_dict()
     return {"errors": validation_errors_to_error_messages(form.errors)}, 401
+
 
 @product_routes.route("/<int:productId>", methods=["DELETE"])
 @login_required
@@ -110,7 +115,7 @@ def delete_product(productId):
 @login_required
 def add_product_images():
     newFile = request.form.get("newFile")
-    
+
     if newFile == "true":
         if "file" not in request.files:
             return "No user_file key in request.files"
@@ -118,7 +123,7 @@ def add_product_images():
         if file:
             product_id = request.form.get("product_id")
             file_url = upload_file_to_s3(file)
-            image = Image(product_id=product_id, url=file_url['url'].replace(' ', '+'))
+            image = Image(product_id=product_id, url=file_url["url"].replace(" ", "+"))
             db.session.add(image)
             db.session.commit()
 
