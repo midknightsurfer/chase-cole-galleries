@@ -103,10 +103,6 @@ export const uploadFile = (fileForm) => async (dispatch) => {
   form.append("product_id", product_id);
   form.append("newFile", newFile);
 
-  const res = await fetch("/api/products/images", {
-    method: "POST",
-    body: form,
-  });
 
 };
 
