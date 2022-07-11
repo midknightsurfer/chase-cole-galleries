@@ -10,7 +10,7 @@ import "./ProductForm.css";
 const ProductForm = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  let { handleModal, setModal } = useContext(ModalContext);  
+  let { handleModal, setModal } = useContext(ModalContext);
 
   const user = useSelector((state) => state.session.user);
 
@@ -31,18 +31,18 @@ const ProductForm = () => {
     }
     if (!description) {
       errors.push("Description is required");
-    } 
+    }
     if (!price) {
       errors.push("Price is required");
     }
-    if (price && price < 0) {
+    if (price && price <= 0) {
       errors.push("Price must be greater than 0");
     }
     if (!shippingPrice) {
       errors.push("Shipping Price is required");
     }
-    if (shippingPrice && shippingPrice < 0) {
-      errors.push("Shipping Price must be greater than 0"); 
+    if (shippingPrice && shippingPrice <= 0) {
+      errors.push("Shipping Price must be greater than 0");
     }
     if (categoryId === 0) {
       errors.push("Category is required");
@@ -89,7 +89,7 @@ const ProductForm = () => {
     setTimeout(() => {
       history.push("/");
       setModal(false);
-    }, 3000);
+    }, 2500);
   };
 
   const addImages = async (images, product_id) => {
@@ -213,7 +213,6 @@ const ProductForm = () => {
           </div>
 
           {hasSubmitted && validationErrors.length > 0 && (
-            <div className="errors__container">
             <div className="errors">
               The following errors were found:
               <ul>
@@ -222,8 +221,6 @@ const ProductForm = () => {
                 ))}
               </ul>
             </div>
-            </div>
-
           )}
           <div className="product-form__btndiv">
             <button className="product-form__btn" type="submit">

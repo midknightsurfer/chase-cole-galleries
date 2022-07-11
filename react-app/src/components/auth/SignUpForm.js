@@ -7,6 +7,7 @@ const SignUpForm = ({ email }) => {
 
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
+  const [emailAddress, setEmailAddress] = useState(email);
   const [password, setPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
 
@@ -15,11 +16,15 @@ const SignUpForm = ({ email }) => {
 
   useEffect(() => {
     const errors = [];
+    setHasSubmitted(false);
     if (!firstName) {
       errors.push("First Name is required");
     }
     if (!lastName) {
       errors.push("Last Name is required");
+    }
+    if (!emailAddress) {
+      errors.push("Email is required");
     }
     if (!password) {
       errors.push("Password is required");
@@ -32,13 +37,11 @@ const SignUpForm = ({ email }) => {
     }
 
     setValidationErrors(errors);
-  }, [firstName, lastName, password, repeatPassword]);
-
+  }, [firstName, lastName, password, repeatPassword, emailAddress]);
 
   const onSignUp = async (e) => {
     e.preventDefault();
-    e.stopPropagation();
-    
+
     setHasSubmitted(true);
     if (validationErrors.length !== 0) return;
 
@@ -46,11 +49,10 @@ const SignUpForm = ({ email }) => {
 
     setHasSubmitted(false);
     setValidationErrors([]);
-
   };
 
   return (
-    <form onSubmit={onSignUp}>
+    <>
       <h3>Sign Up</h3>
       <div>
         <label>First Name</label>
@@ -66,7 +68,7 @@ const SignUpForm = ({ email }) => {
         <input
           type="text"
           name="last_name"
-          onChange={(e) => setLastName(e.target.value)}  
+          onChange={(e) => setLastName(e.target.value)}
           value={lastName}
         ></input>
       </div>
@@ -75,8 +77,8 @@ const SignUpForm = ({ email }) => {
         <input
           type="email"
           name="email"
-          disabled={true}
-          value={email}
+          value={emailAddress}
+          onChange={(e) => setEmailAddress(e.target.value)}
         ></input>
       </div>
       <div>
@@ -93,19 +95,24 @@ const SignUpForm = ({ email }) => {
         <input
           type="password"
           name="repeat_password"
-          onChange={(e) => setRepeatPassword(e.target.value)} 
+          onChange={(e) => setRepeatPassword(e.target.value)}
           value={repeatPassword}
-          required={true}
         ></input>
       </div>
       <div>
-        {hasSubmitted && validationErrors.length > 0 && (
-        validationErrors.map((error, ind) => (
-          <div className="auth-form__error" key={ind}>{error}</div>
-        )))}
+        {hasSubmitted &&
+          validationErrors.length > 0 &&
+          validationErrors.map((error, ind) => (
+            <div className="auth-form__error" key={ind}>
+              {error}
+            </div>
+          ))}
       </div>
-      <button type="submit" className="auth-form__button">Sign Up</button>
-    </form>  );
+      <button type="submit" onClick={onSignUp} className="auth-form__button">
+        Sign Up
+      </button>
+    </>
+  );
 };
 
 export default SignUpForm;
