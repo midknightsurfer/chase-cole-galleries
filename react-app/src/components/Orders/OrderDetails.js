@@ -1,9 +1,8 @@
 import { useContext, useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { removeOrder, editStatus } from "../../store/sold";
+import { editSold } from "../../store/products";  
 import { ModalContext } from "../../context/ModalContext";
-import { getOrders } from "../../store/orders";
-
 
 const OrderDetails = ({ product }) => {
   const [newStatus, setNewStatus] = useState(product.status);
@@ -11,7 +10,7 @@ const OrderDetails = ({ product }) => {
   const [users, setUsers] = useState([]);
   const user = users.find((user) => user.id === product.buyer_id);
 
-  let { handleModal, setModal } = useContext(ModalContext);
+  let { setModal } = useContext(ModalContext);
 
   useEffect(() => {
     async function fetchData() {
@@ -23,6 +22,11 @@ const OrderDetails = ({ product }) => {
   }, []);
 
   const cancelOrder = () => {
+    const data = {
+      sold: false,
+    };
+
+    dispatch(editSold(data, product.product_id));
     dispatch(removeOrder(product.id));
     setModal(false);
   };

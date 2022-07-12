@@ -73,7 +73,7 @@ const ProductForm = () => {
       )
     );
 
-    await addImages(cleanImages, productData[1].id);
+    await addImages(cleanImages, productData[1]?.id);
 
     handleModal(
       <div className="products-card__modalbg">
