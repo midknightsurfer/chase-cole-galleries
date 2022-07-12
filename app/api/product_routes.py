@@ -4,9 +4,6 @@ from .auth_routes import validation_errors_to_error_messages
 from app.forms import NewProductForm, UpdateSold
 from app.models import db, Product, Image
 
-import boto3
-import botocore
-from app.config import Config
 from app.aws_s3 import *
 
 
@@ -115,14 +112,16 @@ def delete_product(productId):
 @login_required
 def add_product_images():
     newFile = request.form.get("newFile")
-
+    print(newFile, "<------------------------------")
     if newFile == "true":
         if "file" not in request.files:
             return "No user_file key in request.files"
         file = request.files["file"]
+        print(file, " <---------------------------file")
         if file:
             product_id = request.form.get("product_id")
             file_url = upload_file_to_s3(file)
+            print(file_url, "<---------------------------file_url")
             image = Image(product_id=product_id, url=file_url["url"].replace(" ", "+"))
             db.session.add(image)
             db.session.commit()
