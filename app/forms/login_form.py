@@ -22,8 +22,12 @@ def password_matches(form, field):
     if not user.check_password(password):
         raise ValidationError('Password was incorrect.')
 
+def email_valid(form, field):
+    email = field.data
+    if not '@' in email:
+        raise ValidationError('Email is not valid.')
 
 class LoginForm(FlaskForm):
-    email = StringField('email', validators=[DataRequired(), user_exists])
-    password = StringField('password', validators=[
+    email = StringField('Email', validators=[DataRequired(), user_exists, email_valid])
+    password = StringField('Password', validators=[
                            DataRequired(), password_matches])

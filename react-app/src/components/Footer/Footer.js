@@ -36,20 +36,20 @@ const Footer = () => {
         </div>
         <div className="footer-secondary__policies">
           <h6>- Policies -</h6>
-          {/* <ul>
-            <NavLink to="/policies" exact={true}>
+          <ul>
+            <NavLink to="/policy" exact={true}>
               <li>Terms & Conditions</li>
             </NavLink>
-            <NavLink to="/policies#privacy" exact={true}>
+            <NavLink to="/policy" exact={true}>
               <li>Privacy Policy</li>
             </NavLink>
-            <NavLink to="/policies#return" exact={true}>
+            <NavLink to="/policy" exact={true}>
               <li>Return Policy</li>
             </NavLink>
-            <NavLink to="/policies#shipping" exact={true}>
+            <NavLink to="/policy" exact={true}>
               <li>Shipping Policy</li>
             </NavLink>
-          </ul> */}
+          </ul>
         </div>
 
         <div className="footer-secondary__communication">

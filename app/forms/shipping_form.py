@@ -9,5 +9,5 @@ class UpdateShipping(FlaskForm):
     state = StringField(
         'State', validators=[DataRequired()])    
     city = StringField('City', validators=[DataRequired()])
-    zipcode = IntegerField('Zipcode', validators=[DataRequired()])
+    zipcode = IntegerField('Zip Code', validators=[DataRequired()])
     phone = StringField('Phone', validators=[DataRequired()])

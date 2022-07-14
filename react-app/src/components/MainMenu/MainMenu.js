@@ -18,18 +18,23 @@ const MainMenu = () => {
   };
 
   return (
-    <div className="main-menu__bg">
+    <div className="main-menu__bg" onClick={() => setModal(false)}>
       <nav className="main-menu">
         <div className="main-menu__header">
           <NavLink to="/" exact={true}>
-            <img src={logo} alt="logo" className="logo" />
+            <img
+              src={logo}
+              alt="logo"
+              className="logo"
+              onClick={() => setModal(false)}
+            />
           </NavLink>
           <i
             className="main-menu__close fas fa-times"
             onClick={() => setModal(false)}
           ></i>
         </div>
-        <div className="main-menu__account">
+        <div className="main-menu__account" onClick={() => setModal(false)}>
           <NavLink to={`/myaccount`} exact={true} activeClassName="active">
             <div>
               <i className="fa-solid fa-user"></i>My Acccount
@@ -63,11 +68,7 @@ const MainMenu = () => {
           {/* <div>
             <i className="fa-solid fa-blog"></i>Refinisher's Blog
           </div> */}
-          <NavLink
-            to="/sell"
-            exact={true}
-            onClick={() => setModal(false)}
-          >
+          <NavLink to="/sell" exact={true} onClick={() => setModal(false)}>
             <div>
               <i className="fa-solid fa-dollar-sign"></i>Sell My Furniture
             </div>
@@ -82,11 +83,7 @@ const MainMenu = () => {
               <button className="main-menu__signin">Log Out</button>
             </NavLink>
           ) : (
-            <NavLink
-              to="/login"
-              exact={true}
-              onClick={() => setModal(false)} 
-            >
+            <NavLink to="/login" exact={true} onClick={() => setModal(false)}>
               <button className="main-menu__signin">Sign In</button>
             </NavLink>
           )}

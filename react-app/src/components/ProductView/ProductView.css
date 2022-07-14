@@ -6,6 +6,29 @@
   margin-top: 50px;
 }
 
+.myaccount-card__container {
+  width: 90%;
+  margin: 0 auto;
+  line-height: 20px;
+  border: 1px solid black;
+  margin-top: 50px;
+  padding-bottom: 300px;
+}
+
+.myaccount-card__container h3 {
+  padding: 10px;
+}
+
+.myaccount-card__container a {
+  text-decoration: none;
+  color: black;
+}
+
+.myaccount-card__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
 .products-card__container a {
   text-decoration: none;
   color: black;

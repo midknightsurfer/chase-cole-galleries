@@ -24,14 +24,12 @@ const ProductCard = ({ product }) => {
     e.preventDefault();
     handleModal(
       <div className="products-card__modalbg">
-          <div className="products-card__modal">
-            <p>Are you sure you want to remove this product?</p>
-            <div className="products-card__modalbtns">
-              <button onClick={() => deleteProduct(product.id)}>Delete</button>
-              <button onClick={() => setModal(false)}>
-                Cancel
-              </button>
-            </div>
+        <div className="products-card__modal">
+          <p>Are you sure you want to remove this product?</p>
+          <div className="products-card__modalbtns">
+            <button onClick={() => deleteProduct(product?.id)}>Delete</button>
+            <button onClick={() => setModal(false)}>Cancel</button>
+          </div>
         </div>
       </div>
     );
@@ -39,26 +37,34 @@ const ProductCard = ({ product }) => {
 
   const handleEditBtn = (e) => {
     e.preventDefault();
-    history.push(`/products/edit/${product.id}`);
+    history.push(`/products/edit/${product?.id}`);
   };
 
   return (
     <>
-      <Link to={`/products/${product.id}`}>
+      <Link to={`/products/${product?.id}`}>
         <div className="products-card">
           <div
             className="products-card__photo"
-            style={{ backgroundImage: `url(${product.images[0]})` }}
-          >            {product?.sold === true ? (
-            <img src={sold} alt="sold" className="products-cart__sold" />
-          ) : (
-            ""
-          )}</div>
+            style={{ backgroundImage: `url(${product?.images[0]})` }}
+          >
+            {" "}
+            {product?.sold === true ? (
+              <img src={sold} alt="sold" className="products-cart__sold" />
+            ) : (
+              ""
+            )}
+          </div>
 
-          <div className="products-card__title">{product.title}</div>
-          <div className="products-card__price">{new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'USD' }).format(product.price)}</div>
+          <div className="products-card__title">{product?.title}</div>
+          <div className="products-card__price">
+            {new Intl.NumberFormat("en-IN", {
+              style: "currency",
+              currency: "USD",
+            }).format(product?.price)}
+          </div>
           {user ? (
-            user.id === product.user_id ? (
+            user?.id === product?.user_id ? (
               <div className="products-card__modifybtns">
                 <div
                   className="delete-btn"

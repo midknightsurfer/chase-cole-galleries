@@ -20,20 +20,8 @@ const LoginForm = () => {
   const [showSignUp, setShowSignUp] = useState(false);
   const [showLoginForm, setShowLoginForm] = useState(true);
 
-  const [validationErrors, setValidationErrors] = useState([]);
+  const [errors, setErrors] = useState([]);
   const [hasSubmitted, setHasSubmitted] = useState(false);
-
-  useEffect(() => {
-    const errors = [];
-    if (!email) {
-      errors.push("Email is required");
-    }
-    if (email && !email.includes('@')) {
-      errors.push("Email must contain an @");
-    }
-
-    setValidationErrors(errors);
-  }, [email, password]);
 
   useEffect(() => {
     async function fetchData() {
@@ -43,6 +31,18 @@ const LoginForm = () => {
     }
     fetchData();
   }, []);
+
+  useEffect(() => {
+    const errors = []
+    setHasSubmitted(false);
+    if (!email) {
+      errors.push(["Email: This field is required."]);
+    }
+    if (!email.includes("@")) {
+      errors.push(["Email: This field must contain an @."]);
+    }
+    setErrors(errors)
+  }, [email]);
 
   const demoLogin = async (e) => {
     e.preventDefault();
@@ -59,41 +59,37 @@ const LoginForm = () => {
     e.preventDefault();
 
     setHasSubmitted(true);
-    if (validationErrors.length !== 0) return;
+    if (errors.length) return;
 
     const user = users.find((user) => user.email === email);
-  
-    if (user) {
-        setShowPassword(!showPassword);
-        setShowCheck(!showCheck);
-        setShowLogin(!showLogin);      
-    } else {
-        setShowCheck(!showCheck);
-        setShowSignUp(!showSignUp);
-        setShowLoginForm(!showLoginForm);      
-    }
 
-    setHasSubmitted(false);
-    setValidationErrors([]);
+    if (user) {
+      setShowPassword(!showPassword);
+      setShowCheck(!showCheck);
+      setShowLogin(!showLogin);
+    } else {
+      setShowCheck(!showCheck);
+      setShowSignUp(!showSignUp);
+      setShowLoginForm(!showLoginForm);
+    }
+    
   };
 
   const onCancel = () => {
     setShowCheck(!showCheck);
     setShowSignUp(!showSignUp);
     setShowLoginForm(!showLoginForm);
-  }
+  };
 
   const onLogin = async (e) => {
     e.preventDefault();
 
     setHasSubmitted(true);
-  
-    if (validationErrors.length !== 0) return;
 
-    await dispatch(login(email, password));
-
-    setHasSubmitted(false);
-    setValidationErrors([]);
+    const data = await dispatch(login(email, password));
+    if (data) {
+      setErrors(data);
+    }
 
   };
 
@@ -122,7 +118,7 @@ const LoginForm = () => {
       <form className="auth-form">
         {showLoginForm && (
           <>
-            <img src={logo} alt="logo"/>
+            <img src={logo} alt="logo" />
 
             <h3>Enter your email address to sign in or to create an account</h3>
 
@@ -130,10 +126,11 @@ const LoginForm = () => {
               <label htmlFor="email">Email</label>
               <input
                 name="email"
-                type="text"
+                type="email"
                 placeholder="Email"
                 value={email}
-                onChange={(e) => setEmail(e.target.value) }
+                onChange={(e) => setEmail(e.target.value)}
+                required
               />
             </div>
           </>
@@ -141,22 +138,24 @@ const LoginForm = () => {
         <div>
           {showPassword && (
             <div>
-              <label htmlFor="password">Password</label>
+              <label htmlFor="Password">Password</label>
               <input
-                name="password"
+                name="Password"
                 type="password"
                 placeholder="Password"
                 value={password}
-                onChange={(e) => setPassword(e.target.value) }
+                onChange={(e) => setPassword(e.target.value)}
               />
             </div>
           )}
 
           <div>
-            {hasSubmitted && validationErrors.length > 0 && (
-            validationErrors.map((error, ind) => (
-              <div className="auth-form__error" key={ind}>{error}</div>
-            )))}
+            {hasSubmitted && errors.length > 0 &&
+              errors.map((error, ind) => (
+                <div className="auth-form__error" key={ind}>
+                  {error}
+                </div>
+              ))}
           </div>
           {showCheck && (
             <>
@@ -182,15 +181,21 @@ const LoginForm = () => {
             </>
           )}
           {showLogin && (
-            <button type="submit" className="auth-form__button" onClick={onLogin}>
-              Login
-            </button>
+              <button
+                type="submit"
+                className="auth-form__button"
+                onClick={onLogin}
+              >
+                Login
+              </button>
           )}
 
           {showSignUp && (
             <>
               <SignUpForm email={email} />
-              <button onClick={onCancel} className="auth-form__button">Cancel</button>
+              <button onClick={onCancel} className="auth-form__button">
+                Cancel
+              </button>
             </>
           )}
         </div>

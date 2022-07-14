@@ -22,7 +22,7 @@ export const getUsers = () => async (dispatch) => {
 
 export const updateUser =
   (data, userId) => async (dispatch) => {
-    const res = await fetch(`/api/users/${userId}`, {
+    const response = await fetch(`/api/users/${userId}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -30,10 +30,17 @@ export const updateUser =
       body: JSON.stringify(data),
     });
     
-    if (res.ok) {
-      const user = await res.json();
-      dispatch(update(user));
-      return ["Created", user];
+    if (response.ok) {
+      const data = await response.json();
+      dispatch(update(data));
+      return null;
+    } else if (response.status < 500) {
+      const data = await response.json();
+      if (data.errors) {
+        return data.errors;
+      }
+    } else {
+      return ["An error occurred. Please try again."];
     }
   };
 

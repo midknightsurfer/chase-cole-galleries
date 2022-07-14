@@ -40,7 +40,7 @@ const CartView = () => {
   };
 
   return (
-    <div className="main-menu__bg">
+    <div className="main-menu__bg" onClick={() => setModal(false)}>
       <i
         className="cart-close fas fa-times"
         onClick={() => setModal(false)}
@@ -57,7 +57,7 @@ const CartView = () => {
               );
             })
           ) : (
-            <h4>Your Cart is Currently Empty</h4>
+            <h4 style={{textAlign: "center"}}>Your Cart is Currently Empty</h4>
           )}{" "}
           {window.location.pathname !== "/checkout" ? (
             cartProducts.length ? (

@@ -10,7 +10,8 @@ import Checkout from "./Cart/Checkout";
 import MyOrders from "./Orders/MyOrders";
 import Footer from "./Footer/Footer";
 import MyAccount from "./MyAccount/MyAccount";
-import PageNotFound from "./PageNotFound";    
+import PageNotFound from "./PageNotFound";
+import Policy from "./Policy"; 
 
 export {
   LoginForm,
@@ -25,5 +26,6 @@ export {
   MyOrders,
   Footer,
   MyAccount,
-  PageNotFound
+  PageNotFound,
+  Policy,
 };

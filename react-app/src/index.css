@@ -93,3 +93,8 @@ button:active {
   height: 80vh;
   text-align: center;
 }
+
+h2 {
+  text-align: center;
+  margin: 20px;
+}

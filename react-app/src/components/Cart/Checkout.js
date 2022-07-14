@@ -31,25 +31,25 @@ const Checkout = () => {
     const errors = [];
     setHasSubmitted(false);
     if (!address) {
-      errors.push("Address is required");
+      errors.push("Address : This field is required");
     }
     if (!state) {
-      errors.push("State is required");
+      errors.push("State : This field is required");
     }
     if (!city) {
-      errors.push("City is required");
+      errors.push("City : This field is required");
     }
     if (!zipcode) {
-      errors.push("Zipcode is required");
+      errors.push("Zip Code : This field is required");
     }
     if (zipcode && (zipcode.length > 5 || zipcode.length < 5)) {
-      errors.push("Zip Code must be 5 digits");
+      errors.push("Zip Code : Zip Code must be 5 digits");
     }
     if (!phone) {
-      errors.push("Phone is required");
+      errors.push("Phone : This field is required");
     }
     if (phone && phone.length !== 10) {
-      errors.push("Phone must be 10 digits");
+      errors.push("Phone : Phone must be 10 digits");
     }
     setValidationErrors(errors);
   }, [address, city, state, zipcode, phone, showShippingForm]);
@@ -145,7 +145,7 @@ const Checkout = () => {
           <>
             <div>Address: {address}</div>
             <div>
-              City: {city} State: {state} Zipcode: {zipcode}
+              City: {city} State: {state} Zip Code: {zipcode}
             </div>
             <div>Phone: {phone}</div>
 

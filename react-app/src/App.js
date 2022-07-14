@@ -17,6 +17,7 @@ import {
   Footer,
   MyAccount,
   PageNotFound,
+  Policy,
 } from "./components";
 
 import ProtectedRoute from "./components/auth/ProtectedRoute";
@@ -75,6 +76,9 @@ function App() {
             </Route>
             <Route path="/products/:productId" exact={true}>
               <ProductView />
+            </Route>
+            <Route path="/policy" exact={true}>
+              <Policy />
             </Route>
             <ProtectedRoute path="/products/edit/:productId" exact={true}>
               <EditProductForm />
