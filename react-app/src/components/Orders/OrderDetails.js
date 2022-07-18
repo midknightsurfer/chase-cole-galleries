@@ -44,7 +44,7 @@ const OrderDetails = ({ product }) => {
   };
 
   return (
-    <div className="main-menu__bg" onClick={() => setModal(false)}>
+    <div className="main-menu__bg">
       <div className="orders-details__modal">
         <h3>Order Details</h3>
         <div>Name: {user?.first_name} {user?.last_name}</div>
