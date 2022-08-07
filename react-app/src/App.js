@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { ModalProvider } from "./context/ModalContext";
+import SearchProvider from "./context/SearchContext";
+import SearchDisplay from "./components/Search/SearchDisplay";
 
 import {
   LoginForm,
@@ -42,6 +44,7 @@ function App() {
   } else {
     splash = loaded && (
       <BrowserRouter>
+      <SearchProvider>
         <ModalProvider>
           <NavBar />
           <Footer />
@@ -95,9 +98,13 @@ function App() {
             <ProtectedRoute path="/sell" exact={true}>
               <ProductForm />
             </ProtectedRoute>
+            <Route exact path="/search">
+            <SearchDisplay />
+          </Route>
             <PageNotFound />
           </Switch>
         </ModalProvider>
+      </SearchProvider>
       </BrowserRouter>
     );
   }

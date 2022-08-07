@@ -4,8 +4,10 @@
 }
 
 .top-menu__cart {
-  float: right;
-  font-size: 16pt;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 22pt;
   cursor: pointer;
   color: rgb(112, 18, 92);
   padding: 12px;
@@ -15,8 +17,10 @@
   cursor: pointer;
   position: absolute;
   color: rgb(112, 18, 92);
-  padding: 15px;
-  font-size: 16pt;
+  top: 10px;
+  left: 10px;
+  font-size: 22pt;
+  padding: 12px;
 }
 
 .top-menu__categories ul {
