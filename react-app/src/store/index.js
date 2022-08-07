@@ -8,6 +8,7 @@ import userReducer from "./user"
 import soldReducer from "./sold"
 import storage from "redux-persist/lib/storage";
 import { persistReducer } from "redux-persist"
+import searchReducer from "./search";
 
 const rootReducer = combineReducers({
   session,
@@ -15,7 +16,8 @@ const rootReducer = combineReducers({
   products: productReducer,
   cart: cartReducer,
   user: userReducer,
-  sold: soldReducer
+  sold: soldReducer,
+  search: searchReducer,
 });
 
 const persistConfig = {

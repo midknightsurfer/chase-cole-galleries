@@ -54,7 +54,7 @@ const MainMenu = () => {
           </NavLink>
         </div>
         <div className="main-menu__lists">
-          {/* <div>
+          <div>
             <i className="fa-solid fa-eye"></i>Recently Viewed
           </div>
           <div>
@@ -62,20 +62,20 @@ const MainMenu = () => {
           </div>
           <div>
             <i className="fa-solid fa-heart"></i>Favorites
-          </div> */}
+          </div>
         </div>
         <div className="main-menu__contact">
-          {/* <div>
+          <div>
             <i className="fa-solid fa-blog"></i>Refinisher's Blog
-          </div> */}
+          </div>
           <NavLink to="/sell" exact={true} onClick={() => setModal(false)}>
             <div>
               <i className="fa-solid fa-dollar-sign"></i>Sell My Furniture
             </div>
           </NavLink>
-          {/* <div>
+          <div>
             <i className="fa-solid fa-address-book"></i>Contact Us
-          </div> */}
+          </div>
         </div>
         <div className="main-menu__footer">
           {user ? (

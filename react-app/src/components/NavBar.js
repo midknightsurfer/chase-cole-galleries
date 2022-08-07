@@ -4,6 +4,7 @@ import { ModalContext } from "../context/ModalContext";
 import { NavLink, useHistory } from "react-router-dom"
 import CartView from "./Cart/CartView"
 import MainMenu from "./MainMenu/MainMenu";
+import Search from "./Search/Search";
 
 import logo from "../assets/logo.png";
 import "./NavBar.css";
@@ -24,15 +25,14 @@ const NavBar = () => {
     <>
       <nav className="top-menu">
         <i className="fa-solid fa-bars" onClick={() => handleModal(<MainMenu />)}></i>
-        <div className="top-menu__menuhover">Menu</div>
         <NavLink
           to="/"
           exact={true}
         >
           <img src={logo} alt="logo" className="logo" />
         </NavLink>
+        <Search />
         <div className="top-menu__cart" onClick={() => handleModal(<CartView />)}><i className="fa-solid fa-cart-flatbed"></i></div>
-        <div className="top-menu__carthover">Cart</div>
       </nav>
       <div className="top-menu__categories">
         <ul>

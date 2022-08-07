@@ -1,4 +1,4 @@
-import { useContext, useState, useEffect } from "react";
+import { useContext } from "react";
 import { ModalContext } from "../../context/ModalContext";
 import OrderDetails from "./OrderDetails";
 
