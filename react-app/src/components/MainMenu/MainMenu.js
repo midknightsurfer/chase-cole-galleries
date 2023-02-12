@@ -61,7 +61,9 @@ const MainMenu = () => {
             <i className="fa-solid fa-calendar-plus"></i>New Arrivals
           </div>
           <div>
-            <i className="fa-solid fa-heart"></i>Favorites
+            <NavLink to={`/myfavorites`} exact={true} activeClassName="active">
+              <i className="fa-solid fa-heart"></i>Favorites
+            </NavLink>
           </div>
         </div>
         <div className="main-menu__contact">

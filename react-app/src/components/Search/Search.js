@@ -23,8 +23,8 @@ function Search() {
           <input
             style={{fontFamily: "sans-serif, FontAwesome"}}
             type="text"
-            placeholder="  Search Furniture and Blogs"
-            maxLength="50"
+            placeholder="  Search Furniture"
+            maxLength="80"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />

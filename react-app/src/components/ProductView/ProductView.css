@@ -36,11 +36,13 @@
 
 .products-card {
   min-width: 150px;
+  background-color:rgb(231, 215, 248);
   box-shadow: 4px 4px 10px gray;
   margin: 6px;
   font-size: 10pt;
   padding: 2px;
-  border: 2px solid transparent;
+  border: 2px solid #ff9845;
+  overflow: hidden;
 }
 
 .products-card:hover {
@@ -56,8 +58,7 @@
   background-position: center;
 }
 
-.products-card__title,
-.products-card__price {
+.products-card__title {
   padding: 5px;
 }
 
@@ -221,4 +222,21 @@
 
 button.gallery-control.gallery-control--next, button.gallery-control.gallery-control--prev {
   border: none;
+}
+
+.products-card__heart .fa-heart {
+  top: 10px;
+  width: 25%;
+  font-size: 1.5em;
+  color: #fd576b;
+  cursor: pointer;
+}
+
+.products-card__header {
+  padding: 10px;
+  border-top: 2px solid #ff9845;
+  border-bottom: 2px solid #ff9845;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }

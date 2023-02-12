@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify, request
 from flask_login import login_required
 from .auth_routes import validation_errors_to_error_messages
-from app.models import db, User
+from app.models import db, User, Favorite
 from app.forms import UpdateShipping
 
 user_routes = Blueprint('users', __name__)
@@ -40,4 +40,10 @@ def update(userId):
 
         return user.to_dict()
     return {"errors": validation_errors_to_error_messages(form.errors)}, 401
+
+@login_required
+@user_routes.route('/<int:id>/favorites')
+def user_favorites(id):
+    favorites = Favorite.query.filter(Favorite.user_id == id).all()
+    return {favorite.product_id: favorite.to_dict() for favorite in favorites}
 

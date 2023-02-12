@@ -98,3 +98,16 @@ h2 {
   text-align: center;
   margin: 20px;
 }
+
+@media screen and (max-width: 670px) {
+  .main-container {
+    position: relative;
+    height:min-content;
+
+  }
+
+  .homepage-description {
+    padding-bottom: 30%;
+  }
+  
+}

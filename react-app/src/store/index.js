@@ -9,6 +9,7 @@ import soldReducer from "./sold"
 import storage from "redux-persist/lib/storage";
 import { persistReducer } from "redux-persist"
 import searchReducer from "./search";
+import favoritesReducer from "./favorites";
 
 const rootReducer = combineReducers({
   session,
@@ -18,6 +19,7 @@ const rootReducer = combineReducers({
   user: userReducer,
   sold: soldReducer,
   search: searchReducer,
+  favorites: favoritesReducer,
 });
 
 const persistConfig = {

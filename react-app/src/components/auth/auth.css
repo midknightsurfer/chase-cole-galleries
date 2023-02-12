@@ -1,7 +1,7 @@
 .auth-form {
   display: flex;
   flex-direction: column;
-  width: 35%;
+  width: fit-content;
   position: absolute;
   left: 0;
   top: 0;
@@ -10,11 +10,15 @@
   margin: auto;
   background-color: #fff;
   border-radius: 10px;
+  height: fit-content;
   padding: 30px;
-  height: 50%;
   opacity: 0.9;
   box-shadow: 2px 2px 25px rgba(0, 0, 0, 0.8);  
-  
+  align-items: center;
+}
+
+.auth-logo {
+  width: 100%;
 }
 
 .auth-form h3 {
@@ -24,7 +28,7 @@
 
 .auth-form__button {
   padding: 10px 0;
-  width: 40%;
+
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -107,9 +111,40 @@
   animation-delay: 30s; 
 }
 
+.auth-form__buttonContainer {
+  display: flex;
+}
+
+.auth-float {
+  float: left;
+  margin-left: 8%;
+}
+
 @media screen and (max-width: 600px) {
   .auth-form {
     width: 75vw;
     opacity: 1;
+  }
+}
+
+@media screen and (min-width: 600px) {
+  .auth-form {
+    width: 50vw;
+  }
+
+  .auth-form input {
+    width: 95%;
+  }
+}
+
+@media screen and (min-width: 1100px) {
+  .auth-form {
+    width: 35vw;
+  }
+
+  .auth-form input {
+    width: 95%;
+    height: 3vh;
+    font-size: 18pt;
   }
 }

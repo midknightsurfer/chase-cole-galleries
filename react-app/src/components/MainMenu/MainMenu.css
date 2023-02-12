@@ -99,4 +99,11 @@
 .fa-user, .fa-box, .fa-calendar-plus, .fa-eye, .fa-heart, .fa-blog, .fa-dollar-sign, .fa-address-book {
   color: rgb(112, 18, 92);
   margin-right: 10px;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 768px) {
+  .main-menu {
+    width: 100vw;
+  }
 }

@@ -44,6 +44,11 @@ const LoginForm = () => {
     setErrors(errors)
   }, [email]);
 
+  useEffect(() => {
+    setErrors([]);
+    setHasSubmitted(false);
+  }, [password]);
+
   const demoLogin = async (e) => {
     e.preventDefault();
 
@@ -80,6 +85,12 @@ const LoginForm = () => {
     setShowSignUp(!showSignUp);
     setShowLoginForm(!showLoginForm);
   };
+
+  const onCancelLogin = () => {
+    setShowCheck(!showCheck);
+    setShowPassword(!showPassword);
+    setShowLogin(!showLogin);
+  };  
 
   const onLogin = async (e) => {
     e.preventDefault();
@@ -118,11 +129,11 @@ const LoginForm = () => {
       <form className="auth-form">
         {showLoginForm && (
           <>
-            <img src={logo} alt="logo" />
+            <img className="auth-logo" src={logo} alt="logo" />
 
             <h3>Enter your email address to sign in or to create an account</h3>
 
-            <div>
+
               <label htmlFor="email">Email</label>
               <input
                 name="email"
@@ -132,7 +143,7 @@ const LoginForm = () => {
                 onChange={(e) => setEmail(e.target.value)}
                 required
               />
-            </div>
+
           </>
         )}
         <div>
@@ -164,30 +175,39 @@ const LoginForm = () => {
                 determine if you already have an account or not and get you to
                 the right place.
               </p>
-              <button
-                type="submit"
-                className="auth-form__button"
-                onClick={onCheck}
-              >
-                Continue
-              </button>
-              <button
-                type="submit"
-                className="auth-form__button"
-                onClick={demoLogin}
-              >
-                Demo Login
-              </button>
+              <div className="auth-form__buttonContainer">
+                <button
+                  type="submit"
+                  className="auth-form__button"
+                  onClick={onCheck}
+                >
+                  Continue
+                </button>
+                <button
+                  type="submit"
+                  className="auth-form__button"
+                  onClick={demoLogin}
+                >
+                  Demo Login
+                </button>                
+              </div>
+
             </>
           )}
           {showLogin && (
+            <>
               <button
                 type="submit"
-                className="auth-form__button"
+                className="auth-form__button auth-float"
                 onClick={onLogin}
               >
                 Login
               </button>
+              <button onClick={onCancelLogin} className="auth-form__button">
+              Cancel
+            </button>            
+            </>
+
           )}
 
           {showSignUp && (

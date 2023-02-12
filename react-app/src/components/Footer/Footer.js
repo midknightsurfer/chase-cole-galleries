@@ -6,7 +6,7 @@ const Footer = () => {
     <>
       <div className="footer-secondary">
         <div className="footer-secondary__sitemap">
-          <h6>- Sitemap -</h6>
+          <h6>Sitemap</h6>
           <ul>
             <NavLink to="/" exact={true}>
               <li>Homepage</li>
@@ -35,7 +35,7 @@ const Footer = () => {
           </ul>
         </div>
         <div className="footer-secondary__policies">
-          <h6>- Policies -</h6>
+          <h6>Policies</h6>
           <ul>
             <NavLink to="/policy" exact={true}>
               <li>Terms & Conditions</li>
@@ -53,7 +53,7 @@ const Footer = () => {
         </div>
 
         <div className="footer-secondary__communication">
-          <h6>- Get in Touch -</h6>
+          <h6>Get in Touch</h6>
           <ul className="footer-secondary__socialicons">
             <a
               target="_blank"
@@ -116,6 +116,7 @@ const Footer = () => {
               </a>
             </div>
           </li>
+          <div className="techs">
           <li>Python</li>
           <li>React</li>
           <li>Redux</li>
@@ -123,6 +124,8 @@ const Footer = () => {
           <li>Flask</li>
           <li>PostgreSQL</li>
           <li>Docker</li>
+
+          </div>
         </ul>
       </footer>
     </>

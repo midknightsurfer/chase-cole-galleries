@@ -11,7 +11,8 @@ import MyOrders from "./Orders/MyOrders";
 import Footer from "./Footer/Footer";
 import MyAccount from "./MyAccount/MyAccount";
 import PageNotFound from "./PageNotFound";
-import Policy from "./Policy"; 
+import Policy from "./Policy";
+import MyFavorites from "./MyFavorites/MyFavorites";
 
 export {
   LoginForm,
@@ -28,4 +29,5 @@ export {
   MyAccount,
   PageNotFound,
   Policy,
+  MyFavorites,
 };

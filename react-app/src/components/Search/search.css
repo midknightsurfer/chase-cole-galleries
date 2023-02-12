@@ -8,20 +8,20 @@
 }
 
 .search__form-container {
-  display: flex;
-  justify-content: center;
-  width: 50%;
-  height: 100%;
   margin: 0 auto;
 }
 
 .search__form-input {
+  display: flex;
+  justify-content: center;
   align-items: center;
   width: 100%;
   padding: 10px;
+
 }
 
 .search__form-input input {
+  width: 50vw; 
   height: 35px;
   border-radius: 80px;
   padding-left: 20px;
@@ -29,15 +29,23 @@
 }
 
 .search__form-button {
-  position: absolute;
+  position: relative;
+  float: right;
   width: 60px;
   margin-left: -64px;
   margin-top: 8px;
   box-shadow: none;
   height: 40px;
+  z-index: 999;
 }
 
 .products__card-container a {
   text-decoration: none;
   color: black;
+}
+
+@media screen and (max-width: 670px) {
+  .search__form-input {
+    visibility: hidden;
+  }
 }

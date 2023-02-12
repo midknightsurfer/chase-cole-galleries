@@ -5,7 +5,7 @@
 
 .top-menu__cart {
   position: absolute;
-  top: 10px;
+  top: 4px;
   right: 10px;
   font-size: 22pt;
   cursor: pointer;
@@ -69,6 +69,16 @@
 
 .fa-bars:hover, .top-menu__cart:hover {
   color: #fd576b;
+}
+
+@media screen and (max-width: 768px) {
+  .top-menu__categories {
+    display: none;
+  }
+
+  .top-menu {
+    height: 9vh;
+  }
 }
 
 .top-menu__categories {
